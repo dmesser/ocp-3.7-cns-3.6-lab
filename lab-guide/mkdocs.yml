@@ -1,0 +1,32 @@
+site_name: Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+site_url: 'https://dmesser.github.io/ocp-3.6-cns-3.5-lab/'
+site_favicon: 'img/favicon.ico'
+copyright: 'Copyright ©2017 Red Hat, Inc.'
+
+theme: 'material'
+extra:
+  logo: 'img/shadowman_rgb.png'
+  palette:
+    primary: 'red'
+    accent: 'light blue'
+
+pages:
+- Overview: index.md
+- Modules:
+    - 'Module 1 - Examine OpenShift Installation': module-1-ocp-environment.md
+    - 'Module 2 - Deploying Container-Native Storage': module-2-deploy-cns.md
+    - 'Module 3 - Persistent Storage for Apps': module-3-cns-for-apps.md
+    - 'Module 4 - Cluster Operations': module-4-cluster-ops.md
+    - 'Module 5 - Persistent Storage for Infrastructure': module-5-cns-for-infra.md
+
+markdown_extensions:
+    - smarty
+    - toc:
+        permalink: '#'
+    - sane_lists
+    - footnotes
+    - smart_strong
+    - nl2br
+    - codehilite:
+        guess_lang: False
+    - admonition

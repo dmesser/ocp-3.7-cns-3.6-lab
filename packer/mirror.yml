@@ -1,0 +1,26 @@
+---
+
+- hosts: default
+
+  vars:
+    registry_port: 5555
+    rhsm_repos:
+      - rhel-7-server-rpms
+      - rhel-7-server-extras-rpms
+      - rhel-7-fast-datapath-rpms
+      - rhel-7-server-ose-3.7-rpms
+      - rh-gluster-3-for-rhel-7-server-rpms
+
+  roles:
+    - { role: registered-host, tags: ['registered-host'], up2date_system: false }
+    - { role: docker-host, tags: ['docker-host'] }
+    - { role: docker-registry, tags: ['docker-registry'] }
+    - { role: registry-mirror, tags: ['registry-mirror'] }
+    - { role: repo-mirror, tags: ['repo-mirror'] }
+
+  tasks:
+
+    - name: unsubscribe system
+      redhat_subscription: state=absent
+
+...

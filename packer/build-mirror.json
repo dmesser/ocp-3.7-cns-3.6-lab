@@ -1,0 +1,55 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "aws_region": "eu-central-1",
+    "aws_ami": "ami-284cdc47",
+    "org_id": "",
+    "activation_key": ""
+  },
+  "builders": [{
+    "communicator": "ssh",
+    "ssh_timeout": "10m",
+    "ssh_username": "ec2-user",
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `aws_region`}}",
+    "source_ami": "{{user `aws_ami`}}",
+    "instance_type": "t2.medium",
+    "launch_block_device_mappings": [
+    {
+      "device_name": "/dev/sda1",
+      "volume_size": 40,
+      "volume_type": "gp2",
+      "delete_on_termination": true
+    },
+    {
+      "device_name": "/dev/xvdb",
+      "volume_size": 20,
+      "volume_type": "gp2",
+      "delete_on_termination": true
+    }],
+    "ami_name": "ocp-3.7-cns-3.6-mirror-{{timestamp}}",
+    "ami_regions": ["eu-central-1", "us-east-1", "us-west-2"],
+    "ami_groups": ["all"],
+    "ami_description": "RPM/Registry Mirror for OCP 3.7 / CNS 3.6",
+    "tags": {
+      "Name": "packer-builder-ocp-3.7-cns-3.6-mirror",
+      "Platform": "Red Hat Enterprise Linux",
+      "Release": "3.6.173.0.21",
+      "OS_Version": "Red Hat Enterprise Linux 7.4",
+      "OCP_Version": "OpenShift Container Platform 3.7",
+      "CNS_Version": "Container-Native Storage 3.6"
+    }
+  }],
+  "provisioners": [{
+    "type": "ansible",
+    "user": "ec2-user",
+    "playbook_file": "mirror.yml",
+    "extra_arguments": [
+        "--become",
+        "--extra-vars", "rhsm_org_id={{user `org_id`}} rhsm_act_key={{user `activation_key`}}"
+      ]
+  }]
+}

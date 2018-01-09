@@ -1,0 +1,41 @@
+---
+
+- name: install httpd
+  yum: name=httpd state=present
+
+# - name: enable firewall to allow httpd
+#   firewalld:
+#     service: http
+#     permanent: true
+#     state: enabled
+#     immediate: yes
+
+- name: start httpd
+  service: name=httpd state=started enabled=yes
+
+- name: install repo sync utilities
+  yum: name={{ item }} state=present
+  with_items:
+    - yum-utils
+    - createrepo
+
+- name: sync repositories
+  shell: reposync --gpgcheck --newest-only --quiet --repoid={{ item }} --download_path=/var/www/html/{{ item }}
+  register: sync_result
+  until: sync_result|success
+  retries: 3
+  delay: 300
+  with_items:
+    - "{{ rhsm_repos }}"
+
+- name: create repo structure
+  shell: createrepo --quiet -o /var/www/html/{{ item }} /var/www/html/{{ item }}
+  with_items:
+    - "{{ rhsm_repos }}"
+
+- name: create repo file
+  template: src=repo-file.j2 dest=/var/www/html/{{ item }}.repo
+  with_items:
+    - "{{ rhsm_repos }}"
+
+...

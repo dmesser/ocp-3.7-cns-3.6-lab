@@ -1,0 +1,4 @@
+STORAGE_DRIVER=overlay2
+VG=docker
+DATA_SIZE=100%FREE
+DEVS=xvdb

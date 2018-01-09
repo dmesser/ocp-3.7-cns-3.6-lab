@@ -1,0 +1,44 @@
+---
+
+  - name: install ose base and storage packages
+    yum: name={{ item }} state=present
+    register: yum_result
+    until: yum_result|success
+    retries: 3
+    delay: 300
+    with_items:
+      - vim
+      - wget
+      - git
+      - jq
+      - net-tools
+      - bind-utils
+      - iptables-services
+      - bridge-utils
+      - bash-completion
+      - python-docker-py
+      - skopeo
+      - dnsmasq
+      - atomic-openshift-clients
+      - atomic-openshift-utils
+      - atomic-openshift-excluder
+      - atomic-openshift-docker-excluder
+      - nfs-utils
+      - glusterfs-fuse
+      - ceph-common
+      - iscsi-initiator-utils
+
+  - name: remove openshift packages from filter
+    shell: atomic-openshift-excluder unexclude
+
+  - name: add insecure internal registry
+    lineinfile:
+      regexp: '^OPTIONS='
+      line: OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false --insecure-registry 172.30.0.0/16'
+      dest: /etc/sysconfig/docker
+      state: present
+
+  - name: restart docker
+    service: name=docker state=restarted
+
+...

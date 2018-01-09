@@ -1,0 +1,31 @@
+---
+
+- hosts: default
+
+  vars:
+    registry_mirror: mirror.lab:5555
+    repo_mirror: http://mirror.lab
+    rhsm_repos:
+      - rhel-7-server-rpms
+      - rhel-7-server-extras-rpms
+      - rhel-7-fast-datapath-rpms
+      - rhel-7-server-ose-3.7-rpms
+      - rh-gluster-3-for-rhel-7-server-rpms
+
+  roles:
+    - { role: registered-host, tags: ['registered-host'], up2date_system: false}
+    - { role: aws-host, tags: ['aws-host']}
+    - { role: docker-host, tags: ['docker-host']}
+    - { role: ansible-host, tags: ['ansible-host']}
+    - { role: ocp-installer, tags: ['ocp-installer']}
+    - { role: cns-utilities, tags: ['cns-utilities']}
+    - { role: authorized-key, tags: ['authorized-key']}
+    - { role: registry-mirror-client, tags: ['registry-mirror-client']}
+    - { role: repo-mirror-client, tags: ['repo-mirror-client']}
+
+  tasks:
+
+    - name: unsubscribe system
+      redhat_subscription: state=absent
+
+...

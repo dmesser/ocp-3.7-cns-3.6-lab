@@ -1,0 +1,33 @@
+---
+
+  - name: enable EPEL
+    yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+
+  - name: install aws-cfn-bootstrap dependencies
+    yum: name={{ item }} state=present
+    with_items:
+      - python-pip
+      - python-setuptools
+
+  - name: install aws-cfn-bootstrap
+    shell:
+      cmd: /bin/easy_install --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+      creates: /opt/aws/bin/cfn-init
+
+  - name: create cfn-hup systemd file
+    copy: src=cfn-hup.service dest=/etc/systemd/system/
+
+  - name: disable cfn-hup service
+    systemd: name=cfn-hup enabled=no daemon_reload=yes
+
+  - name: disable hostname control in cloud-init
+    lineinfile:
+      regexp: '^ - {{ item }}'
+      line: "{{ item }}"
+      dest: /etc/cloud/cloud.cfg
+      state: absent
+    with_items:
+      - set_hostname
+      - update_hostname
+
+...

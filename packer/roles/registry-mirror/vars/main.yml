@@ -1,0 +1,70 @@
+---
+
+deploy_mirror: false
+
+registry_port: 5555
+
+src_registry: registry.access.redhat.com
+dest_registry: "localhost:{{ registry_port }}"
+
+ose_minor_tag: v3.7.14-5
+ose_major_tag: v3.7
+
+rhgs_server_tag: 3.3.0-362
+rhgs_volmanager_tag: 3.3.0-364
+rhgs_block_prov_tag: "{{ rhgs_server_tag }}"
+rhgs_s3_server_tag: "{{ rhgs_server_tag }}"
+
+ose_core_images:
+  - openshift3/ose-ansible
+  - openshift3/ose-cluster-capacity
+  - openshift3/ose-deployer
+  - openshift3/ose-docker-builder
+  - openshift3/ose-docker-registry
+  - openshift3/ose-egress-http-proxy
+  - openshift3/ose-egress-router
+  - openshift3/ose-f5-router
+  - openshift3/ose-federation
+  - openshift3/ose-haproxy-router
+  - openshift3/ose-keepalived-ipfailover
+  - openshift3/ose-pod
+  - openshift3/ose-sti-builder
+  - openshift3/ose
+  - openshift3/container-engine
+  - openshift3/node
+  - openshift3/openvswitch
+
+ose_infra_images:
+  - openshift3/logging-auth-proxy
+  - openshift3/logging-curator
+  # - openshift3/logging-deployer
+  - openshift3/logging-elasticsearch
+  - openshift3/logging-fluentd
+  - openshift3/logging-kibana
+  - openshift3/metrics-cassandra
+  # - openshift3/metrics-deployer
+  - openshift3/metrics-hawkular-metrics
+  - openshift3/metrics-hawkular-openshift-agent
+  - openshift3/metrics-heapster
+
+ose_broker_images:
+  - openshift3/ose-service-catalog
+  - openshift3/ose-ansible-service-broker
+  - openshift3/mediawiki-apb
+  - openshift3/postgresql-apb
+
+ose_s2i_images:
+  # - openshift3/logging-elasticsearch:{{ ose_major_tag }}
+  - rhscl/ruby-23-rhel7:latest
+  - rhscl/postgresql-95-rhel7:latest
+
+rhel_core_images:
+  - rhel7/etcd:latest
+
+cns_core_images:
+  - rhgs3/rhgs-server-rhel7:{{ rhgs_server_tag }}
+  - rhgs3/rhgs-volmanager-rhel7:{{ rhgs_volmanager_tag }}
+  - rhgs3/rhgs-gluster-block-prov-rhel7:{{ rhgs_block_prov_tag }}
+  - rhgs3/rhgs-s3-server-rhel7:{{ rhgs_s3_server_tag }}
+
+...

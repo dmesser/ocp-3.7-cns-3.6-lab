@@ -1,0 +1,45 @@
+---
+
+- name: install dependencies
+  yum: name={{ item }} state=present
+  with_items:
+    - docker-python
+    # - python-firewall
+
+- name: run a local registry
+  docker_container:
+    name: registry
+    image: docker.io/registry:2
+    restart_policy: always
+    volumes:
+      - registry:/var/lib/registry:z
+    published_ports:
+      - "{{ registry_port }}:5000"
+    detach: true
+    state: started
+
+- name: add insecure local registry mirror
+  lineinfile:
+    regexp: '^INSECURE_REGISTRY='
+    line: INSECURE_REGISTRY='--insecure-registry {{ dest_registry }}'
+    dest: /etc/sysconfig/docker
+    state: present
+
+- name: enable local registry mirror
+  lineinfile:
+    regexp: '^ADD_REGISTRY='
+    line: ADD_REGISTRY='--add-registry {{ dest_registry }} --add-registry registry.access.redhat.com'
+    dest: /etc/sysconfig/docker
+    state: present
+
+- name: restart docker
+  service: name=docker state=restarted
+
+# - name: enable firewall to allow registry
+#   firewalld:
+#     port: "{{ registry_port }}/tcp"
+#     permanent: true
+#     state: enabled
+#     immediate: yes
+
+...

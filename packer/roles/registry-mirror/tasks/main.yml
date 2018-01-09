@@ -1,0 +1,107 @@
+---
+
+- name: download ose core images
+  docker_image:
+    name: "{{ src_registry }}/{{ item[0] }}:{{ item[1] }}"
+  with_nested:
+    - "{{ ose_core_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: push ose core images
+  docker_image:
+    name: "{{ item[0] }}"
+    repository: "{{ dest_registry }}/{{ item[0] }}"
+    tag: "{{ item[1] }}"
+    push: yes
+  with_nested:
+    - "{{ ose_core_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: remove cached image copies
+  docker_image:
+    name: "{{ src_registry }}/{{ item[0] }}"
+    tag: "{{ item[1] }}"
+    state: absent
+  with_nested:
+    - "{{ ose_core_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: download ose infra images
+  docker_image:
+    name: "{{ src_registry }}/{{ item[0] }}:{{ item[1] }}"
+  with_nested:
+    - "{{ ose_infra_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: push ose infra images
+  docker_image:
+    name: "{{ item[0] }}"
+    repository: "{{ dest_registry }}/{{ item[0] }}"
+    tag: "{{ item[1] }}"
+    push: yes
+  with_nested:
+    - "{{ ose_infra_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: remove cached image copies
+  docker_image:
+    name: "{{ src_registry }}/{{ item[0] }}"
+    tag: "{{ item[1] }}"
+    state: absent
+  with_nested:
+    - "{{ ose_infra_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: download ose service broker images
+  docker_image:
+    name: "{{ src_registry }}/{{ item[0] }}:{{ item[1] }}"
+  with_nested:
+    - "{{ ose_broker_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: push ose service broker images
+  docker_image:
+    name: "{{ item[0] }}"
+    repository: "{{ dest_registry }}/{{ item[0] }}"
+    tag: "{{ item[1] }}"
+    push: yes
+  with_nested:
+    - "{{ ose_broker_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: remove cached image copies
+  docker_image:
+    name: "{{ src_registry }}/{{ item[0] }}"
+    tag: "{{ item[1] }}"
+    state: absent
+  with_nested:
+    - "{{ ose_broker_images }}"
+    - [ '{{ ose_minor_tag }}', '{{ ose_major_tag }}', 'latest']
+
+- name: download cns, etcd and s2i images
+  docker_image:
+    name: "{{ src_registry }}/{{ item }}"
+  with_items:
+    - "{{ ose_s2i_images }}"
+    - "{{ rhel_core_images }}"
+    - "{{ cns_core_images }}"
+
+- name: push cns, etcd and s2i images
+  docker_image:
+    name: "{{ item }}"
+    repository: "{{ dest_registry }}/{{ item }}"
+    push: yes
+  with_items:
+    - "{{ ose_s2i_images }}"
+    - "{{ rhel_core_images }}"
+    - "{{ cns_core_images }}"
+
+- name: remove cached image copies
+  docker_image:
+    name: "{{ src_registry}}/{{ item }}"
+    state: absent
+  with_items:
+    - "{{ ose_s2i_images }}"
+    - "{{ rhel_core_images }}"
+    - "{{ cns_core_images }}"
+...

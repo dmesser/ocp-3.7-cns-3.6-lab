@@ -1,0 +1,20 @@
+---
+
+- name: add insecure local registry mirror
+  lineinfile:
+    regexp: '^INSECURE_REGISTRY='
+    line: INSECURE_REGISTRY='--insecure-registry {{ registry_mirror }}'
+    dest: /etc/sysconfig/docker
+    state: present
+
+- name: enable local registry mirror
+  lineinfile:
+    regexp: '^ADD_REGISTRY='
+    line: ADD_REGISTRY='--add-registry {{ registry_mirror }} --add-registry registry.access.redhat.com'
+    dest: /etc/sysconfig/docker
+    state: present
+
+- name: restart docker
+  service: name=docker state=restarted
+
+...

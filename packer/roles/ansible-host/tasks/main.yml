@@ -1,0 +1,26 @@
+---
+
+- name: install ansible
+  yum: name=ansible state=present
+
+- name: disable tty requirement for ec2-user
+  lineinfile:
+    line: Defaults:ec2-user !requiretty
+    dest: /etc/sudoers
+    state: present
+
+- name: enable ansible pipelining
+  lineinfile:
+    line: pipelining = True
+    dest: /etc/ansible/ansible.cfg
+    state: present
+
+- name: create ansible.cfg
+  copy:
+    src: ansible.cfg
+    dest: /etc/ansible/ansible.cfg
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+...

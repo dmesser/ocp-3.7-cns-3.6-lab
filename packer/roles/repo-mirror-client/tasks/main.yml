@@ -1,0 +1,8 @@
+---
+
+- name: create repo file
+  template: src=repo-file.j2 dest=/etc/yum.repos.d/{{ item }}.repo
+  with_items:
+    - "{{ rhsm_repos }}"
+
+...

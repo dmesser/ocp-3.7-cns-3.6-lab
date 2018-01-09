@@ -1,0 +1,7 @@
+---
+
+registry_port: 5555
+
+registry_mirror: "mirror.lab:{{ registry_port }}"
+
+...
