@@ -7,7 +7,7 @@ registry_port: 5555
 src_registry: registry.access.redhat.com
 dest_registry: "localhost:{{ registry_port }}"
 
-ose_minor_tag: v3.7.14-5
+ose_minor_tag: v3.7.14
 ose_major_tag: v3.7
 
 rhgs_server_tag: 3.3.0-362

@@ -37,7 +37,7 @@
     "tags": {
       "Name": "packer-builder-ocp-3.7-cns-3.6-lab",
       "Platform": "Red Hat Enterprise Linux",
-      "Release": "3.7.14-5",
+      "Release": "3.7.14",
       "OS_Version": "Red Hat Enterprise Linux 7.4",
       "OCP_Version": "OpenShift Container Platform 3.7",
       "CNS_Version": "Container-Native Storage 3.6"
