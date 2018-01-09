@@ -47,7 +47,7 @@ openshift_metrics_install_metrics=false
 openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
 openshift_metrics_cassandra_storage_type=pv
 openshift_metrics_cassandra_pvc_size=10Gi
-openshift_hosted_logging_deploy=false
+openshift_logging_install_logging=false
 openshift_logging_es_pvc_size=10Gi
 openshift_logging_es_pvc_dynamic=true
 openshift_storage_glusterfs_image=rhgs3/rhgs-server-rhel7
@@ -301,7 +301,7 @@ openshift_metrics_install_metrics=false
 openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
 openshift_metrics_cassandra_storage_type=pv
 openshift_metrics_cassandra_pvc_size=10Gi
-openshift_hosted_logging_deploy=false
+openshift_logging_install_logging=false
 openshift_logging_es_pvc_size=10Gi
 openshift_logging_es_pvc_dynamic=true
 
@@ -407,7 +407,7 @@ In a very similar fashion you can install OpenShift Logging Services, run by Kib
 &#8680; Execute the Logging deployment playbook like this:
 
     ansible-playbook -i /etc/ansible/hosts \
-      -e openshift_hosted_logging_deploy=True \
+      -e openshift_logging_install_logging=true \
       /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-logging.yml
 
 After 1-2 minutes the playbook finishes and you have a number of new pods in the `logging` namespace:
