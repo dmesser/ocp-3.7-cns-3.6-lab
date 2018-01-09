@@ -613,7 +613,7 @@ Resources:
                   openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
                   openshift_metrics_cassandra_storage_type=pv
                   openshift_metrics_cassandra_pvc_size=10Gi
-                  openshift_hosted_logging_deploy=false
+                  openshift_logging_install_logging=false
                   openshift_logging_es_pvc_size=10Gi
                   openshift_logging_es_pvc_dynamic=true
                   openshift_docker_additional_registries=mirror.lab:5555
@@ -628,6 +628,9 @@ Resources:
                   [masters:vars]
                   openshift_schedulable=true
                   openshift_node_labels="{'role': 'master'}"
+
+                  [etcd:children]
+                  masters
 
                   [nodes]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab  openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -663,7 +666,7 @@ Resources:
                   openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
                   openshift_metrics_cassandra_storage_type=pv
                   openshift_metrics_cassandra_pvc_size=10Gi
-                  openshift_hosted_logging_deploy=false
+                  openshift_logging_install_logging=false
                   openshift_logging_es_pvc_size=10Gi
                   openshift_logging_es_pvc_dynamic=true
                   openshift_storage_glusterfs_image=rhgs3/rhgs-server-rhel7
@@ -683,6 +686,9 @@ Resources:
                   [masters:vars]
                   openshift_schedulable=true
                   openshift_node_labels="{'role': 'master'}"
+
+                  [etcd:children]
+                  masters
 
                   [nodes]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -721,7 +727,7 @@ Resources:
                   openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
                   openshift_metrics_cassandra_storage_type=pv
                   openshift_metrics_cassandra_pvc_size=10Gi
-                  openshift_hosted_logging_deploy=false
+                  openshift_logging_install_logging=false
                   openshift_logging_es_pvc_size=10Gi
                   openshift_logging_es_pvc_dynamic=true
                   openshift_storage_glusterfs_namespace=app-storage
@@ -741,6 +747,9 @@ Resources:
                   [masters:vars]
                   openshift_schedulable=true
                   openshift_node_labels="{'role': 'master'}"
+
+                  [etcd:children]
+                  masters
 
                   [nodes]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
