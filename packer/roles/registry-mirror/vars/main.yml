@@ -33,6 +33,7 @@ ose_core_images:
   - openshift3/container-engine
   - openshift3/node
   - openshift3/openvswitch
+  - openshift3/registry-console
 
 ose_infra_images:
   - openshift3/logging-auth-proxy
