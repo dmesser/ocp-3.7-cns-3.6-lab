@@ -9,6 +9,8 @@ theme:
   palette:
     primary: 'deep orange'
     accent: 'indigo'
+  feature:
+    tabs: true
 
 pages:
 - Overview: index.md
