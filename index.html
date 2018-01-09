@@ -1,0 +1,627 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="./assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
+    
+    
+      
+        <title>Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017</title>
+      
+    
+    
+      <link rel="stylesheet" href="./assets/stylesheets/application.5d3fffba.css">
+      
+    
+    
+      <script src="./assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/" title="Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+              </span>
+              <span class="md-header-nav__topic">
+                Overview
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Overview
+      </label>
+    
+    <a href="." title="Overview" class="md-nav__link md-nav__link--active">
+      Overview
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-pre-requisites" title="1. Pre-requisites" class="md-nav__link">
+    1. Pre-requisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-to-start-your-lab" title="2. How to start your lab" class="md-nav__link">
+    2. How to start your lab
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-download-access-key" title="3. Download Access Key" class="md-nav__link">
+    3. Download Access Key
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-wait-for-lab-provisioning-to-complete" title="4. Wait for lab provisioning to complete" class="md-nav__link">
+    4. Wait for lab provisioning to complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-enter-the-lab-environment" title="5. Enter the lab environment" class="md-nav__link">
+    5. Enter the lab environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-lab-environment-overview" title="6. Lab Environment Overview" class="md-nav__link">
+    6. Lab Environment Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-lab-tips" title="7. Lab tips" class="md-nav__link">
+    7. Lab tips
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Modules
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Modules
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="module-1-ocp-environment/" title="Module 1 - Examine OpenShift Installation" class="md-nav__link">
+      Module 1 - Examine OpenShift Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="module-2-deploy-cns/" title="Module 2 - Deploying Container-Native Storage" class="md-nav__link">
+      Module 2 - Deploying Container-Native Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="module-3-cns-for-apps/" title="Module 3 - Persistent Storage for Apps" class="md-nav__link">
+      Module 3 - Persistent Storage for Apps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="module-4-cluster-ops/" title="Module 4 - Cluster Operations" class="md-nav__link">
+      Module 4 - Cluster Operations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="module-5-cns-for-infra/" title="Module 5 - Persistent Storage for Infrastructure" class="md-nav__link">
+      Module 5 - Persistent Storage for Infrastructure
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-pre-requisites" title="1. Pre-requisites" class="md-nav__link">
+    1. Pre-requisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-to-start-your-lab" title="2. How to start your lab" class="md-nav__link">
+    2. How to start your lab
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-download-access-key" title="3. Download Access Key" class="md-nav__link">
+    3. Download Access Key
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-wait-for-lab-provisioning-to-complete" title="4. Wait for lab provisioning to complete" class="md-nav__link">
+    4. Wait for lab provisioning to complete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-enter-the-lab-environment" title="5. Enter the lab environment" class="md-nav__link">
+    5. Enter the lab environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-lab-environment-overview" title="6. Lab Environment Overview" class="md-nav__link">
+    6. Lab Environment Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-lab-tips" title="7. Lab tips" class="md-nav__link">
+    7. Lab tips
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="welcome-to-container-native-storage-hands-on-lab">Welcome to Container-Native Storage Hands-on Lab<a class="headerlink" href="#welcome-to-container-native-storage-hands-on-lab" title="Permanent link">#</a></h1>
+<p>This lab guide is designed for self-paced walk-through of the &ldquo;Container-Native Storage 3.5 on OpenShift 3.6&rdquo; hosted on <a href="https://redhat.qwiklab.com">redhat.qwkilab.com</a>. This lab gives you access to a fully functional OpenShift Container Platform 3.6 environment hosted on AWS.<br />
+This is not a tutorial on OpenShift Container Platform. Basic familiarity is assumed.<br />
+Completing the entire lab content will typically take between 2 and 3 hours.</p>
+<h2 id="1-pre-requisites">1. Pre-requisites<a class="headerlink" href="#1-pre-requisites" title="Permanent link">#</a></h2>
+<p>For this lab you need to fulfill the following pre-requisites:</p>
+<ul>
+<li>
+<p>Workstation with Internet access</p>
+</li>
+<li>
+<p>SSH client supporting authentication with a private key</p>
+</li>
+</ul>
+<hr />
+<h2 id="2-how-to-start-your-lab">2. How to start your lab<a class="headerlink" href="#2-how-to-start-your-lab" title="Permanent link">#</a></h2>
+<p>To start the Test Drive press <b><span style="background-color:#909e33; color:white; font-size: 120%">&nbsp;&nbsp;Start Lab&nbsp;&nbsp;</span></b> button in the top bar.</p>
+<hr />
+<h2 id="3-download-access-key">3. Download Access Key<a class="headerlink" href="#3-download-access-key" title="Permanent link">#</a></h2>
+<p>Immediately after pressing the <b><span style="background-color:#909e33; color:white; font-size: 120%">&nbsp;&nbsp;Start Lab&nbsp;&nbsp;</span></b> button, a pane labeled <b><span style="background-color:#777777; color:white; font-size: 120%">&nbsp;&nbsp;Connect&nbsp;&nbsp;</span></b> will rollover presenting your custom SSH access key to download.</p>
+<p><img alt="Download SSH access keys" src="./img/qwiklab-pem-key.png" /></p>
+<p>Download the <em>PEM</em> key to your computer if you are using regular OpenSSH on the command line Linux or macOS. Choose <em>PPK</em> if you are using PuTTY on Windows.</p>
+<p>Click <b><span style="background-color:#777777; color:white; font-size: 120%">&nbsp;&nbsp;Connect&nbsp;&nbsp;</span></b> button again to hide the pane.</p>
+<hr />
+<h2 id="4-wait-for-lab-provisioning-to-complete">4. Wait for lab provisioning to complete<a class="headerlink" href="#4-wait-for-lab-provisioning-to-complete" title="Permanent link">#</a></h2>
+<p>When you started your Test Drive the lab environment provision process initiated in the background. During provisioning you can monitor progress in the top navigation bar</p>
+<p><img alt="Monitoring Lab Provisioning Progress" src="./img/qwiklab-progress-bar.png" /></p>
+<p><strong>When there is no progress bar you can start immediately</strong>. In this case your lab was pre-provisioned.</p>
+<p>When there is a progress bar your lab is currently provisioning. The progress bar will disappear as soon as that is done. Also, upon launch you will see a button to end your lab session and countdown until automatic shutdown:</p>
+<p><img alt="Lab timer" src="./img/qwiklab-end-button.png" /></p>
+<hr />
+<h2 id="5-enter-the-lab-environment">5. Enter the lab environment<a class="headerlink" href="#5-enter-the-lab-environment" title="Permanent link">#</a></h2>
+<p>In order to access the lab infrastructure click the <span style="background-color:#0087cf; color:white; font-size: 120%">&nbsp;&nbsp;<b>Addl. Info</b>&nbsp;&nbsp;</span> (will be visible when the lab is readily provisioned) on the right side of the screen to obtain the following access information:</p>
+<p><img alt="Lab info" src="./img/qwiklab_addl_info.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Example Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL to OpenShift UI</td>
+<td>OpenShiftLoginURL</td>
+<td>e.g. <em>https://34.226.81.9.nip.io:8443/</em></td>
+</tr>
+<tr>
+<td>IP to Lab Environment</td>
+<td>MasterNodePublicIP</td>
+<td>e.g. <em>34.226.81.9</em></td>
+</tr>
+<tr>
+<td>SSH user on master node</td>
+<td>SSHLoginUser</td>
+<td><code>ec2-user</code></td>
+</tr>
+</tbody>
+</table>
+<p>&#8680; To login via SSH download the PEM file to your machine and change the permissions:</p>
+<div class="codehilite"><pre><span></span>chmod 0400 ~/Downloads/&lt;pem-file-name&gt;
+</pre></div>
+
+
+<p>&#8680; Then login with the ssh client like this:</p>
+<div class="codehilite"><pre><span></span>ssh -i ~/Downloads/&lt;pem-file-name&gt; -l ec2-user &lt;MasterNodePublicIP&gt;
+</pre></div>
+
+
+<p>The Master node also functions as your <em>jumpserver</em>. Once you are logged on to it you have access to all systems with the <code>ec2-user</code> who has passwordless authentication and passwordless sudo capabilities set up everywhere.</p>
+<hr />
+<h2 id="6-lab-environment-overview">6. Lab Environment Overview<a class="headerlink" href="#6-lab-environment-overview" title="Permanent link">#</a></h2>
+<p>The lab environment has 10 nodes in total with stable, internal IP addresses and <code>/etc/hosts</code>-based DNS resolution. All nodes have internet access. Only the Master can be reached from the Internet via it&rsquo;s public IP however.</p>
+<table>
+<thead>
+<tr>
+<th>Host</th>
+<th>Interal FQDN</th>
+<th>Internal IP address</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenShift Master</td>
+<td>master.lab</td>
+<td>10.0.1.100</td>
+</tr>
+<tr>
+<td>OpenShift Infra Node 1</td>
+<td>infra-1.lab</td>
+<td>10.0.2.101</td>
+</tr>
+<tr>
+<td>OpenShift Infra Node 2</td>
+<td>infra-2.lab</td>
+<td>10.0.3.102</td>
+</tr>
+<tr>
+<td>OpenShift Infra Node 3</td>
+<td>infra-3.lab</td>
+<td>10.0.4.103</td>
+</tr>
+<tr>
+<td>OpenShift App Node 1</td>
+<td>node-1.lab</td>
+<td>10.0.2.201</td>
+</tr>
+<tr>
+<td>OpenShift App Node 2</td>
+<td>node-2.lab</td>
+<td>10.0.3.202</td>
+</tr>
+<tr>
+<td>OpenShift App Node 3</td>
+<td>node-3.lab</td>
+<td>10.0.4.203</td>
+</tr>
+<tr>
+<td>OpenShift App Node 4</td>
+<td>node-4.lab</td>
+<td>10.0.4.204</td>
+</tr>
+<tr>
+<td>OpenShift App Node 5</td>
+<td>node-5.lab</td>
+<td>10.0.3.205</td>
+</tr>
+<tr>
+<td>OpenShift App Node 6</td>
+<td>node-6.lab</td>
+<td>10.0.4.206</td>
+</tr>
+</tbody>
+</table>
+<p>You don&rsquo;t need to remember this - this is purely informational.<br />
+This labs topology roughly looks like this:</p>
+<p><a href="./img/cns_infrastructure_aws.svg"><img alt="CNS Lab Infrastructure" src="./img/cns_infrastructure_aws.svg" /></a></p>
+<hr />
+<h2 id="7-lab-tips">7. Lab tips<a class="headerlink" href="#7-lab-tips" title="Permanent link">#</a></h2>
+<p>You might these hints useful:</p>
+<ul>
+<li>almost all of the commands/files don&rsquo;t contain environment-specific content, there is a <kbd>copy-to-clipboard</kbd> button on the right end of every code block for your convenience</li>
+<li>this lab uses nip.io for DNS resolution of the public IP specific to your lab, keep that in mind when working with URLs in the lab</li>
+<li>you can skip modules in this lab, unless stated otherwise in the <em>Overview</em> section they are independent of each other</li>
+<li>if you want to look at this lab guide in a separate window: this documentation is hosted at <a href="https://dmesser.github.io/ocp-3.7-cns-3.6-lab/" target="_blank">https://dmesser.github.io/ocp-3.7-cns-3.6-lab</a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+        
+          <a href="module-1-ocp-environment/" title="Module 1 - Examine OpenShift Installation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Module 1 - Examine OpenShift Installation
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright ©2017 Red Hat, Inc.
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="./assets/javascripts/application.6cdc17f0.js"></script>
+      
+      <script>app.initialize({version:"0.17.2",url:{base:"."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1739 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/module-4-cluster-ops/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
+    
+    
+      
+        <title>Module 4 - Cluster Operations - Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/" title="Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+              </span>
+              <span class="md-header-nav__topic">
+                Module 4 - Cluster Operations
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Modules
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Modules
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-1-ocp-environment/" title="Module 1 - Examine OpenShift Installation" class="md-nav__link">
+      Module 1 - Examine OpenShift Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-2-deploy-cns/" title="Module 2 - Deploying Container-Native Storage" class="md-nav__link">
+      Module 2 - Deploying Container-Native Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-3-cns-for-apps/" title="Module 3 - Persistent Storage for Apps" class="md-nav__link">
+      Module 3 - Persistent Storage for Apps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Module 4 - Cluster Operations
+      </label>
+    
+    <a href="./" title="Module 4 - Cluster Operations" class="md-nav__link md-nav__link--active">
+      Module 4 - Cluster Operations
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-multiple-storage-pools" title="Running multiple storage pools" class="md-nav__link">
+    Running multiple storage pools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-a-cns-cluster" title="Deleting a CNS cluster" class="md-nav__link">
+    Deleting a CNS cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expanding-a-glusterfs-pool" title="Expanding a GlusterFS pool" class="md-nav__link">
+    Expanding a GlusterFS pool
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-device-to-a-node" title="Adding a device to a node" class="md-nav__link">
+    Adding a device to a node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replacing-a-failed-device" title="Replacing a failed device" class="md-nav__link">
+    Replacing a failed device
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-5-cns-for-infra/" title="Module 5 - Persistent Storage for Infrastructure" class="md-nav__link">
+      Module 5 - Persistent Storage for Infrastructure
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-multiple-storage-pools" title="Running multiple storage pools" class="md-nav__link">
+    Running multiple storage pools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-a-cns-cluster" title="Deleting a CNS cluster" class="md-nav__link">
+    Deleting a CNS cluster
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expanding-a-glusterfs-pool" title="Expanding a GlusterFS pool" class="md-nav__link">
+    Expanding a GlusterFS pool
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-device-to-a-node" title="Adding a device to a node" class="md-nav__link">
+    Adding a device to a node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replacing-a-failed-device" title="Replacing a failed device" class="md-nav__link">
+    Replacing a failed device
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Module 4 - Cluster Operations</h1>
+                
+                <div class="admonition summary">
+<p class="admonition-title">Overview</p>
+<p>In this module you be introduced to some standard operational procedures. You will learn how to run multiple GlusterFS <em>Trusted Storage Pools</em> on OpenShift and how to expand and maintain deployments.</p>
+<p>Herein, we will use the term pool (GlusterFS terminology) and cluster (<code>heketi</code> terminology) interchangeably.</p>
+<p>This module requires that you have completed <a href="../../module-2-deploy-cns/">Module 2</a>.</p>
+</div>
+<h2 id="running-multiple-storage-pools">Running multiple storage pools<a class="headerlink" href="#running-multiple-storage-pools" title="Permanent link">#</a></h2>
+<p>In the previous modules a single GlusterFS cluster was used to supply <code>PersistentVolumes</code> to applications. CNS allows for multiple clusters to run in a single OpenShift deployment, controlled by a central <code>heketi</code> API:</p>
+<p>There are several use cases for this:</p>
+<ol>
+<li>
+<p>Provide data isolation between clusters of different tenants</p>
+</li>
+<li>
+<p>Provide multiple performance tiers of CNS, i.e. HDD-based vs. SSD-based</p>
+</li>
+<li>
+<p>Run OpenShift across large geo-graphical distances with a CNS cluster per region whereas otherwise latency prohibits synchronous data replication in  a stretched setup</p>
+</li>
+</ol>
+<p>!!! Note:<br />
+    The procedures to add an additional CNS cluster to an existing setup is not yet supported by <code>openshift-ansible</code>.</p>
+<p>Because we cannot use <code>openshift-ansible</code> as of today we need to run a couple of steps manually that would otherwise be automated.</p>
+<p>To deploy a second CNS cluster, aka GlusterFS pool, follow these steps:</p>
+<p>&#8680; Log in as <code>operator</code> to namespace <code>app-storage</code></p>
+<div class="codehilite"><pre><span></span>oc login -u operator -n app-storage
+</pre></div>
+
+
+<p>Your deployment has 6 OpenShift Application Nodes in total, <code>node-1</code>, <code>node-2</code> and <code>node-3</code> currently setup running CNS. We will now set up a <strong>second CNS cluster</strong> using <code>node-4</code>, <code>node-5</code> and <code>node-6</code>.</p>
+<p>First we need to make sure the firewall on those systems is updated. Without <code>openshift-ansible</code> automating CNS deployment the ports necessary for running GlusterFS are not yet opened.</p>
+<p>&#8680; First, create a file called <code>configure-firewall.yml</code> and copy&amp;paste the following contents:</p>
+<p><kbd>configure-firewall.yml:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">node-4.lab</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">node-5.lab</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">node-6.lab</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">insert iptables rules required for GlusterFS</span>
+      <span class="l l-Scalar l-Scalar-Plain">blockinfile</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/sysconfig/iptables</span>
+        <span class="l l-Scalar l-Scalar-Plain">block</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+          <span class="no">-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24007 -j ACCEPT</span>
+          <span class="no">-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24008 -j ACCEPT</span>
+          <span class="no">-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 2222 -j ACCEPT</span>
+          <span class="no">-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m multiport --dports 49152:49664 -j ACCEPT</span>
+        <span class="l l-Scalar l-Scalar-Plain">insertbefore</span><span class="p p-Indicator">:</span> <span class="s">&quot;^COMMIT&quot;</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">reload iptables</span>
+      <span class="l l-Scalar l-Scalar-Plain">systemd</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">iptables</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">reloaded</span>
+
+<span class="nn">...</span>
+</pre></div>
+
+
+<p>&#8680; Run this small Ansible playbook to apply and reload the firewall configuration on all 3 nodes conveniently:</p>
+<div class="codehilite"><pre><span></span>ansible-playbook configure-firewall.yml
+</pre></div>
+
+
+<p>The playbook should complete successfully:</p>
+<div class="codehilite"><pre><span></span>PLAY [node-4.lab,node-5.lab,node-6.lab] ******************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************************
+Sunday 24 September 2017  14:02:50 +0000 (0:00:00.056)       0:00:00.056 ******
+ok: [node-5.lab]
+ok: [node-6.lab]
+ok: [node-4.lab]
+
+TASK [insert iptables rules required for GlusterFS] ******************************************************************************
+Sunday 24 September 2017  14:02:51 +0000 (0:00:00.859)       0:00:00.916 ******
+changed: [node-4.lab]
+changed: [node-5.lab]
+changed: [node-6.lab]
+
+TASK [reload iptables] ***********************************************************************************************************
+Sunday 24 September 2017  14:02:51 +0000 (0:00:00.268)       0:00:01.184 ******
+changed: [node-6.lab]
+changed: [node-5.lab]
+changed: [node-4.lab]
+
+PLAY RECAP ***********************************************************************************************************************
+node-4.lab                 : ok=3    changed=2    unreachable=0    failed=0
+node-5.lab                 : ok=3    changed=2    unreachable=0    failed=0
+node-6.lab                 : ok=3    changed=2    unreachable=0    failed=0
+
+Sunday 24 September 2017  14:02:52 +0000 (0:00:00.334)       0:00:01.519 ******
+===============================================================================
+Gathering Facts --------------------------------------------------------- 0.86s
+reload iptables --------------------------------------------------------- 0.34s
+insert iptables rules required for GlusterFS ---------------------------- 0.27s
+</pre></div>
+
+
+<p>&#8680; Next, we need to apply additional labels to the remaining 3 OpenShift Nodes:</p>
+<div class="codehilite"><pre><span></span>oc label node/node-4.lab glusterfs=storage-host
+oc label node/node-5.lab glusterfs=storage-host
+oc label node/node-6.lab glusterfs=storage-host
+</pre></div>
+
+
+<p>The label will be used to control GlusterFS pod placement and availability. They are part of a <code>DaemonSet</code> definition that is looking for hosts with this particular label.</p>
+<p>&#8680; Wait for all pods to show <code>1/1</code> in the <code>READY</code> column:</p>
+<div class="codehilite"><pre><span></span> oc get pods -o wide -n app-storage
+</pre></div>
+
+
+<p>You can also watch the additional GlusterFS pods deploy in the OpenShift UI, while being logged in as <code>operator</code> in project <code>app-storage</code>, select <strong>Applications</strong> from the left menu and then <strong>Pods</strong>:</p>
+<p><a href="../img/openshift_2nd_cns_pods.png"><img alt="CNS Deployment" src="../img/openshift_2nd_cns_pods.png" /></a></p>
+<p>!!! Note:<br />
+    It may take up to 3 minutes for the GlusterFS pods to transition into <code>READY</code> state.</p>
+<p>&#8680; When done, on the CLI display all GlusterFS pods alongside with the name of the container host they are running on:</p>
+<div class="codehilite"><pre><span></span>oc get pods -o wide -n app-storage -l glusterfs=storage-pod
+</pre></div>
+
+
+<p>You will see that now also app nodes <code>node-4</code>, <code>node-5</code> and <code>node-6</code> run GlusterFS pods, although they are unitialized and not yet ready to use by CNS yet.</p>
+<p>For manual bulk import of new nodes like this, a JSON topology file is used which includes the existing cluster as well as the new, second cluster with a separate set of nodes.</p>
+<p>&#8680; Create a new file named <code>2-clusters-topology.json</code> with the content below (use copy&amp;paste):</p>
+<p><kbd>2-clusters-topology.json:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;clusters&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-1.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.2.201&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-2.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.3.202&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">2</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-3.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.4.203&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">3</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+<span class="hll">        <span class="p">},</span>
+</span>        <span class="p">{</span>
+            <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-4.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.2.204&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-5.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.3.205&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">2</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-6.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.4.206&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">3</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The file contains the same content as the dynamically generated JSON structure <code>openshift-ansible</code> used, but with a second cluster specification (beginning at the highlighted line).</p>
+<p>When loading this topology to <code>heketi</code>, it will recognize the existing cluster (leaving it unchanged) and start creating the new one, with the same bootstrapping process used to initialize the first cluster.<br />
+That is: the <code>glusterd</code> process running in the pods will form a new 3-node cluster and the supplied block storage device <code>/dev/xvdc</code> will be formatted.</p>
+<p>&#8680; Prepare the heketi CLI tool like previously in <a href="../module-2-deploy-cns/#heketi-env-setup">Module 2</a>.</p>
+<div class="codehilite"><pre><span></span>HEKETI_POD=$(oc get pods -l glusterfs=heketi-storage-pod -n app-storage -o jsonpath=&quot;{.items[0].metadata.name}&quot;)
+export HEKETI_CLI_SERVER=http://$(oc get route/heketi-storage -o jsonpath=&#39;{.spec.host}&#39;)
+export HEKETI_CLI_USER=admin
+export HEKETI_CLI_KEY=$(oc get pod/$HEKETI_POD -o jsonpath=&#39;{.spec.containers[0].env[?(@.name==&quot;HEKETI_ADMIN_KEY&quot;)].value}&#39;)
+</pre></div>
+
+
+<p>&#8680; Verify there is currently only a single cluster known to heketi</p>
+<div class="codehilite"><pre><span></span>heketi-cli cluster list
+</pre></div>
+
+
+<p>Example output:</p>
+<div class="codehilite"><pre><span></span>Clusters:
+fb67f97166c58f161b85201e1fd9b8ed
+</pre></div>
+
+
+<p>Your ID will be different since it&rsquo;s auto-generated.</p>
+<p>&#8680; Save your specific ID of the first cluster with this shell command (and the versatile <code>jq</code> json parser) into an environment variable:</p>
+<div class="codehilite"><pre><span></span>FIRST_CNS_CLUSTER=$(heketi-cli cluster list --json | jq -r &#39;.clusters[0]&#39;)
+</pre></div>
+
+
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>Do not skip above step. The value in the environment variable <code>FIRST_CNS_CLUSTER</code> is required later in this module.</p>
+</div>
+<p>&#8680; Load the new topology with the heketi client</p>
+<div class="codehilite"><pre><span></span>heketi-cli topology load --json=2-clusters-topology.json
+</pre></div>
+
+
+<p>You should see output similar to the following:</p>
+<div class="codehilite"><pre><span></span>Found node node-1.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+Found device /dev/xvdc
+Found node node-2.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+Found device /dev/xvdc
+Found node node-3.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+Found device /dev/xvdc
+Creating cluster ... ID: 46b205a4298c625c4bca2206b7a82dd3
+Creating node node-4.lab ... ID: 604d2eb15a5ca510ff3fc5ecf912d3c0
+Adding device /dev/xvdc ... OK
+Creating node node-5.lab ... ID: 538b860406870288af23af0fbc2cd27f
+Adding device /dev/xvdc ... OK
+Creating node node-6.lab ... ID: 7736bd0cb6a84540860303a6479cacb2
+Adding device /dev/xvdc ... OK
+</pre></div>
+
+
+<p>As indicated from above output a new cluster got created.</p>
+<p>&#8680; List all clusters:</p>
+<div class="codehilite"><pre><span></span>heketi-cli cluster list
+</pre></div>
+
+
+<p>You should see a second cluster in the list:</p>
+<div class="codehilite"><pre><span></span>Clusters:
+46b205a4298c625c4bca2206b7a82dd3
+fb67f97166c58f161b85201e1fd9b8ed
+</pre></div>
+
+
+<p>The second cluster, in this example with the ID <code>46b205a4298c625c4bca2206b7a82dd3</code>, is an entirely independent GlusterFS deployment. The exact value will be different in your environment.</p>
+<p><code>heketi</code> is now able to differentiate between the clusters with storage provisioning requests when their UUID is specified.</p>
+<p>&#8680; Save the UUID of the second CNS cluster in an environment variable as follows for easy copy&amp;paste later:</p>
+<div class="codehilite"><pre><span></span>SECOND_CNS_CLUSTER=$(heketi-cli cluster list --json | jq -r &quot;.clusters[] | select(contains(\&quot;$FIRST_CNS_CLUSTER\&quot;) | not)&quot;)
+</pre></div>
+
+
+<p>Now we have two independent GlusterFS clusters managed by the same heketi instance:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Nodes</th>
+<th>Cluster UUID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First Cluster</td>
+<td>node-1, node-2, node-3</td>
+<td>fb67f97166c58f161b85201e1fd9b8ed</td>
+</tr>
+<tr>
+<td>Second Cluster</td>
+<td>node-4, node-5, node-6</td>
+<td>46b205a4298c625c4bca2206b7a82dd3</td>
+</tr>
+</tbody>
+</table>
+<p>&#8680; Query the updated topology:</p>
+<div class="codehilite"><pre><span></span>heketi-cli topology info
+</pre></div>
+
+
+<p>Abbreviated output:</p>
+<div class="codehilite"><pre><span></span>Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+
+    Volumes:
+
+    Nodes:
+
+      Node Id: 538b860406870288af23af0fbc2cd27f
+      State: online
+      Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+      Zone: 2
+      Management Hostname: node-5.lab
+      Storage Hostname: 10.0.3.105
+      Devices:
+        Id:e481d022cea9bfb11e8a86c0dd8d3499   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+            Bricks:
+
+      Node Id: 604d2eb15a5ca510ff3fc5ecf912d3c0
+      State: online
+      Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+      Zone: 1
+      Management Hostname: node-4.lab
+      Storage Hostname: 10.0.2.104
+      Devices:
+        Id:09a25a114c53d7669235b368efd2f8d1   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+            Bricks:
+
+      Node Id: 7736bd0cb6a84540860303a6479cacb2
+      State: online
+      Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+      Zone: 3
+      Management Hostname: node-6.lab
+      Storage Hostname: 10.0.4.106
+      Devices:
+        Id:cccadb2b54dccd99f698d2ae137a22ff   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+            Bricks:
+
+Cluster Id: fb67f97166c58f161b85201e1fd9b8ed
+
+[...output omitted for brevity...]
+</pre></div>
+
+
+<p>heketi formed an new, independent 3-node GlusterFS cluster on those nodes.</p>
+<p>&#8680; Check running GlusterFS pods</p>
+<div class="codehilite"><pre><span></span>oc get pods -o wide -l glusterfs=storage-pod
+</pre></div>
+
+
+<p>From the output you can spot the pod names running on the new cluster&rsquo;s nodes:</p>
+<div class="codehilite"><pre><span></span>NAME              READY     STATUS    RESTARTS   AGE       IP           NODE
+<span class="hll">glusterfs-1nvtj   1/1       Running   0          23m       10.0.4.206   node-6.lab
+</span><span class="hll">glusterfs-5gvw8   1/1       Running   0          24m       10.0.2.204   node-4.lab
+</span>glusterfs-5rc2g   1/1       Running   0          4h        10.0.2.201   node-1.lab
+<span class="hll">glusterfs-b4wg1   1/1       Running   0          24m       10.0.3.205   node-5.lab
+</span>glusterfs-jbvdk   1/1       Running   0          4h        10.0.3.202   node-2.lab
+glusterfs-rchtr   1/1       Running   0          4h        10.0.4.203   node-3.lab
+</pre></div>
+
+
+<p>!!! Note:<br />
+    Again note that the pod names are dynamically generated and will be different. Look the FQDN of your hosts to determine one of new cluster&rsquo;s pods.</p>
+<p>&#8680; Let&rsquo;s run the <code>gluster peer status</code> command in the GlusterFS pod running on the node <code>node-6.lab</code>:</p>
+<div class="codehilite"><pre><span></span>POD_NUMBER_SIX=$(oc get pods -o jsonpath=&#39;{.items[?(@.status.hostIP==&quot;10.0.4.206&quot;)].metadata.name}&#39;)
+oc rsh $POD_NUMBER_SIX gluster peer status
+</pre></div>
+
+
+<p>As expected this node only has 2 peers, evidence that it&rsquo;s running in it&rsquo;s own GlusterFS pool separate from the first cluster in deployed in Module 2.</p>
+<div class="codehilite"><pre><span></span>Number of Peers: 2
+
+Hostname: node-5.lab
+Uuid: 0db9b5d0-7fa8-4d2f-8b9e-6664faf34606
+State: Peer in Cluster (Connected)
+Other names:
+10.0.3.205
+
+Hostname: node-4.lab
+Uuid: 695b661d-2a55-4f94-b22e-40a9db79c01a
+State: Peer in Cluster (Connected)
+</pre></div>
+
+
+<p>Before you can use the second cluster two tasks have to be accomplished so we can use both distinctively:</p>
+<ol>
+<li>
+<p>The <em>StorageClass</em> for the first cluster has to be updated to point the first cluster&rsquo;s UUID,</p>
+</li>
+<li>
+<p>A second <em>StorageClass</em> for the second cluster has to be created, pointing to the same heketi API</p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Why do we need to update the first <em>StorageClass</em>?</p>
+<p>When no cluster UUID is specified, heketi serves volume creation requests from any cluster currently registered to it. That would be two now.<br />
+In order to request a volume from specific cluster you have to supply the cluster&rsquo;s UUID to heketi. This is done via a parameter in the <code>StorageClass</code>. The first <code>StorageClass</code> has no UUID specified so far because <code>openshift-ansible</code> did not create it.</p>
+</div>
+<p>Unfortunately you cannot <code>oc patch</code> a <code>StorageClass</code> parameters in OpenShift. So we have to delete it and re-create it. Don&rsquo;t worry - existing <code>PVCs</code> will remain untouched.</p>
+<p>To simplify our work, instead of typing JSON/YAML, we will just export the current <code>StorageClass</code> definition JSON and manipulate it using <code>jq</code> and some clever JSON queries to put the additional <code>clusterid</code> parameter in the right place.</p>
+<p>&#8680; To do that, run the following command via copy&amp;paste:</p>
+<div class="codehilite"><pre><span></span>oc get storageclass/glusterfs-storage -o json \
+| jq &quot;.parameters=(.parameters + {\&quot;clusterid\&quot;: \&quot;$FIRST_CNS_CLUSTER\&quot;})&quot; &gt; glusterfs-storage-fast.json
+</pre></div>
+
+
+<p>This will result in a file named <code>glusterfs-storage-fast.json</code> looking like the following:</p>
+<p><kbd>glusterfs-storage-fast.json:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;storage.k8s.io/v1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;StorageClass&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;creationTimestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-09-24T12:45:24Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;glusterfs-storage&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;resourceVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;2697&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;selfLink&quot;</span><span class="p">:</span> <span class="s2">&quot;/apis/storage.k8s.io/v1/storageclasses/glusterfs-storage&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uid&quot;</span><span class="p">:</span> <span class="s2">&quot;3c107010-a126-11e7-b0a5-025fcde0880f&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;resturl&quot;</span><span class="p">:</span> <span class="s2">&quot;http://heketi-storage-app-storage.cloudapps.34.252.58.209.nip.io&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;restuser&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secretName&quot;</span><span class="p">:</span> <span class="s2">&quot;heketi-storage-admin-secret&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secretNamespace&quot;</span><span class="p">:</span> <span class="s2">&quot;app-storage&quot;</span><span class="p">,</span>
+<span class="hll">    <span class="nt">&quot;clusterid&quot;</span><span class="p">:</span> <span class="s2">&quot;fb67f97166c58f161b85201e1fd9b8ed&quot;</span>
+</span>  <span class="p">},</span>
+  <span class="nt">&quot;provisioner&quot;</span><span class="p">:</span> <span class="s2">&quot;kubernetes.io/glusterfs&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Note the additional <code>clusterid</code> parameter highlighted. It&rsquo;s the first cluster&rsquo;s UUID as known by heketi. The exact values will be different in your environment. The rest of the definition remains the same.</p>
+<p>&#8680; Delete the existing <em>StorageClass</em> definition in OpenShift</p>
+<div class="codehilite"><pre><span></span>oc delete storageclass/glusterfs-storage
+</pre></div>
+
+
+<p>&#8680; Add the <em>StorageClass</em> again:</p>
+<div class="codehilite"><pre><span></span>oc create -f glusterfs-storage-fast.json
+</pre></div>
+
+
+<p>Step 1 complete. The existing <code>StorageClass</code> is &ldquo;updated&rdquo;. <code>PVC</code> using the <code>StorageClass</code> <em>glusterfs-storage</em> will now specifically get served by the first CNS cluster, and only the first cluster.</p>
+<p>To relieve you from manually editing JSON files, we will again use some <code>jq</code> magic to generate the correct JSON structure for our second <code>StorageClass</code>, this time using the second CNS cluster&rsquo;s ID and a different name <code>glusterfs-storage-slow</code></p>
+<p>&#8680; Run the following command:</p>
+<div class="codehilite"><pre><span></span>oc get storageclass/glusterfs-storage -o json \
+| jq &quot;.parameters=(.parameters + {\&quot;clusterid\&quot;: \&quot;$SECOND_CNS_CLUSTER\&quot;})&quot; \
+| jq &#39;.metadata.name = &quot;glusterfs-storage-slow&quot;&#39; &gt; glusterfs-storage-slow.json
+</pre></div>
+
+
+<p>This creates a file called <code>glusterfs-storage-slow.json</code>, looking similar to the below:</p>
+<p><kbd>glusterfs-storage-slow.json:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;storage.k8s.io/v1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;StorageClass&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;creationTimestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-09-24T15:12:34Z&quot;</span><span class="p">,</span>
+<span class="hll">    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;glusterfs-storage-slow&quot;</span><span class="p">,</span>
+</span>    <span class="nt">&quot;resourceVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;12722&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;selfLink&quot;</span><span class="p">:</span> <span class="s2">&quot;/apis/storage.k8s.io/v1/storageclasses/glusterfs-storage&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uid&quot;</span><span class="p">:</span> <span class="s2">&quot;cb16946d-a13a-11e7-b0a5-025fcde0880f&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="hll">    <span class="nt">&quot;clusterid&quot;</span><span class="p">:</span> <span class="s2">&quot;46b205a4298c625c4bca2206b7a82dd3&quot;</span><span class="p">,</span>
+</span>    <span class="nt">&quot;resturl&quot;</span><span class="p">:</span> <span class="s2">&quot;http://heketi-storage-app-storage.cloudapps.34.252.58.209.nip.io&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;restuser&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secretName&quot;</span><span class="p">:</span> <span class="s2">&quot;heketi-storage-admin-secret&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secretNamespace&quot;</span><span class="p">:</span> <span class="s2">&quot;app-storage&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;provisioner&quot;</span><span class="p">:</span> <span class="s2">&quot;kubernetes.io/glusterfs&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Again note the <code>clusterid</code> in the <code>parameters</code> section referencing the second cluster&rsquo;s UUID will as well as the update.</p>
+<p>&#8680; Add the new <code>StorageClass</code>:</p>
+<div class="codehilite"><pre><span></span>oc create -f glusterfs-storage-slow.json
+</pre></div>
+
+
+<p>This creates the <code>StorageClass</code> named <code>glusterfs-storage-slow</code> and because we copied the settings from the first one it&rsquo;s now also set as system-wide default (yes, OpenShift allows you to do that).</p>
+<p>&#8680; Use the <code>oc patch</code> command to fix this:</p>
+<div class="codehilite"><pre><span></span>oc patch storageclass glusterfs-storage-slow \
+-p &#39;{&quot;metadata&quot;: {&quot;annotations&quot;: {&quot;storageclass.kubernetes.io/is-default-class&quot;: &quot;false&quot;}}}&#39;
+</pre></div>
+
+
+<p>&#8680; Display all <code>StorageClass</code> objects to verify:</p>
+<div class="codehilite"><pre><span></span>oc get storageclass
+</pre></div>
+
+
+<p>That&rsquo;s it. You now have 2 <code>StorageClass</code> definitions, one for each CNS cluster, managed by the same <code>heketi</code> instance.</p>
+<div class="codehilite"><pre><span></span>NAME                          TYPE
+glusterfs-storage (default)   kubernetes.io/glusterfs
+glusterfs-storage-slow        kubernetes.io/glusterfs
+</pre></div>
+
+
+<p>Let&rsquo;s verify both <em>StorageClasses</em> are working as expected:</p>
+<p>&#8680; Create the following two files containing PVCs issued against either of both GlusterFS pools via their respective <em>StorageClass</em>:</p>
+<p><kbd>cns-pvc-fast.yml:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">kind</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my-fast-container-storage</span>
+<span class="l l-Scalar l-Scalar-Plain">spec</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">accessModes</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+  <span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">requests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">storage</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5Gi</span>
+  <span class="l l-Scalar l-Scalar-Plain">storageClassName</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">glusterfs-storage</span>
+</pre></div>
+
+
+<p><kbd>cns-pvc-slow.yml:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">kind</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my-slow-container-storage</span>
+<span class="l l-Scalar l-Scalar-Plain">spec</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">accessModes</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+  <span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">requests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">storage</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">7Gi</span>
+  <span class="l l-Scalar l-Scalar-Plain">storageClassName</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">glusterfs-storage-slow</span>
+</pre></div>
+
+
+<p>&#8680; Create both PVCs:</p>
+<div class="codehilite"><pre><span></span>oc create -f cns-pvc-fast.yml
+oc create -f cns-pvc-slow.yml
+</pre></div>
+
+
+<p>Check their provisioning state after a few seconds:</p>
+<div class="codehilite"><pre><span></span>oc get pvc
+</pre></div>
+
+
+<p>They should both be in bound state after a couple of seconds:</p>
+<div class="codehilite"><pre><span></span>NAME                        STATUS    VOLUME                                     CAPACITY   ACCESSMODES   STORAGECLASS             AGE
+my-fast-container-storage   Bound     pvc-bfbf3f72-a13d-11e7-b0a5-025fcde0880f   5Gi        RWX           glusterfs-storage        6s
+my-slow-container-storage   Bound     pvc-c045c082-a13d-11e7-b0a5-025fcde0880f   7Gi        RWX           glusterfs-storage-slow   6s
+</pre></div>
+
+
+<p>&#8680; If you check again the GlusterFS pod on on <code>node-6.lab</code> running as part of the second cluster&hellip;</p>
+<div class="codehilite"><pre><span></span>oc rsh $POD_NUMBER_SIX gluster vol list
+</pre></div>
+
+
+<p>&hellip;you will see a new volume has been created</p>
+<div class="codehilite"><pre><span></span>vol_755b4434cf9062104123e0d9919dd800
+</pre></div>
+
+
+<p>The other volume has been created on the first cluster.</p>
+<p>&#8680; If you were to check GlusterFS on <code>node-1.lab</code>&hellip;</p>
+<div class="codehilite"><pre><span></span>POD_NUMBER_ONE=$(oc get pods -o jsonpath=&#39;{.items[?(@.status.hostIP==&quot;10.0.2.201&quot;)].metadata.name}&#39;)
+oc rsh $POD_NUMBER_ONE gluster vol list
+</pre></div>
+
+
+<p>&hellip;you will also see a new volume has been created, alongside the volumes from the previous exercises and the <code>heketidbstorage</code> volume:</p>
+<div class="codehilite"><pre><span></span>heketidbstorage
+[...output omitted... ]
+vol_8eb957320215fe8801748b239d524808
+</pre></div>
+
+
+<p>If you now compare the <code>PV</code> objects that have been created:</p>
+<p>&#8680; &hellip; the first PV using <code>StorageClass</code> glusterfs-storage:</p>
+<div class="codehilite"><pre><span></span>FAST_PV=$(oc get pvc/my-fast-container-storage -o jsonpath=&quot;{.spec.volumeName}&quot;)
+oc get pv/$FAST_PV -o jsonpath=&quot;{.spec.glusterfs.path}&quot;
+</pre></div>
+
+
+<p>&#8680; &hellip; and the second PV using <code>StorageClass</code> glusterfs-storage-slow:</p>
+<div class="codehilite"><pre><span></span>SLOW_PV=$(oc get pvc/my-slow-container-storage -o jsonpath=&quot;{.spec.volumeName}&quot;)
+oc get pv/$SLOW_PV -o jsonpath=&quot;{.spec.glusterfs.path}&quot;
+</pre></div>
+
+
+<p>&hellip; you will notice that they match the volumes found in the CNS clusters from within their pods respectively.</p>
+<p>This is how you use multiple, parallel GlusterFS pools/clusters on a single OpenShift cluster with a single heketi instance. Whereas the first pool is created with <code>openshift-ansible</code> subsequent pools/cluster are created with the <code>heketi-cli</code> client.</p>
+<p>Clean up the PVCs and the second <em>StorageClass</em> in preparation for the next section.</p>
+<p>&#8680; Delete both PVCs (and therefore their volume)</p>
+<div class="codehilite"><pre><span></span>oc delete pvc/my-fast-container-storage
+oc delete pvc/my-slow-container-storage
+</pre></div>
+
+
+<p>&#8680; Delete the second <em>StorageClass</em></p>
+<div class="codehilite"><pre><span></span>oc delete storageclass/glusterfs-storage-slow
+</pre></div>
+
+
+<hr />
+<h2 id="deleting-a-cns-cluster">Deleting a CNS cluster<a class="headerlink" href="#deleting-a-cns-cluster" title="Permanent link">#</a></h2>
+<p>Since we want to re-use <code>node-4</code>, <code>node-5</code> and <code>node-6</code> for the next section we need to delete it the GlusterFS pools on top of them first.</p>
+<p>This is a process that involves multiple steps of manipulating the heketi topology with the <code>heketi-cli</code> client.</p>
+<p>&#8680; Make sure the client is still properly configured via environment variables:</p>
+<div class="codehilite"><pre><span></span>echo $HEKETI_CLI_SERVER
+echo $HEKETI_CLI_USER
+echo $HEKETI_CLI_KEY
+</pre></div>
+
+
+<p>&#8680; We also require the environment variables storing the UUIDs of both CNS clusters:</p>
+<div class="codehilite"><pre><span></span>echo $FIRST_CNS_CLUSTER
+echo $SECOND_CNS_CLUSTER
+</pre></div>
+
+
+<p>&#8680; First display the entire system topology as it is known to heketi:</p>
+<div class="codehilite"><pre><span></span>heketi-cli topology info
+</pre></div>
+
+
+<p>You will get detailled infos about both clusters.<br />
+The portions of interest for the second clusters we are about to delete are highlighted:</p>
+<div class="codehilite"><pre><span></span><span class="hll">Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+</span>
+    Volumes:
+
+    Nodes:
+
+<span class="hll">        Node Id: 538b860406870288af23af0fbc2cd27f
+</span>        State: online
+        Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+        Zone: 2
+        Management Hostname: node-5.lab
+        Storage Hostname: 10.0.3.105
+        Devices:
+<span class="hll">            Id:e481d022cea9bfb11e8a86c0dd8d3499   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+</span>                Bricks:
+
+<span class="hll">        Node Id: 604d2eb15a5ca510ff3fc5ecf912d3c0
+</span>        State: online
+        Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+        Zone: 1
+        Management Hostname: node-4.lab
+        Storage Hostname: 10.0.2.104
+        Devices:
+<span class="hll">            Id:09a25a114c53d7669235b368efd2f8d1   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+</span>                Bricks:
+
+<span class="hll">        Node Id: 7736bd0cb6a84540860303a6479cacb2
+</span>        State: online
+        Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+        Zone: 3
+        Management Hostname: node-6.lab
+        Storage Hostname: 10.0.4.106
+        Devices:
+<span class="hll">            Id:cccadb2b54dccd99f698d2ae137a22ff   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+</span>            Bricks:
+</pre></div>
+
+
+<p>The hierachical dependencies in this topology works as follows: Clusters &gt; Nodes &gt; Devices.<br />
+Assuming there are no volumes present these need to be deleted in reverse order.</p>
+<p>To make navigating this process easier and avoid mangling with anonymous UUID values we will use some simple scripting.</p>
+<p>&#8680; This is how you get all nodes IDs of the second cluster:</p>
+<div class="codehilite"><pre><span></span>heketi-cli cluster info $SECOND_CNS_CLUSTER --json | jq -r &#39;.nodes[]&#39;
+</pre></div>
+
+
+<p>For example:</p>
+<div class="codehilite"><pre><span></span>538b860406870288af23af0fbc2cd27f
+604d2eb15a5ca510ff3fc5ecf912d3c0
+7736bd0cb6a84540860303a6479cacb2
+</pre></div>
+
+
+<p>&#8680; Let&rsquo;s put this in a variable so we can iterate over it:</p>
+<div class="codehilite"><pre><span></span>NODES=$(heketi-cli cluster info $SECOND_CNS_CLUSTER --json | jq -r &#39;.nodes[]&#39;)
+</pre></div>
+
+
+<p>&#8680; This is how you get information about a node</p>
+<div class="codehilite"><pre><span></span>heketi-cli node info ${NODES[0]}
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>Node Id: 538b860406870288af23af0fbc2cd27f
+State: online
+Cluster Id: 38cba86da51146a0ef9747383bd44476
+Zone: 2
+Management Hostname: node-5.lab
+Storage Hostname: 10.0.3.205
+Devices:
+Id:e481d022cea9bfb11e8a86c0dd8d3499   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+</pre></div>
+
+
+<p>&#8680; Let&rsquo;s iterate over this <code>NODES</code> array and extract all device IDs:</p>
+<div class="codehilite"><pre><span></span>for node in ${NODES} ; do heketi-cli node info $node --json | jq -r &#39;.devices[].id&#39; ; done
+</pre></div>
+
+
+<p>&hellip; for example:</p>
+<div class="codehilite"><pre><span></span>e481d022cea9bfb11e8a86c0dd8d3499
+09a25a114c53d7669235b368efd2f8d1
+cccadb2b54dccd99f698d2ae137a22ff
+</pre></div>
+
+
+<p>&#8680; Let&rsquo;s put this in a a variable too, so we can easily iterate over that:</p>
+<div class="codehilite"><pre><span></span>DEVICES=$(for node in ${NODES} ; do heketi-cli node info $node --json | jq -r &#39;.devices[].id&#39; ; done)
+</pre></div>
+
+
+<p>&#8680; Let&rsquo;s loop over this <code>DEVICES</code> array and delete the device by it&rsquo;s ID in heketi:</p>
+<div class="codehilite"><pre><span></span>for device in $DEVICES ; do heketi-cli device delete $device ; done
+</pre></div>
+
+
+<p>Example output:</p>
+<div class="codehilite"><pre><span></span>Device 538b860406870288af23af0fbc2cd27f deleted
+Device 604d2eb15a5ca510ff3fc5ecf912d3c0 deleted
+Device 7736bd0cb6a84540860303a6479cacb2 deleted
+</pre></div>
+
+
+<p>&#8680; Since the nodes have no devices anymore we can delete those as well (you can&rsquo;t delete a node with a device still attached):</p>
+<div class="codehilite"><pre><span></span>for node in ${NODES} ; do heketi-cli node delete $node ; done
+</pre></div>
+
+
+<p>Example output:</p>
+<div class="codehilite"><pre><span></span>Node 4ff85abd2674c89e79c1f7c7f8ee1be4 deleted
+Node ed9c045f10a5c1f9057d07880543a461 deleted
+Node fd6ddca52c788e2d764fada1f4da2ce4 deleted
+</pre></div>
+
+
+<p>&#8680; Finally, without any nodes in the second cluster, you can also delete it (it won&rsquo;t work if there are nodes left):</p>
+<div class="codehilite"><pre><span></span>heketi-cli cluster delete $SECOND_CNS_CLUSTER
+</pre></div>
+
+
+<p>&#8680; Confirm the cluster is gone:</p>
+<div class="codehilite"><pre><span></span>heketi-cli cluster list
+</pre></div>
+
+
+<p>&#8680; Verify the new topology known by heketi now only containing a single cluster.</p>
+<div class="codehilite"><pre><span></span>heketi-cli topology info
+</pre></div>
+
+
+<p>This deleted all heketi database entries about the cluster. However the GlusterFS pods are still running, since they are controlled directly by OpenShift and the <code>DaemonSet</code>.</p>
+<p>They can be stopped by removing the labels OpenShift uses to determine GlusterFS pod placement for CNS.</p>
+<p>&#8680; Remove the labels from the last 3 OpenShift nodes like so:</p>
+<div class="codehilite"><pre><span></span>oc label node/node-4.lab glusterfs-
+oc label node/node-5.lab glusterfs-
+oc label node/node-6.lab glusterfs-
+</pre></div>
+
+
+<p>Contrary to the output of these commands the label <code>glusterfs</code> is actually removed (indicated by the minus sign).</p>
+<p>&#8680; Verify that all GlusterFS pods running on <code>node-4</code>, <code>node-5</code> and <code>node-6</code> are indeed terminated:</p>
+<div class="codehilite"><pre><span></span>oc get pods -o wide -n app-storage -l glusterfs=storage-pod
+</pre></div>
+
+
+<p>!!! Note:<br />
+    It can take up to 2 minutes for the pods to terminate.</p>
+<p>You should be back down to 3 GlusterFS pods, e.g.</p>
+<div class="codehilite"><pre><span></span>NAME              READY     STATUS    RESTARTS   AGE       IP           NODE
+glusterfs-5rc2g   1/1       Running   0          5h        10.0.2.201   node-1.lab
+glusterfs-jbvdk   1/1       Running   0          5h        10.0.3.202   node-2.lab
+glusterfs-rchtr   1/1       Running   0          5h        10.0.4.203   node-3.lab
+</pre></div>
+
+
+<hr />
+<h2 id="expanding-a-glusterfs-pool">Expanding a GlusterFS pool<a class="headerlink" href="#expanding-a-glusterfs-pool" title="Permanent link">#</a></h2>
+<p>Instead of creating additional GlusterFS pools in CNS on OpenShift it is also possible to expand existing pools. This is useful the increase capacity, performance and resiliency of the storage system.</p>
+<p>This works similar to creating additional pools, with bulk-import via the topology file. Only this time with nodes added to the existing cluster structure in JSON.</p>
+<p>Since manipulating JSON can be error-prone create a new file called <code>expanded-cluster.json</code> with contents as below:</p>
+<p><kbd>expanded-cluster.json:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;clusters&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-1.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.2.201&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-2.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.3.202&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">2</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-3.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.4.203&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">3</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-4.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.2.204&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-5.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.3.205&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">2</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;hostnames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;manage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;node-6.lab&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;storage&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;10.0.4.206&quot;</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="nt">&quot;zone&quot;</span><span class="p">:</span> <span class="mi">3</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;/dev/xvdc&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The difference between this file to the <code>2-clusters-topology.json</code> is that we now have 6 nodes in a single cluster instead of 2 clusters, with 3 nodes each.</p>
+<p>&#8680; Again, apply the expected labels to the remaining 3 OpenShift Nodes:</p>
+<div class="codehilite"><pre><span></span>oc label node/node-4.lab glusterfs=storage-host
+oc label node/node-5.lab glusterfs=storage-host
+oc label node/node-6.lab glusterfs=storage-host
+</pre></div>
+
+
+<p>&#8680; Wait for all pods to show <code>1/1</code> in the <code>READY</code> column:</p>
+<div class="codehilite"><pre><span></span> oc get pods -o wide -n app-storage -l glusterfs=storage-pod
+</pre></div>
+
+
+<p>!!! Note:<br />
+    It may take up to 3 minutes for the GlusterFS pods to transition into <code>READY</code> state.</p>
+<p>This confirms all GlusterFS pods are ready to receive remote commands:</p>
+<div class="codehilite"><pre><span></span>NAME              READY     STATUS    RESTARTS   AGE       IP           NODE
+glusterfs-0lr75   1/1       Running   0          4m        10.0.4.106   node-6.lab
+glusterfs-1dxz3   1/1       Running   0          4m        10.0.3.105   node-5.lab
+glusterfs-5rc2g   1/1       Running   0          5h        10.0.2.101   node-1.lab
+glusterfs-8nrn0   1/1       Running   0          4m        10.0.2.104   node-4.lab
+glusterfs-jbvdk   1/1       Running   0          5h        10.0.3.102   node-2.lab
+glusterfs-rchtr   1/1       Running   0          5h        10.0.4.103   node-3.lab
+</pre></div>
+
+
+<p>&#8680; Ensure the environment variables for operating <code>heketi-cli</code> are still in place:</p>
+<div class="codehilite"><pre><span></span>echo $HEKETI_CLI_SERVER
+echo $HEKETI_CLI_USER
+echo $HEKETI_CLI_KEY
+</pre></div>
+
+
+<p>&#8680; Now load the new topology:</p>
+<div class="codehilite"><pre><span></span>heketi-cli topology load --json=expanded-cluster.json
+</pre></div>
+
+
+<p>The output indicated that the existing cluster was expanded, rather than creating a new one:</p>
+<div class="codehilite"><pre><span></span>Found node node-1.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+    Found device /dev/xvdc
+Found node node-2.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+    Found device /dev/xvdc
+Found node node-3.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+    Found device /dev/xvdc
+Creating node node-4.lab ... ID: 544158e53934a3d351b874b7d915e8d4
+    Adding device /dev/xvdc ... OK
+Creating node node-5.lab ... ID: 645b6edd4044cb1dd828f728d1c3eb81
+    Adding device /dev/xvdc ... OK
+Creating node node-6.lab ... ID: 3f39ebf3c8c82531a7ba447135742776
+    Adding device /dev/xvdc ... OK
+</pre></div>
+
+
+<p>&#8680; Verify the their new peers are now part of the first CNS cluster:</p>
+<div class="codehilite"><pre><span></span>POD_NUMBER_ONE=$(oc get pods -o jsonpath=&#39;{.items[?(@.status.hostIP==&quot;10.0.2.201&quot;)].metadata.name}&#39;)
+oc rsh $POD_NUMBER_ONE gluster peer status
+</pre></div>
+
+
+<p>You should now have a GlusterFS consisting of 6 nodes:</p>
+<div class="codehilite"><pre><span></span>Number of Peers: 5
+
+Hostname: 10.0.3.202
+Uuid: c6a6d571-fd9b-4bd8-aade-e480ec2f8eed
+State: Peer in Cluster (Connected)
+
+Hostname: 10.0.4.203
+Uuid: 46044d06-a928-49c6-8427-a7ab37268fed
+State: Peer in Cluster (Connected)
+
+Hostname: 10.0.2.204
+Uuid: 62abb8b9-7a68-4658-ac84-8098a1460703
+State: Peer in Cluster (Connected)
+
+Hostname: 10.0.3.205
+Uuid: 5b44b6ea-6fb5-4ea9-a6f7-328179dc6dda
+State: Peer in Cluster (Connected)
+
+Hostname: 10.0.4.206
+Uuid: ed39ecf7-1f5c-4934-a89d-ee1dda9a8f98
+State: Peer in Cluster (Connected)
+</pre></div>
+
+
+<p>With this you have expanded the existing pool. New PVCs will start to use capacity from the additional nodes.</p>
+<div class="admonition caution">
+<p class="admonition-title">Important</p>
+<p>In this lab, with this expansion, you now have a GlusterFS pool with mixed media types (both size and speed). It is recommended to have the same media type per pool.<br />
+If you like to offer multiple media types for CNS in OpenShift, use separate pools and separate <code>StorageClass</code> objects as described in the <a href="#running-multiple-glusterfs-pools">previous section</a>.</p>
+</div>
+<hr />
+<h2 id="adding-a-device-to-a-node">Adding a device to a node<a class="headerlink" href="#adding-a-device-to-a-node" title="Permanent link">#</a></h2>
+<p>Instead of adding entirely new nodes you can also add new storage devices for CNS to use on existing nodes.</p>
+<p>It is again possible to do this by loading an updated topology file. Alternatively to bulk-loading via JSON you are also able to do this directly with the <code>heketi-cli</code> utility. This also applies to the previous sections in this module.</p>
+<p>For this purpose <code>node-3.lab</code> has an additional, so far unused block device <code>/dev/xvdd</code>.</p>
+<p>&#8680; To use the heketi-cli make sure the environment variables are still set:</p>
+<div class="codehilite"><pre><span></span>echo $HEKETI_CLI_SERVER
+echo $HEKETI_CLI_USER
+echo $HEKETI_CLI_KEY
+</pre></div>
+
+
+<p>&#8680; Determine the UUUI heketi uses to identify <code>node-6.lab</code> in it&rsquo;s database and save it in an environment variable:</p>
+<div class="codehilite"><pre><span></span>NODE_ID_SIX=$(heketi-cli topology info --json | jq -r &quot;.clusters[] | select(.id==\&quot;$FIRST_CNS_CLUSTER\&quot;) | .nodes[] | select(.hostnames.manage[0] == \&quot;node-6.lab\&quot;) | .id&quot;)
+</pre></div>
+
+
+<p>&#8680; Query the node&rsquo;s available devices:</p>
+<div class="codehilite"><pre><span></span>heketi-cli node info $NODE_ID_SIX
+</pre></div>
+
+
+<p>The node has one device available:</p>
+<div class="codehilite"><pre><span></span>Node Id: 3f39ebf3c8c82531a7ba447135742776
+State: online
+Cluster Id: eb909a08c8e8fd0bf80499fbbb8a8545
+Zone: 3
+Management Hostname: node-6.lab
+Storage Hostname: 10.0.4.206
+Devices:
+Id:62cbae7a3f6faac38a551a614419cca3   Name:/dev/xvdd           State:online    Size (GiB):509     Used (GiB):0       Free (GiB):509
+</pre></div>
+
+
+<p>&#8680; Add the device <code>/dev/xvdd</code> to the node using the UUID noted earlier.</p>
+<div class="codehilite"><pre><span></span>heketi-cli device add --node=$NODE_ID_SIX --name=/dev/xvdd
+</pre></div>
+
+
+<p>The device is registered in heketi&rsquo;s database.</p>
+<div class="codehilite"><pre><span></span>Device added successfully
+</pre></div>
+
+
+<p>&#8680; Query the node&rsquo;s available devices again and you&rsquo;ll see a second device.</p>
+<div class="codehilite"><pre><span></span>heketi-cli node info $NODE_ID_SIX
+</pre></div>
+
+
+<p>That node now has 2 devices. The new device will be used by subsequent <code>PVC</code> being served by this cluster.</p>
+<div class="codehilite"><pre><span></span>Node Id: 3f39ebf3c8c82531a7ba447135742776
+State: online
+Cluster Id: eb909a08c8e8fd0bf80499fbbb8a8545
+Zone: 3
+Management Hostname: node-6.lab
+Storage Hostname: 10.0.4.206
+Devices:
+Id:62cbae7a3f6faac38a551a614419cca3   Name:/dev/xvdd           State:online    Size (GiB):509     Used (GiB):0       Free (GiB):509
+Id:cc594d7f5ce59ab2a991c70572a0852f   Name:/dev/xvdc           State:online    Size (GiB):499     Used (GiB):0       Free (GiB):499
+</pre></div>
+
+
+<hr />
+<h2 id="replacing-a-failed-device">Replacing a failed device<a class="headerlink" href="#replacing-a-failed-device" title="Permanent link">#</a></h2>
+<p>One of heketi&rsquo;s advantages is the automation of otherwise tedious manual tasks, like replacing a faulty brick in GlusterFS to repair degraded volumes.<br />
+We will simulate this use case now.</p>
+<p>&#8680; Make sure you are <code>operator</code> in OpenShift and using the project <code>my-test-project</code></p>
+<div class="codehilite"><pre><span></span>oc login -u operator -n my-test-project
+</pre></div>
+
+
+<p>&#8680; Create the file <code>cns-large-pvc.yml</code> with content below:</p>
+<p><kbd>cns-large-pvc.yml:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">kind</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my-large-container-store</span>
+<span class="l l-Scalar l-Scalar-Plain">spec</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">accessModes</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+  <span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">requests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">storage</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200Gi</span>
+  <span class="l l-Scalar l-Scalar-Plain">storageClassName</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">glusterfs-storage</span>
+</pre></div>
+
+
+<p>&#8680; Create this request for a large volume:</p>
+<div class="codehilite"><pre><span></span>oc create -f cns-large-pvc.yml
+</pre></div>
+
+
+<p>The requested capacity in this <code>PVC</code> is larger than any single brick on nodes <code>node-1.lab</code>, <code>node-2.lab</code> and <code>node-3.lab</code> so it will be created from the bricks of the other 3 nodes which have larger bricks (500 GiB).</p>
+<p>Where are now going to determine a <code>PVCs</code> physical backing device on CNS. This is done with the following relationships between the various entities of GlusterFS, heketi and OpenShift in mind:</p>
+<p>PVC -&gt; PV -&gt; heketi volume -&gt; GlusterFS volume -&gt; GlusterFS brick -&gt; Physical Device</p>
+<p>&#8680; First, get the <code>PV</code></p>
+<div class="codehilite"><pre><span></span>oc describe pvc/my-large-container-store
+</pre></div>
+
+
+<p>Note the <code>PVs</code> name:</p>
+<div class="codehilite"><pre><span></span>    Name:       my-large-container-store
+    Namespace:  my-test-project
+    StorageClass:   app-storage
+    Status:     Bound
+<span class="hll">    Volume:     pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
+</span>    Labels:     &lt;none&gt;
+    Capacity:   200Gi
+    Access Modes:   RWO
+    No events.
+</pre></div>
+
+
+<p>&#8680; Get the GlusterFS volume name of this PV, <strong>use your PVs name here</strong>, e.g.</p>
+<div class="codehilite"><pre><span></span>oc describe pv/pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
+</pre></div>
+
+
+<p>The GlusterFS volume name as it used by GlusterFS:</p>
+<div class="codehilite"><pre><span></span>    Name:       pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
+    Labels:     &lt;none&gt;
+    StorageClass:   app-storage
+    Status:     Bound
+    Claim:      my-test-project/my-large-container-store
+    Reclaim Policy: Delete
+    Access Modes:   RWO
+    Capacity:   200Gi
+    Message:
+    Source:
+        Type:       Glusterfs (a Glusterfs mount on the host that shares a pod&#39;s lifetime)
+        EndpointsName:  glusterfs-dynamic-my-large-container-store
+<span class="hll">        Path:       vol_3ff9946ddafaabe9745f184e4235d4e1
+</span>        ReadOnly:       false
+    No events.
+</pre></div>
+
+
+<p>Let&rsquo;s programmatically determine and safe the relevant information so you don&rsquo;t have to type all this stuff.<br />
+We need: the <code>PV</code> name, the respective GlusterFS volume&rsquo;s, the name of the GlusterFS pod on the node <code>node-6.lab</code> and that node&rsquo;s id in <code>heketi</code> and IP address in environment variables:</p>
+<div class="codehilite"><pre><span></span>LARGE_PV=$(oc get pvc/my-large-container-store -o jsonpath=&quot;{.spec.volumeName}&quot;)
+LARGE_GLUSTER_VOLUME=$(oc get pv/$LARGE_PV -o jsonpath=&quot;{.spec.glusterfs.path}&quot;)
+POD_NUMBER_SIX=$(oc get pods -n app-storage -o jsonpath=&#39;{.items[?(@.status.hostIP==&quot;10.0.4.206&quot;)].metadata.name}&#39;)
+NODE_ID_SIX=$(heketi-cli topology info --json | jq -r &quot;.clusters[] | select(.id==\&quot;$FIRST_CNS_CLUSTER\&quot;) | .nodes[] | select(.hostnames.manage[0] == \&quot;node-6.lab\&quot;) | .id&quot;)
+NODE_IP_SIX=$(oc get pod/$POD_NUMBER_SIX -n app-storage -o jsonpath=&quot;{.status.hostIP}&quot;)
+
+echo &quot;LARGE_PV             = $LARGE_PV&quot;
+echo &quot;LARGE_GLUSTER_VOLUME = $LARGE_GLUSTER_VOLUME&quot;
+echo &quot;POD_NUMBER_SIX       = $POD_NUMBER_SIX&quot;
+echo &quot;NODE_ID_SIX          = $NODE_ID_SIX&quot;
+echo &quot;NODE_IP_SIX          = $NODE_IP_SIX&quot;
+</pre></div>
+
+
+<p>&#8680; Change to the CNS namespace</p>
+<div class="codehilite"><pre><span></span>oc project app-storage
+</pre></div>
+
+
+<p>&#8680; Log on to one of the GlusterFS pods</p>
+<div class="codehilite"><pre><span></span>oc rsh $POD_NUMBER_SIX gluster vol info $LARGE_GLUSTER_VOLUME
+</pre></div>
+
+
+<p>The output indicates this volume is indeed backed by, among others, <code>node-6.lab</code> (see highlighted line)</p>
+<div class="codehilite"><pre><span></span>Volume Name: vol_3ff9946ddafaabe9745f184e4235d4e1
+Type: Replicate
+Volume ID: 774ae26f-bd3f-4c06-990b-57012cc5974b
+Status: Started
+Snapshot Count: 0
+Number of Bricks: 1 x 3 = 3
+Transport-type: tcp
+Bricks:
+Brick1: 10.0.3.205:/var/lib/heketi/mounts/vg_e1b93823a2906c6758aeec13930a0919/brick_b3d5867d2f86ac93fce6967128643f85/brick
+Brick2: 10.0.2.204:/var/lib/heketi/mounts/vg_3c3489a5779c1c840a82a26e0117a415/brick_6323bd816f17c8347b3a68e432501e96/brick
+<span class="hll">Brick3: 10.0.4.206:/var/lib/heketi/mounts/vg_62cbae7a3f6faac38a551a614419cca3/brick_a6c92b6a07983e9b8386871f5b82497f/brick
+</span>Options Reconfigured:
+transport.address-family: inet
+performance.readdir-ahead: on
+nfs.disable: on
+</pre></div>
+
+
+<p>&#8680; Safe the brick directory served by <code>node-6.lab</code> in an environment variable:</p>
+<div class="codehilite"><pre><span></span>BRICK_DIR=$(echo -n $(oc rsh $POD_NUMBER_SIX gluster vol info $LARGE_GLUSTER_VOLUME | grep $NODE_IP_SIX) | cut -d &#39;:&#39; -f 3 | tr -d $&#39;\r&#39; )
+echo $BRICK_DIR
+</pre></div>
+
+
+<p>&#8680; Using the full path of brick you can cross-check with heketi&rsquo;s topology on which device it is based on:</p>
+<div class="codehilite"><pre><span></span>heketi-cli topology info | grep -B2 $BRICK_DIR
+</pre></div>
+
+
+<p>Among other data <code>grep</code> will show the physical backing device of this brick&rsquo;s mount path:</p>
+<div class="codehilite"><pre><span></span><span class="hll">Id:62cbae7a3f6faac38a551a614419cca3   Name:/dev/xvdd           State:online    Size (GiB):499     Used (GiB):201     Free (GiB):298
+</span>            Bricks:
+                Id:a6c92b6a07983e9b8386871f5b82497f   Size (GiB):200     Path: /var/lib/heketi/mounts/vg_62cbae7a3f6faac38a551a614419cca3/brick_a6c92b6a07983e9b8386871f5b82497f/brick
+</pre></div>
+
+
+<p>In this case it&rsquo;s <code>/dev/xvdd</code> of <code>node-6.lab</code>.</p>
+<p>!!! Note:<br />
+    The device might be different for you. This is subject to heketi&rsquo;s dynamic scheduling.</p>
+<p>We will now proceed to disable and delete this device. For that we have to find and use it&rsquo;s UUID in <code>heketi</code>.</p>
+<p>Safe the <code>heketi</code> device&rsquo;s ID from the brick on <code>node-6.lab</code> using the following definition of an environment variable, again by leveraging <code>jq</code> to parse the JSON output of <code>heketi topology info</code>:</p>
+<div class="codehilite"><pre><span></span>FAILED_DEVICE_ID=$(heketi-cli topology info --json | jq &quot;.clusters[] | select(.id==\&quot;$FIRST_CNS_CLUSTER\&quot;) | .nodes[] | select(.hostnames.manage[0] == \&quot;node-6.lab\&quot;) | .devices &quot; | jq -r &quot;.[] | select (.bricks[0].path ==\&quot;$BRICK_DIR\&quot;) | .id&quot;)
+</pre></div>
+
+
+<p>&#8680; Check the device ID that you have selected:</p>
+<div class="codehilite"><pre><span></span>echo $FAILED_DEVICE_ID
+</pre></div>
+
+
+<p>Let&rsquo;s assume this device on <code>node-6.lab</code> has failed and needs to be replaced.</p>
+<p>In such a case you&rsquo;ll take the device&rsquo;s ID and go through the following steps:</p>
+<p>&#8680; First, disable the device in heketi</p>
+<div class="codehilite"><pre><span></span>heketi-cli device disable $FAILED_DEVICE_ID
+</pre></div>
+
+
+<p>This will take the device offline and exclude it from future volume creation requests.</p>
+<p>&#8680; Now remove the device in heketi</p>
+<div class="codehilite"><pre><span></span>heketi-cli device remove $FAILED_DEVICE_ID
+</pre></div>
+
+
+<p>You will notice this command takes a while.<br />
+That&rsquo;s because it will trigger a brick-replacement in GlusterFS. The command will block and heketi in the background will transparently create new bricks for each brick on the device to be deleted. The replacement operation will be conducted with the new bricks replacing all bricks on the device to be deleted. During this time the data remains accessible.</p>
+<p>The new bricks, if possible, will automatically be created in zones different from the remaining bricks to maintain equal balancing and cross-zone availability.</p>
+<p>&#8680; Finally, you are now able to delete the device in heketi entirely</p>
+<div class="codehilite"><pre><span></span>heketi-cli device delete $FAILED_DEVICE_ID
+</pre></div>
+
+
+<p>&#8680; Check again the volumes topology directly from GlusterFS</p>
+<div class="codehilite"><pre><span></span>oc rsh $POD_NUMBER_SIX gluster vol info $LARGE_GLUSTER_VOLUME
+</pre></div>
+
+
+<p>You will notice that the brick from <code>node-6.lab</code> is now a different mount path, because it was backed by a new device.</p>
+<p>&#8680; Use the following to programmatically determine the new device heketi used to replace the one you just deleted:</p>
+<div class="codehilite"><pre><span></span>NEW_BRICK_DIR=$(echo -n $(oc rsh $POD_NUMBER_SIX gluster vol info $LARGE_GLUSTER_VOLUME | grep $NODE_IP_SIX) | cut -d &#39;:&#39; -f 3 | tr -d $&#39;\r&#39; )
+NEW_DEVICE=$(heketi-cli topology info --json | jq &quot;.clusters[] | select(.id==\&quot;$FIRST_CNS_CLUSTER\&quot;) | .nodes[] | select(.hostnames.manage[0] == \&quot;node-6.lab\&quot;) | .devices &quot; | jq -r &quot;.[] | select (.bricks[0].path ==\&quot;$NEW_BRICK_DIR\&quot;) | .name&quot;)
+
+echo $NEW_DEVICE
+</pre></div>
+
+
+<p>If you cross-check again the new bricks mount path with the heketi topology you will see it&rsquo;s indeed coming from a different device. The remaining device in <code>node-6.lab</code>, in this case <code>/dev/xvdc</code></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Device removal while maintaining volume health is possible in heketi as well. Simply delete all devices of the node in question as discussed above. Then the device can be deleted from heketi with <code>heketi-cli device delete &lt;device-uuid&gt;</code></p>
+</div>
+<hr />
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../module-3-cns-for-apps/" title="Module 3 - Persistent Storage for Apps" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Module 3 - Persistent Storage for Apps
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../module-5-cns-for-infra/" title="Module 5 - Persistent Storage for Infrastructure" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Module 5 - Persistent Storage for Infrastructure
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright ©2017 Red Hat, Inc.
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
+      
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

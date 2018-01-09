@@ -1,0 +1,736 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/module-1-ocp-environment/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
+    
+    
+      
+        <title>Module 1 - Examine OpenShift Installation - Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/" title="Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+              </span>
+              <span class="md-header-nav__topic">
+                Module 1 - Examine OpenShift Installation
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Modules
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Modules
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Module 1 - Examine OpenShift Installation
+      </label>
+    
+    <a href="./" title="Module 1 - Examine OpenShift Installation" class="md-nav__link md-nav__link--active">
+      Module 1 - Examine OpenShift Installation
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-openshift-lab-environment" title="The OpenShift Lab Environment" class="md-nav__link">
+    The OpenShift Lab Environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-the-lab-configuration" title="Exploring the Lab configuration" class="md-nav__link">
+    Exploring the Lab configuration
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login-via-the-cli" title="Login via the CLI" class="md-nav__link">
+    Login via the CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reviewing-deployed-components" title="Reviewing deployed components" class="md-nav__link">
+    Reviewing deployed components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review-registry-configuration" title="Review Registry configuration" class="md-nav__link">
+    Review Registry configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absence-of-logging-and-metrics-services" title="Absence of Logging and Metrics services" class="md-nav__link">
+    Absence of Logging and Metrics services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-via-the-web-ui" title="Login via the Web UI" class="md-nav__link">
+    Login via the Web UI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-2-deploy-cns/" title="Module 2 - Deploying Container-Native Storage" class="md-nav__link">
+      Module 2 - Deploying Container-Native Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-3-cns-for-apps/" title="Module 3 - Persistent Storage for Apps" class="md-nav__link">
+      Module 3 - Persistent Storage for Apps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-4-cluster-ops/" title="Module 4 - Cluster Operations" class="md-nav__link">
+      Module 4 - Cluster Operations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-5-cns-for-infra/" title="Module 5 - Persistent Storage for Infrastructure" class="md-nav__link">
+      Module 5 - Persistent Storage for Infrastructure
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-openshift-lab-environment" title="The OpenShift Lab Environment" class="md-nav__link">
+    The OpenShift Lab Environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-the-lab-configuration" title="Exploring the Lab configuration" class="md-nav__link">
+    Exploring the Lab configuration
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login-via-the-cli" title="Login via the CLI" class="md-nav__link">
+    Login via the CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reviewing-deployed-components" title="Reviewing deployed components" class="md-nav__link">
+    Reviewing deployed components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review-registry-configuration" title="Review Registry configuration" class="md-nav__link">
+    Review Registry configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absence-of-logging-and-metrics-services" title="Absence of Logging and Metrics services" class="md-nav__link">
+    Absence of Logging and Metrics services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-via-the-web-ui" title="Login via the Web UI" class="md-nav__link">
+    Login via the Web UI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Module 1 - Examine OpenShift Installation</h1>
+                
+                <div class="admonition summary">
+<p class="admonition-title">Overview</p>
+<p>This module introduces you to the pre-installed OpenShift Container Platform environment in it&rsquo;s default state. No Container-Native Storage components are in place. You may refer back to this chapter for a before-after comparison after completing Module 2 and Module 5.<br />
+There are no pre-requisites for this module.</p>
+</div>
+<h2 id="the-openshift-lab-environment">The OpenShift Lab Environment<a class="headerlink" href="#the-openshift-lab-environment" title="Permanent link">#</a></h2>
+<p>Your lab environment has <em>OpenShift Container Platform 3.6</em> pre-installed. It consists of:</p>
+<ul>
+<li>1 Master node, running the master services and the router</li>
+<li>3 Infra nodes, running the registry</li>
+<li>6 App nodes, without any pods</li>
+</ul>
+<p>The Master is the only node that&rsquo;s accessible via a public IP. All CLI commands in this lab will be done from this node.</p>
+<p>OpenShift has been configured with local authentication, the following users are defined:</p>
+<table>
+<thead>
+<tr>
+<th>User name</th>
+<th>Password</th>
+<th>OpenShift privileges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>operator</td>
+<td>r3dh4t</td>
+<td>cluster-admin</td>
+</tr>
+<tr>
+<td>developer</td>
+<td>r3dh4t</td>
+<td>regular user</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="exploring-the-lab-configuration">Exploring the Lab configuration<a class="headerlink" href="#exploring-the-lab-configuration" title="Permanent link">#</a></h2>
+<h4 id="login-via-the-cli">Login via the CLI<a class="headerlink" href="#login-via-the-cli" title="Permanent link">#</a></h4>
+<p>In the previous chapter you logged on to the master node as <code>ec2-user</code>.</p>
+<p>&#8680; From here continue to log on to OpenShift using the <code>oc</code> client:</p>
+<div class="codehilite"><pre><span></span>oc login -u operator
+</pre></div>
+
+
+<p>Use <code>r3dh4t</code> as the password.</p>
+<div class="codehilite"><pre><span></span>Authentication required for https://master.lab:8443 (openshift)
+Username: operator
+Password:
+Login successful.
+
+You have access to the following projects and can switch between them with &#39;oc project &lt;projectname&gt;&#39;:
+
+  * default
+    kube-public
+    kube-system
+    logging
+    management-infra
+    openshift
+    openshift-infra
+
+Using project &quot;default&quot;.
+</pre></div>
+
+
+<p>&#8680; Switch to the <code>default</code> namespace:</p>
+<div class="codehilite"><pre><span></span>oc project default
+</pre></div>
+
+
+<h4 id="reviewing-deployed-components">Reviewing deployed components<a class="headerlink" href="#reviewing-deployed-components" title="Permanent link">#</a></h4>
+<p>&#8680; Get a general status of the components deployed in this project:</p>
+<div class="codehilite"><pre><span></span>oc status
+</pre></div>
+
+
+<p>You will see that there is a router, an internal container registry and a web-console for that registry deployed:</p>
+<div class="codehilite"><pre><span></span>In project default on server https://master.lab:8443
+
+https://docker-registry-default.cloudapps.52.28.118.20.nip.io (passthrough) (svc/docker-registry)
+  dc/docker-registry deploys mirror.lab:5555/openshift3/ose-docker-registry:v3.6.173.0.21
+    deployment #1 deployed 12 minutes ago - 1 pod
+
+svc/kubernetes - 172.30.0.1 ports 443-&gt;8443, 53-&gt;8053, 53-&gt;8053
+
+https://registry-console-default.cloudapps.52.28.118.20.nip.io (passthrough) (svc/registry-console)
+  dc/registry-console deploys mirror.lab:5555/openshift3/registry-console:v3.6
+    deployment #1 deployed 10 minutes ago - 1 pod
+
+svc/router - 172.30.131.155 ports 80, 443, 1936
+  dc/router deploys mirror.lab:5555/openshift3/ose-haproxy-router:v3.6.173.0.21
+    deployment #1 deployed 10 minutes ago - 1 pod
+</pre></div>
+
+
+<p>&#8680; Display all available nodes in the system</p>
+<div class="codehilite"><pre><span></span>oc get nodes
+</pre></div>
+
+
+<p>You should see 9 nodes in <strong>READY</strong> state:</p>
+<div class="codehilite"><pre><span></span>NAME          STATUS                     AGE       VERSION
+infra-1.lab   Ready                      14m       v1.6.1+5115d708d7
+infra-2.lab   Ready                      14m       v1.6.1+5115d708d7
+infra-3.lab   Ready                      14m       v1.6.1+5115d708d7
+master.lab    Ready,SchedulingDisabled   19m       v1.6.1+5115d708d7
+node-1.lab    Ready                      14m       v1.6.1+5115d708d7
+node-2.lab    Ready                      14m       v1.6.1+5115d708d7
+node-3.lab    Ready                      14m       v1.6.1+5115d708d7
+node-4.lab    Ready                      14m       v1.6.1+5115d708d7
+node-5.lab    Ready                      14m       v1.6.1+5115d708d7
+node-6.lab    Ready                      14m       v1.6.1+5115d708d7
+</pre></div>
+
+
+<p>&#8680; A slight variant of that command will show us some tags (called <em>labels</em>):</p>
+<div class="codehilite"><pre><span></span>oc get nodes --show-labels
+</pre></div>
+
+
+<p>You should see that 3 node have the label <code>role=infra</code> applied whereas the other 6 have <code>role=apps</code> set. The master node has scheduling disabled so it is not burdened with additional workloads.</p>
+<div class="codehilite"><pre><span></span>NAME          STATUS                     AGE       VERSION             LABELS
+infra-1.lab   Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-1.lab,role=infra
+infra-2.lab   Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-2.lab,role=infra
+infra-3.lab   Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-3.lab,role=infra
+master.lab    Ready,SchedulingDisabled   26m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=master.lab,role=master
+node-1.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,glusterfs=storage-host,kubernetes.io/hostname=node-1.lab,role=app
+node-2.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,glusterfs=storage-host,kubernetes.io/hostname=node-2.lab,role=app
+node-3.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,glusterfs=storage-host,kubernetes.io/hostname=node-3.lab,role=app
+node-4.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-4.lab,role=app
+node-5.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-5.lab,role=app
+node-6.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-6.lab,role=app
+</pre></div>
+
+
+<h4 id="review-registry-configuration">Review Registry configuration<a class="headerlink" href="#review-registry-configuration" title="Permanent link">#</a></h4>
+<p>&#8680; Examine the configuration of the OpenShift internal registry:</p>
+<div class="codehilite"><pre><span></span>oc describe deploymentconfig/docker-registry
+</pre></div>
+
+
+<p>There is a single instance of the registry because there is so far no shared storage in this environment:</p>
+<div class="codehilite"><pre><span></span>Name:       docker-registry
+Namespace:  default
+Created:    16 minutes ago
+Labels:     docker-registry=default
+Annotations:    &lt;none&gt;
+Latest Version: 1
+Selector:   docker-registry=default
+Replicas:   1
+Triggers:   Config
+Strategy:   Rolling
+Template:
+Pod Template:
+  Labels:       docker-registry=default
+  Service Account:  registry
+  Containers:
+   registry:
+    Image:  mirror.lab:5555/openshift3/ose-docker-registry:v3.6.173.0.21
+    Port:   5000/TCP
+    Requests:
+      cpu:  100m
+      memory:   256Mi
+    Liveness:   http-get https://:5000/healthz delay=10s timeout=5s period=10s #success=1 #failure=3
+    Readiness:  http-get https://:5000/healthz delay=0s timeout=5s period=10s #success=1 #failure=3
+    Environment:
+      REGISTRY_HTTP_ADDR:                   :5000
+      REGISTRY_HTTP_NET:                    tcp
+      REGISTRY_HTTP_SECRET:                 hrwyZRlJiB48Ep0XI5qER2KgJFEW8wE1bxz7jJrSgiU=
+      REGISTRY_MIDDLEWARE_REPOSITORY_OPENSHIFT_ENFORCEQUOTA:    false
+      OPENSHIFT_DEFAULT_REGISTRY:               docker-registry.default.svc:5000
+      REGISTRY_HTTP_TLS_KEY:                    /etc/secrets/registry.key
+      REGISTRY_HTTP_TLS_CERTIFICATE:                /etc/secrets/registry.crt
+    Mounts:
+      /etc/secrets from registry-certificates (rw)
+<span class="hll">      /registry from registry-storage (rw)
+</span>  Volumes:
+<span class="hll">   registry-storage:
+</span><span class="hll">    Type:   EmptyDir (a temporary directory that shares a pod&#39;s lifetime)
+</span>    Medium:
+   registry-certificates:
+    Type:   Secret (a volume populated by a Secret)
+    SecretName: registry-certificates
+    Optional:   false
+
+Deployment #1 (latest):
+    Name:       docker-registry-1
+    Created:    16 minutes ago
+    Status:     Complete
+    Replicas:   1 current / 1 desired
+    Selector:   deployment=docker-registry-1,deploymentconfig=docker-registry,docker-registry=default
+    Labels:     docker-registry=default,openshift.io/deployment-config.name=docker-registry
+    Pods Status:    1 Running / 0 Waiting / 0 Succeeded / 0 Failed
+
+Events:
+  FirstSeen LastSeen    Count   From                SubObjectPath   Type        Reason          Message
+  --------- --------    -----   ----                -------------   --------    ------          -------
+  16m       16m     1   deploymentconfig-controller         Normal      DeploymentCreatedCreated new replication controller &quot;docker-registry-1&quot; for version 1
+</pre></div>
+
+
+<p>The highlighted lines above show that the OpenShift internal registry is currently using storage of <code>emptyDir</code> to store container images that developers and build process create in OpenShift.</p>
+<p>!!! Note:<br />
+<code>emptyDir</code> is the simplest type of storage available in OpenShift and offers no redundancy, because it is just backed by the local filesystem of the host the mounting pod is running on.<br />
+    More importantly this storage cannot be shared by multiple pods on different hosts and is by design ephemeral.<br />
+    This prevents the registry from being scaled out and you will loose all the data should the registry pod experience problems and needs to be restarted, or it&rsquo;s configuration is altered and a new instance is deployed.</p>
+<p>Clearly you cannot run like this in production. In Module 5 you will see how we can provide proper storage for the registry.</p>
+<h4 id="absence-of-logging-and-metrics-services">Absence of Logging and Metrics services<a class="headerlink" href="#absence-of-logging-and-metrics-services" title="Permanent link">#</a></h4>
+<p>In this deployment OpenShift has been deployed without Logging and Metrics services.</p>
+<p>&#8680; Verify there are no Logging services currently deployed:</p>
+<div class="codehilite"><pre><span></span>oc get all -n logging
+</pre></div>
+
+
+<p>Log aggregation components will normally be deployed in the <code>logging</code> namespace. Right now there should be nothing:</p>
+<div class="codehilite"><pre><span></span>No resources found.
+</pre></div>
+
+
+<p>&#8680; Similarly note that there are no Metrics/monitoring components deployed either:</p>
+<div class="codehilite"><pre><span></span>oc get all -n openshift-infra
+</pre></div>
+
+
+<p>For operating OpenShift in production environments these services however are very valuable. By nature they do not need shared storage like CNS can provide. They however do <strong>benefit from the scale-out capabilities of CNS</strong> which typically offers capacity beyond what&rsquo;s available in a single infrastructure node - these nodes will run logging and Metrics components in OpenShift.</p>
+<p>Although not supported until the official release of CNS 3.6, in Module 5 you will get a general idea of how Logging and Metrics are deployed with CNS.</p>
+<h4 id="login-via-the-web-ui">Login via the Web UI<a class="headerlink" href="#login-via-the-web-ui" title="Permanent link">#</a></h4>
+<p>Lastly, you can also review the environment by logging on to the Web UI of OpenShift. You can retrieve the URL from this lab environments user interface as described in the <a href="../../">Overview section</a> section.</p>
+<p>&#8680; Point your browser to the URL and log in as user <code>operator</code> with password <code>r3dh4t</code>:</p>
+<p><a href="../img/openshift_login.png"><img alt="OpenShift UI Login" src="../img/openshift_login.png" /></a><br />
+<em>(click on the screenshot for better resolution)</em></p>
+<p>When successful you should see the default projects/namespaces that come with a standard OpenShift installation.</p>
+<p><a href="../img/openshift_overview.png"><img alt="OpenShift UI Login" src="../img/openshift_overview.png" /></a></p>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href=".." title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Overview
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../module-2-deploy-cns/" title="Module 2 - Deploying Container-Native Storage" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Module 2 - Deploying Container-Native Storage
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright ©2017 Red Hat, Inc.
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
+      
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

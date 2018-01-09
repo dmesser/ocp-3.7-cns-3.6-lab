@@ -1,0 +1,888 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/module-5-cns-for-infra/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
+    
+    
+      
+        <title>Module 5 - Persistent Storage for Infrastructure - Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://dmesser.github.io/ocp-3.6-cns-3.5-lab/" title="Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+              </span>
+              <span class="md-header-nav__topic">
+                Module 5 - Persistent Storage for Infrastructure
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Modules
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Modules
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-1-ocp-environment/" title="Module 1 - Examine OpenShift Installation" class="md-nav__link">
+      Module 1 - Examine OpenShift Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-2-deploy-cns/" title="Module 2 - Deploying Container-Native Storage" class="md-nav__link">
+      Module 2 - Deploying Container-Native Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-3-cns-for-apps/" title="Module 3 - Persistent Storage for Apps" class="md-nav__link">
+      Module 3 - Persistent Storage for Apps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../module-4-cluster-ops/" title="Module 4 - Cluster Operations" class="md-nav__link">
+      Module 4 - Cluster Operations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Module 5 - Persistent Storage for Infrastructure
+      </label>
+    
+    <a href="./" title="Module 5 - Persistent Storage for Infrastructure" class="md-nav__link md-nav__link--active">
+      Module 5 - Persistent Storage for Infrastructure
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#openshift-registry-on-cns" title="OpenShift Registry on CNS" class="md-nav__link">
+    OpenShift Registry on CNS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openshift-loggingmetrics-on-cns" title="OpenShift Logging/Metrics on CNS" class="md-nav__link">
+    OpenShift Logging/Metrics on CNS
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploying-openshift-metrics-with-persistent-storage-from-cns" title="Deploying OpenShift Metrics with Persistent Storage from CNS" class="md-nav__link">
+    Deploying OpenShift Metrics with Persistent Storage from CNS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-openshift-logging-with-persistent-storage-from-cns" title="Deploying OpenShift Logging with Persistent Storage from CNS" class="md-nav__link">
+    Deploying OpenShift Logging with Persistent Storage from CNS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#openshift-registry-on-cns" title="OpenShift Registry on CNS" class="md-nav__link">
+    OpenShift Registry on CNS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openshift-loggingmetrics-on-cns" title="OpenShift Logging/Metrics on CNS" class="md-nav__link">
+    OpenShift Logging/Metrics on CNS
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploying-openshift-metrics-with-persistent-storage-from-cns" title="Deploying OpenShift Metrics with Persistent Storage from CNS" class="md-nav__link">
+    Deploying OpenShift Metrics with Persistent Storage from CNS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-openshift-logging-with-persistent-storage-from-cns" title="Deploying OpenShift Logging with Persistent Storage from CNS" class="md-nav__link">
+    Deploying OpenShift Logging with Persistent Storage from CNS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Module 5 - Persistent Storage for Infrastructure</h1>
+                
+                <div class="admonition summary">
+<p class="admonition-title">Overview</p>
+<p>In this module you will learn how to use Container-Native Storage to serve storage for OpenShift internal infrastructure.<br />
+This module does not have any pre-requisites.</p>
+</div>
+<h2 id="openshift-registry-on-cns">OpenShift Registry on CNS<a class="headerlink" href="#openshift-registry-on-cns" title="Permanent link">#</a></h2>
+<p>The Registry in OpenShift is used to store all images that result of Source-to-Image deployments as well as custom container images.<br />
+It runs as one or more containers in specific Infrastructure Nodes or Master Nodes in OpenShift.</p>
+<p>As explorerd in Module 1, by default the registry uses a hosts local storage (<code>emptyDir</code>) which makes it prone to outages. To avoid such outages the storage needs to be <strong>persistent</strong> and <strong>shared</strong> in order to survive Registry pod restarts and scale-out.</p>
+<p>What we want to achieve is a setup like depicted in the following diagram:</p>
+<p><a href="../img/scaleout_registry_on_cns.png"><img alt="OpenShift Registry on CNS" src="../img/scaleout_registry_on_cns.png" /></a></p>
+<p>This can be achieved with CNS simply by making the registry pods refer to a PVC in access mode <em>RWX</em> based on CNS.<br />
+Before OpenShift Container Platform 3.6 this had to be done manually on an existing CNS cluster.</p>
+<p>With <code>openshift-ansible</code> you now have this setup task automated. The playbooks that implement this will deploy a <strong>separate CNS cluster</strong>, preferably on the <em>Infrastructure Nodes</em>, create a <code>PVC</code> and update the Registry <code>DeploymentConfig</code> to mount the associated <code>PV</code> which is where container images will then be stored.</p>
+<div class="admonition caution">
+<p class="admonition-title">Important</p>
+<p>This method will be disruptive. All data stored in the registry so far will become unavailable.<br />
+Migration scenarios exist but are beyond the scope of this lab.</p>
+</div>
+<p>&#8680; Review the <code>openshift-ansible</code> inventory file in <code>/etc/ansible/ocp-with-glusterfs-registry</code> that has been prepared in your environment:</p>
+<p><kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="k">[OSEv3:children]</span>
+<span class="na">masters</span>
+<span class="na">nodes</span>
+<span class="hll"><span class="na">glusterfs_registry</span>
+</span>
+<span class="k">[OSEv3:vars]</span>
+<span class="na">deployment_type</span><span class="o">=</span><span class="s">openshift-enterprise</span>
+<span class="na">containerized</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.6.173.0.21</span>
+<span class="na">openshift_master_identity_providers</span><span class="o">=</span><span class="s">[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]</span>
+<span class="na">openshift_master_htpasswd_users</span><span class="o">=</span><span class="s">{&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}</span>
+<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.52.59.170.248.nip.io&#39;</span>
+<span class="na">openshift_router_selector</span><span class="o">=</span><span class="s">&#39;role=master&#39;</span>
+<span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
+<span class="hll"><span class="na">openshift_hosted_registry_storage_kind</span><span class="o">=</span><span class="s">glusterfs</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_registry_storageclass</span><span class="o">=</span><span class="s">true</span>
+</span><span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
+<span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
+<span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
+<span class="na">openshift_hosted_logging_deploy</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
+<span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_storage_glusterfs_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-server-rhel7</span>
+<span class="na">openshift_storage_glusterfs_version</span><span class="o">=</span><span class="s">3.2.0-7</span>
+<span class="na">openshift_storage_glusterfs_heketi_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-volmanager-rhel7</span>
+<span class="na">openshift_storage_glusterfs_heketi_version</span><span class="o">=</span><span class="s">3.2.0-11</span>
+<span class="na">openshift_storage_glusterfs_registry_namespace</span><span class="o">=</span><span class="s">infra-storage</span>
+<span class="na">openshift_docker_additional_registries</span><span class="o">=</span><span class="s">mirror.lab:5555</span>
+<span class="na">openshift_docker_insecure_registries</span><span class="o">=</span><span class="s">mirror.lab:5555</span>
+<span class="na">oreg_url</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose-${component}:${version}</span>
+<span class="na">openshift_examples_modify_imagestreams</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_disable_check</span><span class="o">=</span><span class="s">disk_availability,memory_availability</span>
+
+<span class="k">[masters]</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">52.59.170.248.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248</span>
+
+<span class="k">[masters:vars]</span>
+<span class="na">openshift_schedulable</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_node_labels</span><span class="o">=</span><span class="s">&quot;{&#39;role&#39;: &#39;master&#39;}&quot;</span>
+
+<span class="k">[nodes]</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">52.59.170.248.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248</span>
+<span class="na">infra-1.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-1.lab openshift_ip=10.0.2.101 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
+<span class="na">infra-2.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-2.lab openshift_ip=10.0.3.102 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
+<span class="na">infra-3.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-3.lab openshift_ip=10.0.4.103 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
+<span class="na">node-1.lab openshift_hostname</span><span class="o">=</span><span class="s">node-1.lab openshift_ip=10.0.2.201 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-2.lab openshift_hostname</span><span class="o">=</span><span class="s">node-2.lab openshift_ip=10.0.3.202 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-3.lab openshift_hostname</span><span class="o">=</span><span class="s">node-3.lab openshift_ip=10.0.4.203 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-4.lab openshift_hostname</span><span class="o">=</span><span class="s">node-4.lab openshift_ip=10.0.2.204 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-5.lab openshift_hostname</span><span class="o">=</span><span class="s">node-5.lab openshift_ip=10.0.3.205 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-6.lab openshift_hostname</span><span class="o">=</span><span class="s">node-6.lab openshift_ip=10.0.4.206 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+
+<span class="hll"><span class="k">[glusterfs_registry]</span>
+</span><span class="hll"><span class="na">infra-1.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.2.101 glusterfs_zone=1 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
+</span><span class="hll"><span class="na">infra-2.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.3.102 glusterfs_zone=2 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
+</span><span class="hll"><span class="na">infra-3.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.4.103 glusterfs_zone=3 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
+</span></pre></div>
+
+
+<p>The highlighted lines indicate the vital options in the inventory file to instruct <code>openshift-ansible</code> to deploy this setup.<br />
+Hosts in the <code>[glusterfs_registry]</code> group will run the CNS cluster specifically created for OpenShift Infrastructure. Just like in Module 2, each host gets specific information about the free block device to use for CNS and the failure zone it resides in (the infrastructure nodes are also hosted in 3 different Availability Zones)<br />
+The option <code>openshift_hosted_registry_storage_kind=glusterfs</code> will cause the registry to re-deployed with a <code>PVC</code> served by this cluster.</p>
+<p>&#8680; First ensure that from an Ansible-perspective the required nodes are reachable</p>
+<div class="codehilite"><pre><span></span>ansible -i /etc/ansible/ocp-with-glusterfs-registry glusterfs_registry -m ping
+</pre></div>
+
+
+<p>All 3 OpenShift infrastructure nodes should respond:</p>
+<div class="codehilite"><pre><span></span>infra-3.lab | SUCCESS =&gt; {
+    &quot;changed&quot;: false,
+    &quot;ping&quot;: &quot;pong&quot;
+}
+infra-1.lab | SUCCESS =&gt; {
+    &quot;changed&quot;: false,
+    &quot;ping&quot;: &quot;pong&quot;
+}
+infra-2.lab | SUCCESS =&gt; {
+    &quot;changed&quot;: false,
+    &quot;ping&quot;: &quot;pong&quot;
+}
+</pre></div>
+
+
+<p>&#8680; Enable the Master to be schedulable:</p>
+<div class="codehilite"><pre><span></span>oadm manage-node master.lab --schedulable=true
+</pre></div>
+
+
+<div class="admonition important">
+<p class="admonition-title">Why does the master need to be schedulable?</p>
+<p>This is a very simple lab environment :)<br />
+There is no sophisticated external load-balancing across the infrastructure nodes in place.<br />
+That&rsquo;s why the OpenShift router will run on the master node. The router will get re-deployed when executing the following playbook.<br />
+So making the master accept pods again we ensure the re-deployed router finds it&rsquo;s place again.</p>
+</div>
+<p>&#8680; Run the CNS registry playbook that ships with <code>openshift-ansible</code>:</p>
+<div class="codehilite"><pre><span></span>ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \
+/usr/share/ansible/openshift-ansible/playbooks/byo/openshift-glusterfs/registry.yml
+</pre></div>
+
+
+<p>&#8680; Disable scheduling on the Master again:</p>
+<div class="codehilite"><pre><span></span>oadm manage-node master.lab --schedulable=false
+</pre></div>
+
+
+<p>This will take about 6-7 minutes to complete.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>As in Module 2, executing the playbook in <code>byo/openshift-glusterfs/registry.yml</code> directly post-deployment is not supported in production as of yet. Special care has been taken in this lab so that it works here.<br />
+This will change in one of the next releases of <code>openshift-ansible</code>.</p>
+</div>
+<p>The playbook should succeed without any failures. After it completes you have a Registry that uses CNS to store container images. It has automatically been scaled to 3 pods for high availability too.</p>
+<p>&#8680; Log in as <code>operator</code> in the <code>default</code> namespace</p>
+<div class="codehilite"><pre><span></span>oc login -u operator -n default
+</pre></div>
+
+
+<p>&#8680; Verify a new version of the registry&rsquo;s <code>DeploymentConfig</code> is running:</p>
+<div class="codehilite"><pre><span></span>oc get deploymentconfig/docker-registry
+</pre></div>
+
+
+<p>It should say:</p>
+<div class="codehilite"><pre><span></span>NAME              REVISION   DESIRED   CURRENT   TRIGGERED BY
+docker-registry   2          1         1         config
+</pre></div>
+
+
+<p>&#8680; You can review the details and see how the <code>PVC</code> backs the registry by executing this command</p>
+<div class="codehilite"><pre><span></span>oc describe deploymentconfig/docker-registry
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>Name:       docker-registry
+Namespace:  default
+Created:    42 minutes ago
+Labels:     docker-registry=default
+Annotations:    &lt;none&gt;
+Latest Version: 2
+Selector:   docker-registry=default
+Replicas:   3
+Triggers:   Config
+Strategy:   Rolling
+Template:
+Pod Template:
+  Labels:       docker-registry=default
+  Service Account:  registry
+  Containers:
+   registry:
+    Image:  mirror.lab:5555/openshift3/ose-docker-registry:v3.6.173.0.21
+    Port:   5000/TCP
+    Requests:
+      cpu:  100m
+      memory:   256Mi
+    Liveness:   http-get https://:5000/healthz delay=10s timeout=5s period=10s #success=1 #failure=3
+    Readiness:  http-get https://:5000/healthz delay=0s timeout=5s period=10s #success=1 #failure=3
+    Environment:
+      REGISTRY_HTTP_ADDR:                   :5000
+      REGISTRY_HTTP_NET:                    tcp
+      REGISTRY_HTTP_SECRET:                 4wwwdIkD5sKc/AcAQ76BuNaOWF13MvkYge6ltjJobn0=
+      REGISTRY_MIDDLEWARE_REPOSITORY_OPENSHIFT_ENFORCEQUOTA:    false
+      REGISTRY_HTTP_TLS_KEY:                    /etc/secrets/registry.key
+      REGISTRY_HTTP_TLS_CERTIFICATE:                /etc/secrets/registry.crt
+    Mounts:
+      /etc/secrets from registry-certificates (rw)
+      /registry from registry-storage (rw)
+  Volumes:
+   registry-storage:
+<span class="hll">    Type:   PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+</span><span class="hll">    ClaimName:  registry-claim
+</span>    ReadOnly:   false
+   registry-certificates:
+    Type:   Secret (a volume populated by a Secret)
+    SecretName: registry-certificates
+    Optional:   false
+
+Deployment #2 (latest):
+    Name:       docker-registry-2
+    Created:    14 minutes ago
+    Status:     Complete
+    Replicas:   3 current / 3 desired
+    Selector:   deployment=docker-registry-2,deploymentconfig=docker-registry,docker-registry=default
+    Labels:     docker-registry=default,openshift.io/deployment-config.name=docker-registry
+    Pods Status:    3 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Deployment #1:
+    Created:    42 minutes ago
+    Status:     Complete
+    Replicas:   0 current / 0 desired
+
+Events:
+  FirstSeen LastSeen    Count   From                SubObjectPath   Type        Reason              Message
+  --------- --------    -----   ----                -------------   --------    ------              -------
+  42m       42m     1   deploymentconfig-controller         Normal      DeploymentCreated       Created new replication controller &quot;docker-registry-1&quot; for version 1
+  14m       14m     1   deploymentconfig-controller         Normal      DeploymentCreated       Created new replication controller &quot;docker-registry-2&quot; for version 2
+  14m       14m     1   deploymentconfig-controller         Normal      ReplicationControllerScaled Scaled replication controller &quot;docker-registry-1&quot; from 842477907952 to 3
+</pre></div>
+
+
+<p>While the exact output will be different for you it is easy to tell the registry pods are configured to mount a <code>PersistentVolume</code> associated with the <code>PersistentVolumeClaim</code> named <code>registry-claim</code>.</p>
+<p>&#8680; Verify this <code>PVC</code> exists:</p>
+<div class="codehilite"><pre><span></span>oc get pvc/registry-claim
+</pre></div>
+
+
+<p>The <code>PVC</code> was automatically generated by <code>openshift-ansible</code>:</p>
+<div class="codehilite"><pre><span></span>NAME             STATUS    VOLUME            CAPACITY   ACCESSMODES   STORAGECLASS   AGE
+registry-claim   Bound     registry-volume   5Gi        RWX                          23m
+</pre></div>
+
+
+<p>In the OpenShift UI you will see the new Registry configuration when you log on as <code>operator</code> and check the <strong>Overview</strong> page in the <code>default</code> namespace:</p>
+<p><a href="../img/registry_3way_dc.png"><img alt="Registry Deployment Scaled" src="../img/registry_3way_dc.png" /></a></p>
+<p><code>openshift-ansible</code> generated an independent set of GlusterFS pods, a separate instance of <code>heketi</code> and a separate <code>StorageClass</code> as well. These components were configured to use the <code>infra-storage</code> namespace. Refer to Module 2 to get an understanding of those components if you just skipped to here.</p>
+<p>&#8680; Verify there are at least 3 GlusterFS pods and one <code>heketi</code> pod:</p>
+<div class="codehilite"><pre><span></span>oc get pods -n infra-storage
+</pre></div>
+
+
+<p>There is now dedicated a CNS stack for OpenShift Infrastructure:</p>
+<div class="codehilite"><pre><span></span>NAME                       READY     STATUS    RESTARTS   AGE
+glusterfs-registry-1jct8   1/1       Running   0          33m
+glusterfs-registry-jp92q   1/1       Running   0          33m
+glusterfs-registry-x2kkm   1/1       Running   0          33m
+heketi-registry-1-k744l    1/1       Running   0          30m
+</pre></div>
+
+
+<p>With this you have successfully remediated a single point of failure from your OpenShift installation. Since this setup is entirely automated by <code>openshift-ansible</code> you can deploy out of the box an OpenShift environment capable of hosting stateful applications and operate a fault-tolerant registry. All this with no external dependencies or complicated integration of external storage :)</p>
+<hr />
+<h2 id="openshift-loggingmetrics-on-cns">OpenShift Logging/Metrics on CNS<a class="headerlink" href="#openshift-loggingmetrics-on-cns" title="Permanent link">#</a></h2>
+<p>OpenShift Logging (Kibana) and Metrics (Cassandra) are also components that require persistent storage. Typically so far external block storage providers had to be used in order to get these services to work reliably.</p>
+<p>It might seem counter-intuitive at first to consider CNS to serve these systems, mainly because:</p>
+<ul>
+<li>Kibana and Cassandra are shared-nothing scale-out services</li>
+<li>CNS provides shared filesystem storage whereas for Kibana/Cassandra a block storage device formatted with a local filesystem like XFS would be enough</li>
+</ul>
+<p>Here are a couple of reasons why it is still a good idea to run those on CNS:</p>
+<ul>
+<li>the total amount of storage available infra nodes is typically limited in capacity (CNS can scale beyond that)</li>
+<li>the storage type available in infra nodes is most likely not suitable for performant long-term operations of these services (CNS uses aggregate performance of multiple devices and hosts)</li>
+<li>without CNS some sort external storage system is required that requires additional manual configuration steps, in any case you should not use <code>emptyDir</code></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In the next couple of steps we will deploy Logging/Metrics on CNS. This is will be supported with the upcoming release of CNS 3.6 (early October 2017) in production. However the instructions will slightly vary because the <code>PersistentVolumes</code> will not be backed by a normal GlusterFS volume but by <code>gluster-block</code> to achieve high performance.<br />
+It will not be supported to run these services on standard <code>gluster-fuse</code> based CNS.</p>
+</div>
+<p>To review the required configuration sections in the <code>openshift-ansible</code> inventory file, open the standard inventory file <code>/etc/ansible/hosts/</code> that was used to deploy this OCP cluster initially:</p>
+<p><kbd>/etc/ansible/hosts:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="k">[OSEv3:children]</span>
+<span class="na">masters</span>
+<span class="na">nodes</span>
+
+<span class="k">[OSEv3:vars]</span>
+<span class="na">deployment_type</span><span class="o">=</span><span class="s">openshift-enterprise</span>
+<span class="na">containerized</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.6.173.0.21</span>
+<span class="na">openshift_master_identity_providers</span><span class="o">=</span><span class="s">[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]</span>
+<span class="na">openshift_master_htpasswd_users</span><span class="o">=</span><span class="s">{&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}</span>
+<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.52.59.170.248.nip.io&#39;</span>
+<span class="na">openshift_router_selector</span><span class="o">=</span><span class="s">&#39;role=master&#39;</span>
+<span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
+<span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
+<span class="hll"><span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
+</span><span class="hll"><span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
+</span><span class="na">openshift_hosted_logging_deploy</span><span class="o">=</span><span class="s">false</span>
+<span class="hll"><span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
+</span><span class="hll"><span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
+</span>
+<span class="k">[... output omitted... ]</span>
+</pre></div>
+
+
+<p>The highlighted lines indicate the settings that are required in order to put the Cassandra database of the OpenShift Metrics service on a <code>PersistentVolume</code> (<code>openshift_metrics_cassandra_storage_type=pv</code>) and how large this volume should be (<code>openshift_metrics_cassandra_pvc_size=10Gi</code>).<br />
+Similarly the backend for the ElasticSearch component of OpenShift Logging is set to <code>PersistentVolume</code> (<code>openshift_logging_es_pvc_dynamic=true</code>) and the size is specifed (<code>openshift_logging_es_pvc_size=10Gi</code>).<br />
+With these settings in place <code>openshift-ansible</code> will request <code>PVC</code> object for these services.</p>
+<p>Unfortunately <code>openshift-ansible</code> today is lacking the ability to specify a certain <code>StorageClass</code> with those <code>PVCs</code>, so we have to make the CNS cluster that was created above temporarily the system-wide default.</p>
+<p>&#8680; Login as <code>operator</code> to the <code>openshift-infra</code> namespace:</p>
+<div class="codehilite"><pre><span></span>oc login -u operator -n openshift-infra
+</pre></div>
+
+
+<p>&#8680; First, if you deployed the general-purpose CNS cluster in <a href="../../module-2-deploy-cns/">Module 2</a>, you need to disable the other <code>StorageClass</code> <code>glusterfs-storage</code> from the other CNS stack as being the default:</p>
+<div class="codehilite"><pre><span></span>oc patch storageclass glusterfs-storage \
+-p &#39;{&quot;metadata&quot;: {&quot;annotations&quot;: {&quot;storageclass.kubernetes.io/is-default-class&quot;: &quot;false&quot;}}}&#39;
+</pre></div>
+
+
+<p>&#8680; Then, use the <code>oc patch</code> command again to change the definition of the <code>StorageClass</code> on the fly:</p>
+<div class="codehilite"><pre><span></span>oc patch storageclass glusterfs-registry \
+-p &#39;{&quot;metadata&quot;: {&quot;annotations&quot;: {&quot;storageclass.kubernetes.io/is-default-class&quot;: &quot;true&quot;}}}&#39;
+</pre></div>
+
+
+<p>&#8680; Verify that now the <code>StorageClass</code> <code>glusterfs-registry</code> is the default:</p>
+<div class="codehilite"><pre><span></span>oc get storageclass
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>NAME                           TYPE
+<span class="hll">glusterfs-registry (default)   kubernetes.io/glusterfs
+</span>glusterfs-storage              kubernetes.io/glusterfs
+</pre></div>
+
+
+<h4 id="deploying-openshift-metrics-with-persistent-storage-from-cns">Deploying OpenShift Metrics with Persistent Storage from CNS<a class="headerlink" href="#deploying-openshift-metrics-with-persistent-storage-from-cns" title="Permanent link">#</a></h4>
+<p>The inventory file <code>/etc/ansible/hosts</code> as explained has all the required options set to run Logging/Metrics on dynamic provisioned storage supplied via a <code>PVC</code>. The only variable that we need to override is (<code>openshift_metrics_install_metrics</code>) to actually invoke the required playbooks the installation.</p>
+<p>&#8680; Execute the Metrics deployment playbook like this:</p>
+<div class="codehilite"><pre><span></span>ansible-playbook -i /etc/ansible/hosts \
+    -e openshift_metrics_install_metrics=True \
+    /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-metrics.yml
+</pre></div>
+
+
+<p>This takes about 1-2 minutes to complete. However the deployment is not quite finished yet.</p>
+<p>&#8680; Use the <code>watch</code> command to wait for the <code>hawkular-metrics</code> pod to be in <code>READY</code> state.</p>
+<div class="codehilite"><pre><span></span>watch oc get pods -l name=hawkular-metrics
+</pre></div>
+
+
+<p>Exit out of the watch mode with: <kbd>Ctrl</kbd> + <kbd>c</kbd></p>
+<p>It will be ready when the database (Cassandra) finished initializing. Alternatively in the UI observe the deployment in the <strong>Overview</strong> pane, focussing on the <code>hawkular-metrics</code> deployment:</p>
+<p><a href="../img/waiting_for_metrics_on_cns.png"><img alt="Waiting on OpenShift Metrics to be deployed" src="../img/waiting_for_metrics_on_cns.png" /></a></p>
+<p>After 2-3 minutes all 3 pods, that make up the OpenShift Metrics service, should be ready:</p>
+<p>&#8680; Verify all pods in the namespace have a <code>1/1</code> in the <code>READY</code> column:</p>
+<div class="codehilite"><pre><span></span>oc get pods
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>NAME                         READY     STATUS    RESTARTS   AGE
+hawkular-cassandra-1-sxctx   1/1       Running   0          5m
+hawkular-metrics-895xz       1/1       Running   0          5m
+heapster-pjxpp               1/1       Running   0          5m
+</pre></div>
+
+
+<p>To use the Metrics service you need to logon / reload the OpenShift UI in your browser. You will then see a warning message like this one:</p>
+<p><a href="../img/metrics_warning.png"><img alt="OpenShift Metrics Warning" src="../img/metrics_warning.png" /></a></p>
+<p>Don&rsquo;t worry - this is due to self-signed SSL certificates in this environment.</p>
+<p>&#8680; Click the <strong>Open Metrics URL</strong> link and accept the self-signed certificate in your new browser tab. You will see the status page of the OpenShift Hawkular Metrics component:</p>
+<p><a href="../img/metrics_hawkular.png"><img alt="OpenShift Metrics Hawkular" src="../img/metrics_hawkular.png" /></a></p>
+<p>&#8680; Then go back to the overview page. Next to the pods monitoring graphs for CPU, memory and network consumption will appear:</p>
+<p><a href="../img/metrics_graphs.png"><img alt="OpenShift Metrics Graphs" src="../img/metrics_graphs.png" /></a></p>
+<p>If you change to the <strong>Storage</strong> menu in the OpenShift UI you will also see the <code>PVC</code> that <code>openshift-ansible</code> has set up for the Cassandra pod.</p>
+<p><a href="../img/metrics_pvc.png"><img alt="OpenShift Metrics PVC" src="../img/metrics_pvc.png" /></a></p>
+<p>Congratulations. You have successfully deploy OpenShift Metrics using scalable, fault-tolerant and persistent storage. The data that you see visualized in the UI is stored on a <code>PersistentVolume</code> served by CNS.</p>
+<div class="admonition note">
+<p class="admonition-title">Preview</p>
+<p>This was a preview of the general process. Note that this will be supported for production with the release of CNS 3.6.</p>
+</div>
+<h4 id="deploying-openshift-logging-with-persistent-storage-from-cns">Deploying OpenShift Logging with Persistent Storage from CNS<a class="headerlink" href="#deploying-openshift-logging-with-persistent-storage-from-cns" title="Permanent link">#</a></h4>
+<p>In a very similar fashion you can install OpenShift Logging Services, run by Kibana and ElasticSearch.</p>
+<p>&#8680; As <code>operator</code>, login in to the <code>logging</code> namespace:</p>
+<div class="codehilite"><pre><span></span>oc login -u operator -n logging
+</pre></div>
+
+
+<p>&#8680; Execute the Logging deployment playbook like this:</p>
+<div class="codehilite"><pre><span></span>ansible-playbook -i /etc/ansible/hosts \
+  -e openshift_hosted_logging_deploy=True \
+  /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-logging.yml
+</pre></div>
+
+
+<p>After 1-2 minutes the playbook finishes and you have a number of new pods in the <code>logging</code> namespace:</p>
+<p>&#8680; List all the ElasticSearch pods that aggregate and store the logs:</p>
+<div class="codehilite"><pre><span></span>oc get pods -l component=es
+</pre></div>
+
+
+<p>This pod runs a single ElasticSearch instance.</p>
+<div class="codehilite"><pre><span></span>NAME                                      READY     STATUS    RESTARTS   AGE
+logging-es-data-master-kcbtgll3-1-vb34h   1/1       Running   0          11m
+</pre></div>
+
+
+<p>&#8680; List the Kibana pod:</p>
+<div class="codehilite"><pre><span></span>oc get pods -l component=kibana
+</pre></div>
+
+
+<p>This pod runs the Kibana front-end to query and search through logs:</p>
+<div class="codehilite"><pre><span></span>NAME                     READY     STATUS    RESTARTS   AGE
+logging-kibana-1-1c2dj   2/2       Running   0          11m
+</pre></div>
+
+
+<p>&#8680; List all Fluentd pods:</p>
+<div class="codehilite"><pre><span></span>oc get pods -l component=fluentd
+</pre></div>
+
+
+<p>These pods run as part of a <code>DaemonSet</code> and are responsible for collecting and shipping the various logs from all nodes to the ElasticSearch instance.</p>
+<div class="codehilite"><pre><span></span>NAME                    READY     STATUS    RESTARTS   AGE
+logging-fluentd-3k7nh   1/1       Running   0          5m
+logging-fluentd-473cf   1/1       Running   0          4m
+logging-fluentd-9kgsv   1/1       Running   0          5m
+logging-fluentd-h8fhb   1/1       Running   0          4m
+logging-fluentd-pb6h8   1/1       Running   0          4m
+logging-fluentd-q6lv4   1/1       Running   0          4m
+logging-fluentd-r455n   1/1       Running   0          4m
+logging-fluentd-v34ll   1/1       Running   0          5m
+logging-fluentd-vxnd3   1/1       Running   0          5m
+logging-fluentd-wf3lr   1/1       Running   0          5m
+</pre></div>
+
+
+<p>Switch to the OpenShift UI and as <code>operator</code> select the <code>logging</code> project. In the <strong>Overview</strong> section you&rsquo;ll a <code>Route</code> for the Kibana deployment created. <strong>Click</strong> the link on the <code>Route</code> to open the Kibana UI in a new browser tab and verify the Kibana deployment is healthy.</p>
+<p><a href="../img/kibana_pod_ready.png"><img alt="OpenShift Logging Pods" src="../img/kibana_pod_ready.png" /></a></p>
+<p>The public URL for the Kibana UI will be visible in the <strong>ROUTES</strong> section of the <code>logging-kibana</code> deployment.</p>
+<p><a href="../img/kibana_ui_loading.png"><img alt="OpenShift Logging UI" src="../img/kibana_ui_loading.png" /></a></p>
+<p>When you are logging on for the first time Kibana will ask for credentials.<br />
+Use your OpenShift <code>operator</code> account with the password <code>r3dh4t</code>.</p>
+<p>After logging in you will see that Kibana has started indexing the database, which is hosted on CNS by ElasticSearch.</p>
+<p><a href="../img/kibana_es_indexing.png"><img alt="OpenShift Logging Indexing" src="../img/kibana_es_indexing.png" /></a></p>
+<p>This shows that ElasticSearch search running of CNS-provided <code>PersistentVolume</code> successfully. It will take some time to complete the first indexing.</p>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../module-4-cluster-ops/" title="Module 4 - Cluster Operations" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Module 4 - Cluster Operations
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright ©2017 Red Hat, Inc.
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
+      
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
