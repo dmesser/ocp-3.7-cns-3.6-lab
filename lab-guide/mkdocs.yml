@@ -1,14 +1,14 @@
-site_name: Container-Native Storage Hands-on Lab - Red Hat Tech Exchange 2017
-site_url: 'https://dmesser.github.io/ocp-3.6-cns-3.5-lab/'
-site_favicon: 'img/favicon.ico'
-copyright: 'Copyright ©2017 Red Hat, Inc.'
+site_name: Container-Native Storage 3.6 on OpenShift Container Platform 3.7 Hands-on Lab
+site_url: 'https://dmesser.github.io/ocp-3.7-cns-3.6-lab/'
+copyright: 'Copyright ©2018 Red Hat, Inc.'
 
-theme: 'material'
-extra:
+theme:
+  name: 'material'
   logo: 'img/shadowman_rgb.png'
+  favicon: 'img/favicon.ico'
   palette:
-    primary: 'red'
-    accent: 'light blue'
+    primary: 'deep orange'
+    accent: 'indigo'
 
 pages:
 - Overview: index.md
