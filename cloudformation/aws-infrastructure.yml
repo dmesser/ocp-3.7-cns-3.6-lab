@@ -624,6 +624,7 @@ Resources:
                   osm_etcd_image=mirror.lab:5555/rhel7/etcd
                   openshift_service_catalog_image_prefix=mirror.lab:5555/openshift3/ose-
                   openshift_cli_image=mirror.lab:5555/openshift3/ose
+                  osm_image=mirror.lab:5555/openshift3/ose
                   openshift_examples_modify_imagestreams=false
                   openshift_disable_check=disk_availability,memory_availability
 
@@ -687,6 +688,7 @@ Resources:
                   osm_etcd_image=mirror.lab:5555/rhel7/etcd
                   openshift_service_catalog_image_prefix=mirror.lab:5555/openshift3/ose-
                   openshift_cli_image=mirror.lab:5555/openshift3/ose
+                  osm_image=mirror.lab:5555/openshift3/ose
                   openshift_examples_modify_imagestreams=false
                   openshift_disable_check=disk_availability,memory_availability
 
@@ -753,6 +755,7 @@ Resources:
                   osm_etcd_image=mirror.lab:5555/rhel7/etcd
                   openshift_service_catalog_image_prefix=mirror.lab:5555/openshift3/ose-
                   openshift_cli_image=mirror.lab:5555/openshift3/ose
+                  osm_image=mirror.lab:5555/openshift3/ose
                   openshift_examples_modify_imagestreams=false
                   openshift_disable_check=disk_availability,memory_availability
 
