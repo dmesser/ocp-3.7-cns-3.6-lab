@@ -626,7 +626,7 @@ Resources:
                   openshift_cli_image=mirror.lab:5555/openshift3/ose
                   osm_image=mirror.lab:5555/openshift3/ose
                   openshift_examples_modify_imagestreams=false
-                  openshift_disable_check=disk_availability,memory_availability
+                  openshift_disable_check=disk_availability,memory_availability,docker_image_availability
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -690,7 +690,7 @@ Resources:
                   openshift_cli_image=mirror.lab:5555/openshift3/ose
                   osm_image=mirror.lab:5555/openshift3/ose
                   openshift_examples_modify_imagestreams=false
-                  openshift_disable_check=disk_availability,memory_availability
+                  openshift_disable_check=disk_availability,memory_availability,docker_image_availability
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -757,7 +757,7 @@ Resources:
                   openshift_cli_image=mirror.lab:5555/openshift3/ose
                   osm_image=mirror.lab:5555/openshift3/ose
                   openshift_examples_modify_imagestreams=false
-                  openshift_disable_check=disk_availability,memory_availability
+                  openshift_disable_check=disk_availability,memory_availability,docker_image_availability
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
