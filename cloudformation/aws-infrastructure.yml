@@ -48,19 +48,19 @@ Mappings:
 
   AWSRegion2OCPAMI:
     us-east-1:
-      ami: ami-614e151b
+      ami: ami-db9bc1a1
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
       ami: NOT_SUPPORTED
     us-west-2:
-      ami: ami-5378cf2b
+      ami: ami-8103b4f9
     eu-west-1:
       ami: NOT_SUPPORTED
     eu-west-2:
       ami: NOT_SUPPORTED
     eu-central-1:
-      ami: ami-59cb5636
+      ami: ami-77f56818
     ap-northeast-1:
       ami: NOT_SUPPORTED
     ap-northeast-2:
