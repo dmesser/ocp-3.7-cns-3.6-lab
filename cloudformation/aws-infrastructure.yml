@@ -48,19 +48,19 @@ Mappings:
 
   AWSRegion2OCPAMI:
     us-east-1:
-      ami: ami-dcfba3a6
+      ami: ami-614e151b
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
       ami: NOT_SUPPORTED
     us-west-2:
-      ami: ami-8fa81ff7
+      ami: ami-5378cf2b
     eu-west-1:
       ami: NOT_SUPPORTED
     eu-west-2:
       ami: NOT_SUPPORTED
     eu-central-1:
-      ami: ami-d9198bb6
+      ami: ami-7322b01c
     ap-northeast-1:
       ami: NOT_SUPPORTED
     ap-northeast-2:
@@ -82,19 +82,19 @@ Mappings:
 
   AWSRegion2MirrorAMI:
     us-east-1:
-      ami: ami-7ce9b706
+      ami: ami-1e782364
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
       ami: NOT_SUPPORTED
     us-west-2:
-      ami: ami-b540f4cd
+      ami: ami-6463d41c
     eu-west-1:
       ami: NOT_SUPPORTED
     eu-west-2:
       ami: NOT_SUPPORTED
     eu-central-1:
-      ami: ami-11b1237e
+      ami: ami-4520b22a
     ap-northeast-1:
       ami: NOT_SUPPORTED
     ap-northeast-2:
@@ -804,7 +804,6 @@ Resources:
               - ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible masters,nodes -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
-              - abrt-auto-reporting enabled
               - "ansible-playbook -vvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; echo $? > /tmp/result "
 
 
