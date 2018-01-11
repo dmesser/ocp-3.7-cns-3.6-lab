@@ -60,7 +60,7 @@ Mappings:
     eu-west-2:
       ami: NOT_SUPPORTED
     eu-central-1:
-      ami: ami-7322b01c
+      ami: ami-59cb5636
     ap-northeast-1:
       ami: NOT_SUPPORTED
     ap-northeast-2:
