@@ -804,6 +804,7 @@ Resources:
               - ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible masters,nodes -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
+              - "ansible-playbook -vvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; echo $? > /tmp/result "
 
 
   MasterNodePublicIP:
