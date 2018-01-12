@@ -53,6 +53,7 @@
   yum:
     name: '*'
     state: latest
+    disablerepo: rh-gluster-3-for-rhel-7-server-rpms
   when:
     - up2date_system is defined
     - up2date_system
