@@ -10,4 +10,19 @@
     - cns-deploy-5.0.0-56.el7rhgs
     - heketi-client-5.0.0-19.el7rhgs
 
+- name: enable EPEL
+  yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+
+- name: install jq
+  yum:
+    name: jq
+    state: present
+    disablerepo: '*'
+    enablerepo: epel
+
+- name: remove EPEL
+  yum:
+    name: epel-release-latest-7
+    state: absent
+
 ...
