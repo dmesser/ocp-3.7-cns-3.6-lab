@@ -790,7 +790,6 @@ Resources:
             runcmd:
               - ansible masters -m filesystem -a "fstype=xfs dev=/dev/xvdc"
               - ansible masters -m mount -a "fstype=xfs src=/dev/xvdc path=/var/lib/origin state=mounted"
-              - ansible masters -m yum -a "name=jq state=present"
               - ansible localhost -m wait_for -a "port=22 timeout=600 host=infra-1.lab"
               - ansible localhost -m wait_for -a "port=22 timeout=600 host=infra-2.lab"
               - ansible localhost -m wait_for -a "port=22 timeout=600 host=infra-3.lab"
@@ -804,7 +803,7 @@ Resources:
               - ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible masters,nodes -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
-              - "nohup /root/deploy-ocp.sh '${OpenShiftInstallerHandle}' &"
+              
 
   OpenShiftInstallerHandle:
     Type: AWS::CloudFormation::WaitConditionHandle
