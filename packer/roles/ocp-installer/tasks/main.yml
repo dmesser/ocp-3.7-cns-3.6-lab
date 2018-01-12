@@ -10,6 +10,7 @@
       - vim
       - wget
       - git
+      - curl
       - net-tools
       - bind-utils
       - iptables-services
