@@ -803,6 +803,7 @@ Resources:
               - ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible masters,nodes -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
+              - setenforce 0
               - ansible-playbook -vvvvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 
   OpenShiftInstallerHandle:
