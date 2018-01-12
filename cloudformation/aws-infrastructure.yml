@@ -804,8 +804,8 @@ Resources:
               - ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible masters,nodes -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
-              - ansible-playbook -vvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
-              - "ansible-playbook -vvv /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; /opt/aws/bin/cfn-signal -e $? '${OpenShiftInstallerHandle}'"
+              - ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
+              - "ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; /opt/aws/bin/cfn-signal -e $? '${OpenShiftInstallerHandle}'"
               - oc --config=/home/ec2-user/.kube/config adm policy add-cluster-role-to-user cluster-admin operator
               - oadm --config=/home/ec2-user/.kube/config manage-node master.lab --schedulable=false
 
