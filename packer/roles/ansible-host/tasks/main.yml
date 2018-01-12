@@ -23,4 +23,10 @@
     group: root
     mode: "u=rw,g=r,o=r"
 
+- name: create ansible log accessible by all users
+  file:
+    path: /tmp/ansible.log
+    mode: 0777
+    state: touch
+
 ...
