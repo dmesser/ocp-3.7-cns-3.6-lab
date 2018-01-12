@@ -19,6 +19,9 @@
       - python-docker-py
       - skopeo
       - dnsmasq
+      - kexec-tools
+      - sos
+      - psacct
       - atomic-openshift-clients
       - atomic-openshift-utils
       - atomic-openshift-excluder
