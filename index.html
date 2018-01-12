@@ -159,7 +159,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="module-1-ocp-environment/" title="Modules" class="md-tabs__link">
+        <a href="module-1-install/" title="Modules" class="md-tabs__link">
           Modules
         </a>
       
@@ -251,22 +251,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-get-the-lab-access-credentials" title="4. Get the lab access credentials" class="md-nav__link">
-    4. Get the lab access credentials
+  <a href="#5-get-the-lab-access-credentials" title="5. Get the lab access credentials" class="md-nav__link">
+    5. Get the lab access credentials
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-lab-environment-overview" title="6. Lab Environment Overview" class="md-nav__link">
-    6. Lab Environment Overview
+  <a href="#6-access-the-jump-server" title="6. Access the jump server" class="md-nav__link">
+    6. Access the jump server
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-lab-tips" title="7. Lab tips" class="md-nav__link">
-    7. Lab tips
+  <a href="#7-lab-environment-overview" title="7. Lab Environment Overview" class="md-nav__link">
+    7. Lab Environment Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-lab-tips" title="8. Lab tips" class="md-nav__link">
+    8. Lab tips
   </a>
   
 </li>
@@ -305,8 +312,8 @@
 
 
   <li class="md-nav__item">
-    <a href="module-1-ocp-environment/" title="Module 1 - Examine OpenShift Installation" class="md-nav__link">
-      Module 1 - Examine OpenShift Installation
+    <a href="module-1-install/" title="Module 1 - Combined OpenShift and CNS Installation" class="md-nav__link">
+      Module 1 - Combined OpenShift and CNS Installation
     </a>
   </li>
 
@@ -413,22 +420,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-get-the-lab-access-credentials" title="4. Get the lab access credentials" class="md-nav__link">
-    4. Get the lab access credentials
+  <a href="#5-get-the-lab-access-credentials" title="5. Get the lab access credentials" class="md-nav__link">
+    5. Get the lab access credentials
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-lab-environment-overview" title="6. Lab Environment Overview" class="md-nav__link">
-    6. Lab Environment Overview
+  <a href="#6-access-the-jump-server" title="6. Access the jump server" class="md-nav__link">
+    6. Access the jump server
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-lab-tips" title="7. Lab tips" class="md-nav__link">
-    7. Lab tips
+  <a href="#7-lab-environment-overview" title="7. Lab Environment Overview" class="md-nav__link">
+    7. Lab Environment Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-lab-tips" title="8. Lab tips" class="md-nav__link">
+    8. Lab tips
   </a>
   
 </li>
@@ -475,9 +489,10 @@ Completing the entire lab content will typically take between 2 and 4 hours.</p>
 <p>In total provisioning usually takes about 5 minutes and should not exceed 10 minutes.<br />
 When your lab infrastructure is ready this progress bar disappears. Upon launch you will see a button to end your lab session and a countdown until automatic shutdown:</p>
 <p><img alt="Lab timer" src="./img/qwiklab-end-button.png" /></p>
-<h2 id="4-get-the-lab-access-credentials">4. Get the lab access credentials<a class="headerlink" href="#4-get-the-lab-access-credentials" title="Permanent link">#</a></h2>
+<h2 id="5-get-the-lab-access-credentials">5. Get the lab access credentials<a class="headerlink" href="#5-get-the-lab-access-credentials" title="Permanent link">#</a></h2>
 <p>When lab provisioning is finished successfully lab access data will displayed on the left side of this screen.</p>
 <p><img alt="Lab info" src="./img/qwiklab-lab-details.png" /></p>
+<p>There is a copy-to-clipboard button next to each field to easily obtain the following data:</p>
 <table>
 <thead>
 <tr>
@@ -488,11 +503,6 @@ When your lab infrastructure is ready this progress bar disappears. Upon launch 
 </thead>
 <tbody>
 <tr>
-<td>URL to OpenShift UI</td>
-<td>OpenShiftLoginURL</td>
-<td>e.g. <em>https://34.226.81.9.nip.io:8443/</em></td>
-</tr>
-<tr>
 <td>IP to Lab Environment</td>
 <td>MasterNodePublicIP</td>
 <td>e.g. <em>34.226.81.9</em></td>
@@ -502,8 +512,14 @@ When your lab infrastructure is ready this progress bar disappears. Upon launch 
 <td>SSHLoginUser</td>
 <td><code>ec2-user</code></td>
 </tr>
+<tr>
+<td>(After OpenShift deployment) URL to OpenShift UI</td>
+<td>OpenShiftLoginURL</td>
+<td>e.g. <em>https://34.226.81.9.nip.io:8443/</em></td>
+</tr>
 </tbody>
 </table>
+<h2 id="6-access-the-jump-server">6. Access the jump server<a class="headerlink" href="#6-access-the-jump-server" title="Permanent link">#</a></h2>
 <p>&#8680; To login via SSH download the PEM file to your machine and change the permissions:</p>
 <div class="codehilite"><pre><span></span>chmod 0400 ~/Downloads/&lt;pem-file-name&gt;
 </pre></div>
@@ -516,7 +532,7 @@ When your lab infrastructure is ready this progress bar disappears. Upon launch 
 
 <p>The Master node also functions as your <em>jumpserver</em>. Once you are logged on to it you have access to all systems with the <code>ec2-user</code> who has passwordless authentication and passwordless sudo capabilities set up everywhere.</p>
 <hr />
-<h2 id="6-lab-environment-overview">6. Lab Environment Overview<a class="headerlink" href="#6-lab-environment-overview" title="Permanent link">#</a></h2>
+<h2 id="7-lab-environment-overview">7. Lab Environment Overview<a class="headerlink" href="#7-lab-environment-overview" title="Permanent link">#</a></h2>
 <p>The lab environment has 10 nodes in total with stable, internal IP addresses and <code>/etc/hosts</code>-based DNS resolution. All nodes have internet access. Only the Master can be reached from the Internet via it&rsquo;s public IP however.</p>
 <table>
 <thead>
@@ -583,7 +599,7 @@ When your lab infrastructure is ready this progress bar disappears. Upon launch 
 This labs topology roughly looks like this:</p>
 <p><a href="./img/cns_infrastructure_aws.svg"><img alt="CNS Lab Infrastructure" src="./img/cns_infrastructure_aws.svg" /></a></p>
 <hr />
-<h2 id="7-lab-tips">7. Lab tips<a class="headerlink" href="#7-lab-tips" title="Permanent link">#</a></h2>
+<h2 id="8-lab-tips">8. Lab tips<a class="headerlink" href="#8-lab-tips" title="Permanent link">#</a></h2>
 <p>You might these hints useful:</p>
 <ul>
 <li>almost all of the commands/files don&rsquo;t contain environment-specific content, there is a <kbd>copy-to-clipboard</kbd> button on the right end of every code block for your convenience</li>
@@ -611,13 +627,13 @@ This labs topology roughly looks like this:</p>
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="module-1-ocp-environment/" title="Module 1 - Examine OpenShift Installation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="module-1-install/" title="Module 1 - Combined OpenShift and CNS Installation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Module 1 - Examine OpenShift Installation
+                Module 1 - Combined OpenShift and CNS Installation
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
