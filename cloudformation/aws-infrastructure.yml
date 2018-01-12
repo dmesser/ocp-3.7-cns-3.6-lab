@@ -760,7 +760,7 @@ Resources:
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
 
                   [masters]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
+                  master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP} ansible_connection=local
 
                   [masters:vars]
                   openshift_schedulable=true
