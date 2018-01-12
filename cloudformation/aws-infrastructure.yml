@@ -599,62 +599,7 @@ Resources:
                   [OSEv3:children]
                   masters
                   nodes
-
-                  [OSEv3:vars]
-                  deployment_type=openshift-enterprise
-                  containerized=true
-                  openshift_image_tag=v3.7.14
-                  openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
-                  openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}.nip.io'
-                  openshift_router_selector='role=master'
-                  openshift_hosted_router_wait=true
-                  openshift_registry_selector='role=infra'
-                  openshift_hosted_registry_wait=true
-                  openshift_metrics_install_metrics=false
-                  openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
-                  openshift_metrics_cassandra_storage_type=pv
-                  openshift_metrics_cassandra_pvc_size=10Gi
-                  openshift_logging_install_logging=false
-                  openshift_logging_es_pvc_size=10Gi
-                  openshift_logging_es_pvc_dynamic=true
-                  openshift_docker_additional_registries=mirror.lab:5555
-                  openshift_docker_insecure_registries=mirror.lab:5555
-                  oreg_url=mirror.lab:5555/openshift3/ose-${!component}:${!version}
-                  osm_etcd_image=mirror.lab:5555/rhel7/etcd
-                  openshift_service_catalog_image_prefix=mirror.lab:5555/openshift3/ose-
-                  openshift_cli_image=mirror.lab:5555/openshift3/ose
-                  osm_image=mirror.lab:5555/openshift3/ose
-                  openshift_examples_modify_imagestreams=false
-                  openshift_disable_check=disk_availability,memory_availability,docker_image_availability
-
-                  [masters]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
-
-                  [masters:vars]
-                  openshift_schedulable=true
-                  openshift_node_labels="{'role': 'master'}"
-
-                  [etcd:children]
-                  masters
-
-                  [nodes]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab  openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
-                  infra-1.lab openshift_hostname=infra-1.lab openshift_ip=${InfraNode1Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
-                  infra-2.lab openshift_hostname=infra-2.lab openshift_ip=${InfraNode2Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
-                  infra-3.lab openshift_hostname=infra-3.lab openshift_ip=${InfraNode3Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
-                  node-1.lab openshift_hostname=node-1.lab openshift_ip=${AppNode1Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-2.lab openshift_hostname=node-2.lab openshift_ip=${AppNode2Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-3.lab openshift_hostname=node-3.lab openshift_ip=${AppNode3Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-4.lab openshift_hostname=node-4.lab openshift_ip=${AppNode4Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-5.lab openshift_hostname=node-5.lab openshift_ip=${AppNode5Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-6.lab openshift_hostname=node-6.lab openshift_ip=${AppNode6Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                path: /etc/ansible/hosts
-
-              - content: |
-                  [OSEv3:children]
-                  masters
-                  nodes
+                  glusterfs
                   glusterfs_registry
 
                   [OSEv3:vars]
@@ -668,20 +613,6 @@ Resources:
                   openshift_hosted_router_wait=true
                   openshift_registry_selector='role=infra'
                   openshift_hosted_registry_wait=true
-                  openshift_hosted_registry_storage_kind=glusterfs
-                  openshift_storage_glusterfs_registry_storageclass=True
-                  openshift_metrics_install_metrics=false
-                  openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
-                  openshift_metrics_cassandra_storage_type=pv
-                  openshift_metrics_cassandra_pvc_size=10Gi
-                  openshift_logging_install_logging=false
-                  openshift_logging_es_pvc_size=10Gi
-                  openshift_logging_es_pvc_dynamic=true
-                  openshift_storage_glusterfs_image=rhgs3/rhgs-server-rhel7
-                  openshift_storage_glusterfs_version=3.3.0-362
-                  openshift_storage_glusterfs_heketi_image=rhgs3/rhgs-volmanager-rhel7
-                  openshift_storage_glusterfs_heketi_version=3.3.0-364
-                  openshift_storage_glusterfs_registry_namespace=infra-storage
                   openshift_docker_additional_registries=mirror.lab:5555
                   openshift_docker_insecure_registries=mirror.lab:5555
                   oreg_url=mirror.lab:5555/openshift3/ose-${!component}:${!version}
@@ -691,52 +622,6 @@ Resources:
                   osm_image=mirror.lab:5555/openshift3/ose
                   openshift_examples_modify_imagestreams=false
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
-
-                  [masters]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
-
-                  [masters:vars]
-                  openshift_schedulable=true
-                  openshift_node_labels="{'role': 'master'}"
-
-                  [etcd:children]
-                  masters
-
-                  [nodes]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
-                  infra-1.lab openshift_hostname=infra-1.lab openshift_ip=${InfraNode1Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
-                  infra-2.lab openshift_hostname=infra-2.lab openshift_ip=${InfraNode2Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
-                  infra-3.lab openshift_hostname=infra-3.lab openshift_ip=${InfraNode3Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
-                  node-1.lab openshift_hostname=node-1.lab openshift_ip=${AppNode1Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-2.lab openshift_hostname=node-2.lab openshift_ip=${AppNode2Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-3.lab openshift_hostname=node-3.lab openshift_ip=${AppNode3Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-4.lab openshift_hostname=node-4.lab openshift_ip=${AppNode4Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-5.lab openshift_hostname=node-5.lab openshift_ip=${AppNode5Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-                  node-6.lab openshift_hostname=node-6.lab openshift_ip=${AppNode6Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'app'}"
-
-                  [glusterfs_registry]
-                  infra-1.lab glusterfs_ip=${InfraNode1Interface.PrimaryPrivateIpAddress} glusterfs_zone=1 glusterfs_devices='[ "/dev/xvdc" ]'
-                  infra-2.lab glusterfs_ip=${InfraNode2Interface.PrimaryPrivateIpAddress} glusterfs_zone=2 glusterfs_devices='[ "/dev/xvdc" ]'
-                  infra-3.lab glusterfs_ip=${InfraNode3Interface.PrimaryPrivateIpAddress} glusterfs_zone=3 glusterfs_devices='[ "/dev/xvdc" ]'
-                path: /etc/ansible/ocp-with-glusterfs-registry
-
-              - content: |
-                  [OSEv3:children]
-                  masters
-                  nodes
-                  glusterfs
-
-                  [OSEv3:vars]
-                  deployment_type=openshift-enterprise
-                  containerized=true
-                  openshift_image_tag=v3.7.14
-                  openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
-                  openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}.nip.io'
-                  openshift_router_selector='role=master'
-                  openshift_hosted_router_wait=true
-                  openshift_registry_selector='role=infra'
-                  openshift_hosted_registry_wait=true
                   openshift_metrics_install_metrics=false
                   openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
                   openshift_metrics_cassandra_storage_type=pv
@@ -749,15 +634,9 @@ Resources:
                   openshift_storage_glusterfs_version=3.3.0-362
                   openshift_storage_glusterfs_heketi_image=rhgs3/rhgs-volmanager-rhel7
                   openshift_storage_glusterfs_heketi_version=3.3.0-364
-                  openshift_docker_additional_registries=mirror.lab:5555
-                  openshift_docker_insecure_registries=mirror.lab:5555
-                  oreg_url=mirror.lab:5555/openshift3/ose-${!component}:${!version}
-                  osm_etcd_image=mirror.lab:5555/rhel7/etcd
-                  openshift_service_catalog_image_prefix=mirror.lab:5555/openshift3/ose-
-                  openshift_cli_image=mirror.lab:5555/openshift3/ose
-                  osm_image=mirror.lab:5555/openshift3/ose
-                  openshift_examples_modify_imagestreams=false
-                  openshift_disable_check=disk_availability,memory_availability,docker_image_availability
+                  openshift_storage_glusterfs_registry_namespace=infra-storage
+                  openshift_hosted_registry_storage_kind=glusterfs
+                  openshift_storage_glusterfs_registry_storageclass=True
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -785,7 +664,13 @@ Resources:
                   node-1.lab glusterfs_ip=${AppNode1Interface.PrimaryPrivateIpAddress} glusterfs_zone=1 glusterfs_devices='[ "/dev/xvdc" ]'
                   node-2.lab glusterfs_ip=${AppNode2Interface.PrimaryPrivateIpAddress} glusterfs_zone=2 glusterfs_devices='[ "/dev/xvdc" ]'
                   node-3.lab glusterfs_ip=${AppNode3Interface.PrimaryPrivateIpAddress} glusterfs_zone=3 glusterfs_devices='[ "/dev/xvdc" ]'
-                path: /etc/ansible/ocp-with-glusterfs
+
+
+                  [glusterfs_registry]
+                  infra-1.lab glusterfs_ip=${InfraNode1Interface.PrimaryPrivateIpAddress} glusterfs_zone=1 glusterfs_devices='[ "/dev/xvdc" ]'
+                  infra-2.lab glusterfs_ip=${InfraNode2Interface.PrimaryPrivateIpAddress} glusterfs_zone=2 glusterfs_devices='[ "/dev/xvdc" ]'
+                  infra-3.lab glusterfs_ip=${InfraNode3Interface.PrimaryPrivateIpAddress} glusterfs_zone=3 glusterfs_devices='[ "/dev/xvdc" ]'
+                path: /etc/ansible/hosts
 
             runcmd:
               - ansible masters -m filesystem -a "fstype=xfs dev=/dev/xvdc"
