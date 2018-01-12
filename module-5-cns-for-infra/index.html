@@ -138,6 +138,41 @@
         
       
       
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href=".." title="Overview" class="md-tabs__link">
+        Overview
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../module-1-ocp-environment/" title="Modules" class="md-tabs__link md-tabs__link--active">
+          Modules
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
@@ -424,7 +459,7 @@ Migration scenarios exist but are beyond the scope of this lab.</p>
 <span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
 <span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
 <span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
-<span class="na">openshift_hosted_logging_deploy</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_logging_install_logging</span><span class="o">=</span><span class="s">false</span>
 <span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
 <span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
 <span class="na">openshift_storage_glusterfs_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-server-rhel7</span>
@@ -672,7 +707,7 @@ It will not be supported to run these services on standard <code>gluster-fuse</c
 <span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
 <span class="hll"><span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
 </span><span class="hll"><span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
-</span><span class="na">openshift_hosted_logging_deploy</span><span class="o">=</span><span class="s">false</span>
+</span><span class="na">openshift_logging_install_logging</span><span class="o">=</span><span class="s">false</span>
 <span class="hll"><span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
 </span><span class="hll"><span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
 </span>
@@ -766,7 +801,7 @@ heapster-pjxpp               1/1       Running   0          5m
 
 <p>&#8680; Execute the Logging deployment playbook like this:</p>
 <div class="codehilite"><pre><span></span>ansible-playbook -i /etc/ansible/hosts \
-  -e openshift_hosted_logging_deploy=True \
+  -e openshift_logging_install_logging=true \
   /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-logging.yml
 </pre></div>
 

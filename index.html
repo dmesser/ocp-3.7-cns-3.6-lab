@@ -138,6 +138,39 @@
         
       
       
+        
+
+<nav class="md-tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="." title="Overview" class="md-tabs__link md-tabs__link--active">
+        Overview
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="module-1-ocp-environment/" title="Modules" class="md-tabs__link">
+          Modules
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
@@ -197,8 +230,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-how-to-start-your-lab" title="2. How to start your lab" class="md-nav__link">
-    2. How to start your lab
+  <a href="#2-how-to-start-your-test-drive" title="2. How to start your Test Drive" class="md-nav__link">
+    2. How to start your Test Drive
   </a>
   
 </li>
@@ -218,8 +251,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-enter-the-lab-environment" title="5. Enter the lab environment" class="md-nav__link">
-    5. Enter the lab environment
+  <a href="#4-get-the-lab-access-credentials" title="4. Get the lab access credentials" class="md-nav__link">
+    4. Get the lab access credentials
   </a>
   
 </li>
@@ -359,8 +392,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-how-to-start-your-lab" title="2. How to start your lab" class="md-nav__link">
-    2. How to start your lab
+  <a href="#2-how-to-start-your-test-drive" title="2. How to start your Test Drive" class="md-nav__link">
+    2. How to start your Test Drive
   </a>
   
 </li>
@@ -380,8 +413,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-enter-the-lab-environment" title="5. Enter the lab environment" class="md-nav__link">
-    5. Enter the lab environment
+  <a href="#4-get-the-lab-access-credentials" title="4. Get the lab access credentials" class="md-nav__link">
+    4. Get the lab access credentials
   </a>
   
 </li>
@@ -416,11 +449,11 @@
                 
                 
                 <h1 id="welcome-to-container-native-storage-hands-on-lab">Welcome to Container-Native Storage Hands-on Lab<a class="headerlink" href="#welcome-to-container-native-storage-hands-on-lab" title="Permanent link">#</a></h1>
-<p>This lab guide is designed for self-paced walk-through of the &ldquo;Container-Native Storage 3.5 on OpenShift 3.6&rdquo; hosted on <a href="https://redhat.qwiklab.com">redhat.qwkilab.com</a>. This lab gives you access to a fully functional OpenShift Container Platform 3.6 environment hosted on AWS.<br />
+<p>This lab guide is designed for self-paced walk-through of the &ldquo;Container-Native Storage 3.6 on OpenShift 3.7&rdquo; hosted on <a href="https://redhat.qwiklab.com">redhat.qwkilab.com</a>. This lab gives you access to a fully functional OpenShift Container Platform 3.7 environment hosted on AWS.<br />
 This is not a tutorial on OpenShift Container Platform. Basic familiarity is assumed.<br />
-Completing the entire lab content will typically take between 2 and 3 hours.</p>
+Completing the entire lab content will typically take between 2 and 4 hours.</p>
 <h2 id="1-pre-requisites">1. Pre-requisites<a class="headerlink" href="#1-pre-requisites" title="Permanent link">#</a></h2>
-<p>For this lab you need to fulfill the following pre-requisites:</p>
+<p>For this lab you need to fulfil the following pre-requisites:</p>
 <ul>
 <li>
 <p>Workstation with Internet access</p>
@@ -429,26 +462,22 @@ Completing the entire lab content will typically take between 2 and 3 hours.</p>
 <p>SSH client supporting authentication with a private key</p>
 </li>
 </ul>
-<hr />
-<h2 id="2-how-to-start-your-lab">2. How to start your lab<a class="headerlink" href="#2-how-to-start-your-lab" title="Permanent link">#</a></h2>
-<p>To start the Test Drive press <b><span style="background-color:#909e33; color:white; font-size: 120%">&nbsp;&nbsp;Start Lab&nbsp;&nbsp;</span></b> button in the top bar.</p>
-<hr />
+<h2 id="2-how-to-start-your-test-drive">2. How to start your Test Drive<a class="headerlink" href="#2-how-to-start-your-test-drive" title="Permanent link">#</a></h2>
+<p>To start the Test Drive press <img alt="START button" src="./img/qwiklab-start-button.png" /> button in the top bar.</p>
+<p>In total you can start the lab <strong>5</strong> times. Then your quota of free lab environments has reached it&rsquo;s limit. Contact us if you want to run even more labs.</p>
 <h2 id="3-download-access-key">3. Download Access Key<a class="headerlink" href="#3-download-access-key" title="Permanent link">#</a></h2>
-<p>Immediately after pressing the <b><span style="background-color:#909e33; color:white; font-size: 120%">&nbsp;&nbsp;Start Lab&nbsp;&nbsp;</span></b> button, a pane labeled <b><span style="background-color:#777777; color:white; font-size: 120%">&nbsp;&nbsp;Connect&nbsp;&nbsp;</span></b> will rollover presenting your custom SSH access key to download.</p>
+<p>Immediately after pressing the <img alt="START button" src="./img/qwiklab-start-button.png" /> button, the download links for the SSH keys will become active (blue) in the left hand pane in a section labeled &ldquo;Connection Details&rdquo;:</p>
 <p><img alt="Download SSH access keys" src="./img/qwiklab-pem-key.png" /></p>
-<p>Download the <em>PEM</em> key to your computer if you are using regular OpenSSH on the command line Linux or macOS. Choose <em>PPK</em> if you are using PuTTY on Windows.</p>
-<p>Click <b><span style="background-color:#777777; color:white; font-size: 120%">&nbsp;&nbsp;Connect&nbsp;&nbsp;</span></b> button again to hide the pane.</p>
-<hr />
+<p>Download the <em>PEM</em> key to your computer if you are using regular OpenSSH on the command line with Linux or macOS. Choose <em>Download PPK</em> if you are using PuTTY on Windows.</p>
 <h2 id="4-wait-for-lab-provisioning-to-complete">4. Wait for lab provisioning to complete<a class="headerlink" href="#4-wait-for-lab-provisioning-to-complete" title="Permanent link">#</a></h2>
-<p>When you started your Test Drive the lab environment provision process initiated in the background. During provisioning you can monitor progress in the top navigation bar</p>
+<p>When you started your Test Drive the lab environment provision process initiated in the background. During provisioning you can monitor progress in the top bar above this guide:</p>
 <p><img alt="Monitoring Lab Provisioning Progress" src="./img/qwiklab-progress-bar.png" /></p>
-<p><strong>When there is no progress bar you can start immediately</strong>. In this case your lab was pre-provisioned.</p>
-<p>When there is a progress bar your lab is currently provisioning. The progress bar will disappear as soon as that is done. Also, upon launch you will see a button to end your lab session and countdown until automatic shutdown:</p>
+<p>In total provisioning usually takes about 5 minutes and should not exceed 10 minutes.<br />
+When your lab infrastructure is ready this progress bar disappears. Upon launch you will see a button to end your lab session and a countdown until automatic shutdown:</p>
 <p><img alt="Lab timer" src="./img/qwiklab-end-button.png" /></p>
-<hr />
-<h2 id="5-enter-the-lab-environment">5. Enter the lab environment<a class="headerlink" href="#5-enter-the-lab-environment" title="Permanent link">#</a></h2>
-<p>In order to access the lab infrastructure click the <span style="background-color:#0087cf; color:white; font-size: 120%">&nbsp;&nbsp;<b>Addl. Info</b>&nbsp;&nbsp;</span> (will be visible when the lab is readily provisioned) on the right side of the screen to obtain the following access information:</p>
-<p><img alt="Lab info" src="./img/qwiklab_addl_info.png" /></p>
+<h2 id="4-get-the-lab-access-credentials">4. Get the lab access credentials<a class="headerlink" href="#4-get-the-lab-access-credentials" title="Permanent link">#</a></h2>
+<p>When lab provisioning is finished successfully lab access data will displayed on the left side of this screen.</p>
+<p><img alt="Lab info" src="./img/qwiklab-lab-details.png" /></p>
 <table>
 <thead>
 <tr>
@@ -562,6 +591,7 @@ This labs topology roughly looks like this:</p>
 <li>you can skip modules in this lab, unless stated otherwise in the <em>Overview</em> section they are independent of each other</li>
 <li>if you want to look at this lab guide in a separate window: this documentation is hosted at <a href="https://dmesser.github.io/ocp-3.7-cns-3.6-lab/" target="_blank">https://dmesser.github.io/ocp-3.7-cns-3.6-lab</a></li>
 </ul>
+<p>Have fun!</p>
                 
                   
                 
