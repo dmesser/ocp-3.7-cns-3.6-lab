@@ -10,4 +10,12 @@
     - set_hostname
     - update_hostname
 
+- name: copy cfn-signal.sh script to /usr/local/sbin
+  copy:
+    src: cfn-signal.sh
+    dest: /usr/local/sbin
+    owner: root
+    group: root
+    mode: 0755
+
 ...
