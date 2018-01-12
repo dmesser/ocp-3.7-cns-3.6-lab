@@ -602,7 +602,7 @@ Resources:
 
                   [OSEv3:vars]
                   deployment_type=openshift-enterprise
-                  containerized=true
+                  containerized=false
                   openshift_image_tag=v3.7.14
                   openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
                   openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
