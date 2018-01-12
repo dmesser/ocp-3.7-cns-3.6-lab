@@ -809,14 +809,14 @@ Resources:
               - oc --config=/home/ec2-user/.kube/config adm policy add-cluster-role-to-user cluster-admin operator
               - oadm --config=/home/ec2-user/.kube/config manage-node master.lab --schedulable=false
 
-  InitializationHandle:
+  OpenShiftInstallerHandle:
     Type: AWS::CloudFormation::WaitConditionHandle
 
-  Initialization:
+  OpenShiftInstaller:
     Type: AWS::CloudFormation::WaitCondition
     DependsOn: MasterNode
     Properties:
-      Handle: !Ref InitializationHandle
+      Handle: !Ref OpenShiftInstallerHandle
       Timeout: '1800'
 
   MasterNodePublicIP:
