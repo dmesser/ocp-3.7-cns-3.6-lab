@@ -48,19 +48,19 @@ Mappings:
 
   AWSRegion2OCPAMI:
     us-east-1:
-      ami: ami-0f032775
+      ami: ami-38e9cd42
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
       ami: NOT_SUPPORTED
     us-west-2:
-      ami: ami-8a56e0f2
+      ami: ami-645aec1c
     eu-west-1:
       ami: NOT_SUPPORTED
     eu-west-2:
       ami: NOT_SUPPORTED
     eu-central-1:
-      ami: ami-ac4ed3c3
+      ami: ami-677ce108
     ap-northeast-1:
       ami: NOT_SUPPORTED
     ap-northeast-2:
@@ -602,7 +602,7 @@ Resources:
 
                   [OSEv3:vars]
                   deployment_type=openshift-enterprise
-                  containerized=false
+                  containerized=true
                   openshift_image_tag=v3.7.14
                   openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
                   openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
@@ -804,9 +804,7 @@ Resources:
               - ansible nodes -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible masters,nodes -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
-              - "ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; /usr/local/sbin/cfn-signal.sh $? '${OpenShiftInstallerHandle}'"
-              - oc --config=/home/ec2-user/.kube/config adm policy add-cluster-role-to-user cluster-admin operator
-              - oadm --config=/home/ec2-user/.kube/config manage-node master.lab --schedulable=false
+              - "nohup /root/deploy-ocp.sh &"
 
   OpenShiftInstallerHandle:
     Type: AWS::CloudFormation::WaitConditionHandle
