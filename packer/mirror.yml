@@ -12,6 +12,7 @@
       - rh-gluster-3-for-rhel-7-server-rpms
 
   roles:
+    - { role: authorized_key, tags: ['authorized_key'] }
     - { role: registered-host, tags: ['registered-host'], up2date_system: false }
     - { role: docker-host, tags: ['docker-host'] }
     - { role: docker-registry, tags: ['docker-registry'] }
