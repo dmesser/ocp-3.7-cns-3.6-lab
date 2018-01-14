@@ -474,6 +474,10 @@ Resources:
       GroupDescription: Firewall definition for OpenShift Master and Heketi
       SecurityGroupIngress:
       - IpProtocol: tcp
+        FromPort: 2379
+        ToPort: 2379
+        CidrIp: !FindInMap [ Subnet2Cidr, vpc, cidr ]
+      - IpProtocol: tcp
         FromPort: 4789
         ToPort: 4789
         CidrIp: !FindInMap [ Subnet2Cidr, vpc, cidr ]
