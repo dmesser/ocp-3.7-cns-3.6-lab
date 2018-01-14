@@ -36,8 +36,7 @@
       dest: fetch/
       flat: yes
   when:
-    - not private_key.stat.exists
-    - not public_key.stat.exists
+    - not private_key.stat.exists or not public_key.stat.exists
 
 - name: add ssh key pair to authorized_keys
   authorized_key:
@@ -55,5 +54,8 @@
   with_items:
     - id_rsa
     - id_rsa.pub
+  when:
+    - private_key.stat.exists
+    - public_key.stat.exists
 
 ...
