@@ -31,7 +31,7 @@ Parameters:
 
   MirrorInstanceType:
     Type: String
-    Default: t2.small
+    Default: t2.medium
     AllowedValues:
       - t1.micro
       - t2.nano
