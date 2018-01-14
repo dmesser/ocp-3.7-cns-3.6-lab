@@ -13,7 +13,7 @@
 
   roles:
     - { role: authorized-key, tags: ['authorized_key'] }
-    - { role: registered-host, tags: ['registered-host'], up2date_system: false }
+    - { role: registered-host, tags: ['registered-host'], up2date_system: true }
     - { role: docker-host, tags: ['docker-host'] }
     - { role: docker-registry, tags: ['docker-registry'] }
     - { role: registry-mirror, tags: ['registry-mirror'] }
