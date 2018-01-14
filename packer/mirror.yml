@@ -16,7 +16,11 @@
     - { role: docker-host, tags: ['docker-host'] }
     - { role: docker-registry, tags: ['docker-registry'] }
     - { role: registry-mirror, tags: ['registry-mirror'] }
+    - { role: registry-mirror-client, tags: ['registry-mirror-client'] }
     - { role: repo-mirror, tags: ['repo-mirror'] }
+    - { role: repo-mirror-client, tags: ['repo-mirror-client'] }
+    - { role: ansible-host, tags: ['ansible-host'] }
+    - { role: ocp-installer, tags: ['ocp-installer'] }
 
   tasks:
 
