@@ -1237,15 +1237,15 @@ Resources:
                 - ansible all -m shell -a "modprobe dm-thin-pool"
                 - ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml
 
-    OpenShiftInstallerHandle:
-      Type: AWS::CloudFormation::WaitConditionHandle
+  OpenShiftInstallerHandle:
+    Type: AWS::CloudFormation::WaitConditionHandle
 
-    OpenShiftInstaller:
-      Type: AWS::CloudFormation::WaitCondition
-      DependsOn: MirrorNode
-      Properties:
-        Handle: !Ref OpenShiftInstallerHandle
-        Timeout: '1800'
+  OpenShiftInstaller:
+    Type: AWS::CloudFormation::WaitCondition
+    DependsOn: MirrorNode
+    Properties:
+      Handle: !Ref OpenShiftInstallerHandle
+      Timeout: '1800'
 
 Outputs:
   MasterNodePublicIP:
