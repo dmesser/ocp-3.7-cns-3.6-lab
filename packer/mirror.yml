@@ -15,6 +15,7 @@
     - { role: authorized-key, tags: ['authorized_key'] }
     - { role: registered-host, tags: ['registered-host'], up2date_system: true }
     - { role: docker-host, tags: ['docker-host'] }
+    - { role: aws-host, tags: ['aws-host']}
     - { role: docker-registry, tags: ['docker-registry'] }
     - { role: registry-mirror, tags: ['registry-mirror'] }
     - { role: registry-mirror-client, tags: ['registry-mirror-client'] }

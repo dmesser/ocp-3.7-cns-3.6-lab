@@ -31,14 +31,6 @@
       - ceph-common
       - iscsi-initiator-utils
 
-  - name: copy install script to /root/
-    copy:
-      src: deploy-ocp.sh
-      dest: /root/
-      owner: root
-      group: root
-      mode: 0750
-
   - name: remove openshift packages from filter
     shell: atomic-openshift-excluder unexclude
 
