@@ -624,6 +624,7 @@ Resources:
                   openshift_examples_modify_imagestreams=false
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
                   openshift_enable_service_catalog=false
+                  openshift_template_service_broker_namespaces=['openshift']
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -683,8 +684,6 @@ Resources:
                   openshift_storage_glusterfs_heketi_image=rhgs3/rhgs-volmanager-rhel7
                   openshift_storage_glusterfs_heketi_version=3.3.0-364
                   openshift_storage_glusterfs_storageclass=true
-                  openshift_storage_glusterfs_storageclass_default=true
-                  openshift_storage_glusterfs_block_deploy=false
                   openshift_docker_additional_registries=mirror.lab:5555
                   openshift_docker_insecure_registries=mirror.lab:5555
                   oreg_url=mirror.lab:5555/openshift3/ose-${!component}:${!version}
@@ -695,6 +694,7 @@ Resources:
                   openshift_examples_modify_imagestreams=false
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
                   openshift_enable_service_catalog=false
+                  openshift_template_service_broker_namespaces=['openshift']
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -1221,6 +1221,7 @@ Resources:
                   openshift_examples_modify_imagestreams=false
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
                   openshift_enable_service_catalog=false
+                  openshift_template_service_broker_namespaces=['openshift']
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
