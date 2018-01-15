@@ -570,6 +570,10 @@ Resources:
         Ebs:
           VolumeSize: '20'
           VolumeType: 'gp2'
+      - DeviceName: /dev/xvdd
+        Ebs:
+          VolumeSize: '20'
+          VolumeType: 'gp2'
       UserData:
         Fn::Base64:
           !Sub |
@@ -1244,11 +1248,13 @@ Resources:
               - ansible localhost -m wait_for -a "port=22 timeout=600 host=node-5.lab"
               - ansible localhost -m wait_for -a "port=22 timeout=600 host=node-6.lab"
               - ansible masters -m filesystem -a "fstype=xfs dev=/dev/xvdc"
+              - ansible masters -m filesystem -a "fstype=xfs dev=/dev/xvdd"
               - ansible masters -m mount -a "fstype=xfs src=/dev/xvdc path=/var/lib/origin state=mounted"
+              - ansible masters -m mount -a "fstype=xfs src=/dev/xvdd path=/var/lib/etcd state=mounted"
               - ansible all -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible all -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
-              - "ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; /opt/aws/bin/cfn-signal -e $? '${OpenShiftInstallerHandle}'"
+              - "ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; /usr/local/sbin/cfn-signal.sh $? '${OpenShiftInstallerHandle}'"
               - ansible masters -m shell -a "/usr/local/bin/oc adm policy add-cluster-role-to-user cluster-admin operator"
               - ansible masters -m shell -a "/usr/local/bin/oadm manage-node master.lab --schedulable=false"
 
