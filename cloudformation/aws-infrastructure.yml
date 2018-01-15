@@ -1124,8 +1124,8 @@ Resources:
       SourceDestCheck: 'false'
       GroupSet:
         - Ref: MirrorSecurityGroup
-      SubnetId: !Ref PublicSubnet1
-      PrivateIpAddress: 10.0.1.99
+      SubnetId: !Ref PrivateSubnet1
+      PrivateIpAddress: 10.0.2.99
 
   MirrorNode:
     Type: AWS::EC2::Instance
