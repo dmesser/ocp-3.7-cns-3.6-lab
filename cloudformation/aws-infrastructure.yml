@@ -1254,7 +1254,7 @@ Resources:
               - ansible all -m copy -a "src=/etc/hosts dest=/etc/hosts"
               - ansible all -m shell -a "hostnamectl set-hostname {{ openshift_hostname }} --static"
               - ansible all -m shell -a "modprobe dm-thin-pool"
-              - "ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; /usr/local/sbin/cfn-signal.sh $? '${OpenShiftInstallerHandle}'"
+              - "ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/config.yml ; /usr/local/sbin/cfn-signal.sh $? ${OpenShiftInstallerHandle}"
               - ansible masters -m shell -a "/usr/local/bin/oc adm policy add-cluster-role-to-user cluster-admin operator"
               - ansible masters -m shell -a "/usr/local/bin/oadm manage-node master.lab --schedulable=false"
 
