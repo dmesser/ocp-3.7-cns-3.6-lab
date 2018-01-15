@@ -19,7 +19,7 @@ Parameters:
 
   MasterInstanceType:
     Type: String
-    Default: t2.large
+    Default: m4.xlarge
     AllowedValues:
       - t1.micro
       - t2.nano
@@ -27,6 +27,7 @@ Parameters:
       - t2.small
       - t2.medium
       - t2.large
+      - m4.xlarge
     ConstraintDescription: Must be a valid EC2 instance type.
 
   MirrorInstanceType:
