@@ -696,6 +696,7 @@ Resources:
                   openshift_storage_glusterfs_heketi_image=rhgs3/rhgs-volmanager-rhel7
                   openshift_storage_glusterfs_heketi_version=3.3.0-364
                   openshift_storage_glusterfs_storageclass=true
+                  openshift_storage_glusterfs_block_deploy=false
                   openshift_docker_additional_registries=mirror.lab:5555
                   openshift_docker_insecure_registries=mirror.lab:5555
                   oreg_url=mirror.lab:5555/openshift3/ose-${!component}:${!version}
