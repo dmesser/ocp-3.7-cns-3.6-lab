@@ -161,7 +161,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../module-1-install/" title="Modules" class="md-tabs__link md-tabs__link--active">
+        <a href="../module-1-ocp-environment/" title="Modules" class="md-tabs__link md-tabs__link--active">
           Modules
         </a>
       
@@ -231,8 +231,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../module-1-install/" title="Module 1 - Combined OpenShift and CNS Installation" class="md-nav__link">
-      Module 1 - Combined OpenShift and CNS Installation
+    <a href="../module-1-ocp-environment/" title="Module 1 - OpenShift Environment" class="md-nav__link">
+      Module 1 - OpenShift Environment
     </a>
   </li>
 
@@ -462,8 +462,10 @@ Parameters: resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.ni
 </pre></div>
 
 
-<p>!!! Note:<br />
-    The exact value for <code>resturl</code> will again be different for you because it&rsquo;s based on the <code>route</code>/IP address on your system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The exact value for <code>resturl</code> will again be different for you because it&rsquo;s based on the <code>route</code>/IP address on your system.</p>
+</div>
 <p>The <em>Provisioner</em> is a module in OpenShift/Kubernetes that can talk to the CNS API service: <em>heketi</em>. The parameters supplied in the <code>StorageClass</code> tell the <em>Provisioner</em> the URL of the API as well as the <code>admin</code> users (defined in <code>restuser</code>) password in the form of an OpenShift <code>secret</code> (<code>base64</code>&lsquo;d hash of the password).<br />
 The <em>Provisioner</em> is not an entity directly accessible to users.</p>
 <hr />
@@ -629,7 +631,7 @@ Parameters:     resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.15
 <p>Log on to the OpenShift UI as the <code>developer</code> user</p>
 </li>
 <li>
-<p>Create a new project called &lsquo;my-test-project&rsquo;, label and description is optional</p>
+<p>Click <em>+Create project</em> and create a new one called &lsquo;my-test-project&rsquo;, label and description is optional</p>
 </li>
 <li>
 <p>In the Overview, next to the project’s name select <em>Add to project</em></p>
@@ -681,9 +683,9 @@ service &quot;rails-pgsql-persistent&quot; created
 route &quot;rails-pgsql-persistent&quot; created
 imagestream &quot;rails-pgsql-persistent&quot; created
 buildconfig &quot;rails-pgsql-persistent&quot; created
-<span class="hll">deploymentconfig &quot;rails-pgsql-persistent&quot; created
-</span>persistentvolumeclaim &quot;postgresql&quot; created
-service &quot;postgresql&quot; created
+deploymentconfig &quot;rails-pgsql-persistent&quot; created
+<span class="hll">persistentvolumeclaim &quot;postgresql&quot; created
+</span>service &quot;postgresql&quot; created
 deploymentconfig &quot;postgresql&quot; created
 </pre></div>
 
@@ -749,14 +751,12 @@ rails-pgsql-persistent-1-hook-pre   0/1       Terminating   0         1m
 
 
 <p>Exit out of the watch mode with: <kbd>Ctrl</kbd> + <kbd>c</kbd></p>
-<p>!!! Note:<br />
-    It may take up to 5-7 minutes for the deployment to complete.</p>
-<div class="codehilite"><pre><span></span>If you did it via the UI the deployment is finished when both, rails app and postgres database are up and running:
-
-[![OpenShift Rails Example Deployment](img/openshift_rails_app_create_3.png)](img/openshift_rails_app_create_3.png)
-</pre></div>
-
-
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It may take up to 5-7 minutes for the deployment to complete.</p>
+<p>If you did it via the UI the deployment is finished when both, rails app and postgres database are up and running:</p>
+<p><a href="../img/openshift_rails_app_create_3.png"><img alt="OpenShift Rails Example Deployment" src="../img/openshift_rails_app_create_3.png" /></a></p>
+</div>
 <p>You should also see a PVC being issued and in the <em>Bound</em> state.</p>
 <p>&#8680; Look at the PVC created:</p>
 <div class="codehilite"><pre><span></span>oc get pvc/postgresql
@@ -781,8 +781,10 @@ rails-pgsql-persistent   rails-pgsql-persistent-my-test-project.cloudapps.34.252
 </pre></div>
 
 
-<p>!!! Note:<br />
-    Again, the URL will be slightly different for you.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Again, the URL will be slightly different for you.</p>
+</div>
 <p>Following this output, point your browser to the URL (prepend it with <code>http://</code> and append <strong>/articles</strong>) to reach the actual application, in this case:</p>
 <p>http://<em>rails-pgsql-persistent-my-test-project.cloudapps.<strong>&lt;YOUR-IP-HERE></strong>.nip.io</em>/<strong>articles</strong></p>
 <p>You should be able to successfully create articles and comments. The username/password to create articles and comments is by default <strong>openshift</strong>/<strong>secret</strong>.<br />

@@ -161,7 +161,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="../module-1-install/" title="Modules" class="md-tabs__link md-tabs__link--active">
+        <a href="../module-1-ocp-environment/" title="Modules" class="md-tabs__link md-tabs__link--active">
           Modules
         </a>
       
@@ -231,8 +231,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../module-1-install/" title="Module 1 - Combined OpenShift and CNS Installation" class="md-nav__link">
-      Module 1 - Combined OpenShift and CNS Installation
+    <a href="../module-1-ocp-environment/" title="Module 1 - OpenShift Environment" class="md-nav__link">
+      Module 1 - OpenShift Environment
     </a>
   </li>
 
@@ -442,9 +442,9 @@ This module has no pre-requisites.</p>
 </pre></div>
 
 
-<p>A version higher than or equals to <code>3.6.173.0.5-3</code> is required to utilize the <strong>OpenShift Advanced Installer</strong> to deploy CNS.</p>
+<p>A version higher than or equals to <code>3.6.173.0.5-3</code> is required to utilize the <strong>OpenShift Advanced Installer</strong> to deploy CNS. Since this lab is based on OpenShift Container Platform 3.7 this requirement is already satisfied.</p>
 <div class="codehilite"><pre><span></span>Installed Packages
-openshift-ansible.noarch                   3.6.173.0.21-2.git.0.44a4038.el7                    @rhel-7-server-ose-3.6-rpms
+openshift-ansible.noarch                   3.7.14-1.git.0.4b35b2d.el7                    @rhel-7-server-ose-3.7-rpms
 </pre></div>
 
 
@@ -465,12 +465,14 @@ openshift-ansible.noarch                   3.6.173.0.21-2.git.0.44a4038.el7     
 <span class="k">[OSEv3:vars]</span>
 <span class="na">deployment_type</span><span class="o">=</span><span class="s">openshift-enterprise</span>
 <span class="na">containerized</span><span class="o">=</span><span class="s">true</span>
-<span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.6.173.0.21</span>
+<span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.7.14</span>
 <span class="na">openshift_master_identity_providers</span><span class="o">=</span><span class="s">[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]</span>
 <span class="na">openshift_master_htpasswd_users</span><span class="o">=</span><span class="s">{&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}</span>
-<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.35.158.172.55.nip.io&#39;</span>
+<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.34.239.188.221.nip.io&#39;</span>
 <span class="na">openshift_router_selector</span><span class="o">=</span><span class="s">&#39;role=master&#39;</span>
+<span class="na">openshift_hosted_router_wait</span><span class="o">=</span><span class="s">true</span>
 <span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
+<span class="na">openshift_hosted_registry_wait</span><span class="o">=</span><span class="s">true</span>
 <span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
 <span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
 <span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
@@ -480,34 +482,46 @@ openshift-ansible.noarch                   3.6.173.0.21-2.git.0.44a4038.el7     
 <span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
 <span class="hll"><span class="na">openshift_storage_glusterfs_namespace</span><span class="o">=</span><span class="s">app-storage</span>
 </span><span class="hll"><span class="na">openshift_storage_glusterfs_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-server-rhel7</span>
-</span><span class="hll"><span class="na">openshift_storage_glusterfs_version</span><span class="o">=</span><span class="s">3.2.0-7</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_version</span><span class="o">=</span><span class="s">3.3.0-362</span>
 </span><span class="hll"><span class="na">openshift_storage_glusterfs_heketi_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-volmanager-rhel7</span>
-</span><span class="hll"><span class="na">openshift_storage_glusterfs_heketi_version</span><span class="o">=</span><span class="s">3.2.0-11</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_heketi_version</span><span class="o">=</span><span class="s">3.3.0-364</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_storageclass</span><span class="o">=</span><span class="s">true</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_block_deploy</span><span class="o">=</span><span class="s">false</span>
 </span><span class="na">openshift_docker_additional_registries</span><span class="o">=</span><span class="s">mirror.lab:5555</span>
 <span class="na">openshift_docker_insecure_registries</span><span class="o">=</span><span class="s">mirror.lab:5555</span>
-<span class="na">oreg_url</span><span class="o">=</span><span class="s">http://mirror.lab:5555/openshift3/ose-${component}:${version}</span>
-<span class="na">openshift_examples_modify_imagestreams</span><span class="o">=</span><span class="s">true</span>
-<span class="na">openshift_disable_check</span><span class="o">=</span><span class="s">disk_availability,memory_availability</span>
+<span class="na">oreg_url</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose-${component}:${version}</span>
+<span class="na">osm_etcd_image</span><span class="o">=</span><span class="s">mirror.lab:5555/rhel7/etcd</span>
+<span class="na">openshift_service_catalog_image_prefix</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose-</span>
+<span class="na">openshift_cli_image</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose</span>
+<span class="na">osm_image</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose</span>
+<span class="na">openshift_examples_modify_imagestreams</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_disable_check</span><span class="o">=</span><span class="s">disk_availability,memory_availability,docker_image_availability</span>
+<span class="na">openshift_enable_service_catalog</span><span class="o">=</span><span class="s">false</span>
 
 <span class="k">[masters]</span>
-<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">35.158.172.55.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=35.158.172.55</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">34.239.188.221.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221</span>
 
 <span class="k">[masters:vars]</span>
 <span class="na">openshift_schedulable</span><span class="o">=</span><span class="s">true</span>
 <span class="na">openshift_node_labels</span><span class="o">=</span><span class="s">&quot;{&#39;role&#39;: &#39;master&#39;}&quot;</span>
 
+<span class="k">[etcd:children]</span>
+<span class="na">masters</span>
+
 <span class="k">[nodes]</span>
-<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">35.158.172.55.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=35.158.172.55</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">34.239.188.221.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221</span>
 <span class="na">infra-1.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-1.lab openshift_ip=10.0.2.101 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
 <span class="na">infra-2.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-2.lab openshift_ip=10.0.3.102 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
 <span class="na">infra-3.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-3.lab openshift_ip=10.0.4.103 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
 <span class="na">node-1.lab openshift_hostname</span><span class="o">=</span><span class="s">node-1.lab openshift_ip=10.0.2.201 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
 <span class="na">node-2.lab openshift_hostname</span><span class="o">=</span><span class="s">node-2.lab openshift_ip=10.0.3.202 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
 <span class="na">node-3.lab openshift_hostname</span><span class="o">=</span><span class="s">node-3.lab openshift_ip=10.0.4.203 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
-<span class="na">node-4.lab openshift_hostname</span><span class="o">=</span><span class="s">node-4.lab openshift_ip=10.0.4.204 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-4.lab openshift_hostname</span><span class="o">=</span><span class="s">node-4.lab openshift_ip=10.0.2.204 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-5.lab openshift_hostname</span><span class="o">=</span><span class="s">node-5.lab openshift_ip=10.0.3.205 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+<span class="na">node-6.lab openshift_hostname</span><span class="o">=</span><span class="s">node-6.lab openshift_ip=10.0.4.206 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
 
-<span class="hll"><span class="k">[glusterfs]</span>
-</span><span class="hll"><span class="na">node-1.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.2.201 glusterfs_zone=1 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
+<span class="k">[glusterfs]</span>
+<span class="hll"><span class="na">node-1.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.2.201 glusterfs_zone=1 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
 </span><span class="hll"><span class="na">node-2.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.3.202 glusterfs_zone=2 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
 </span><span class="hll"><span class="na">node-3.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.4.203 glusterfs_zone=3 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
 </span></pre></div>
@@ -516,14 +530,17 @@ openshift-ansible.noarch                   3.6.173.0.21-2.git.0.44a4038.el7     
 <p>The highlighted lines show the settings relevant for CNS deployment. In summary what is provided is:</p>
 <ul>
 <li>a hostgroup called <code>[glusterfs]</code> is created with all those OpenShift nodes that are designed to run CNS</li>
-<li><em>(optional)</em> a custom name for the namespace is provided in which the CNS pods will live</li>
-<li><em>(optional)</em> a specific name and version of the required container images to be used</li>
+<li>a custom name for the namespace is provided in which the CNS pods will live (<code>openshift_storage_glusterfs_namespace</code>, optional)</li>
+<li>a specific name and version of the required container images to be used (<code>openshift_storage_glusterfs_image</code> and <code>openshift_storage_glusterfs_version</code>, optional)</li>
+<li>a specific name and version of the required heketi api server images to be used (<code>openshift_storage_glusterfs_image</code> and <code>openshift_storage_glusterfs_version</code>, optional)</li>
+<li>a setting to automatically create a <code>StorageClass</code> for CNS (<code>openshift_storage_glusterfs_storageclass</code>)</li>
+<li>a setting to disable the gluster-block provisioner (<code>openshift_storage_glusterfs_block_deploy</code>, optional, default true)</li>
 <li>information about available block devices, zone and <em>(optionally)</em> IP addresses for GlusterFS traffic for each host in the <code>[glusterfs]</code> group</li>
 </ul>
 <p>In every environment the following pre-requisites need to be met:</p>
 <ul>
 <li>the designated nodes have a valid Red Hat Gluster Storage Subscription</li>
-<li>the device names in <code>glusterfs_devices</code> should contain no data or filesystem/LVM structures</li>
+<li>the device names in <code>glusterfs_devices</code> should contain no data or filesystem/LVM structures (otherwise specify <code>openshift_storage_glusterfs_wipe  =true</code>)</li>
 <li>there need to be at least 3 nodes in the <code>[glusterfs]</code> host group and these should also be part of the <code>[nodes]</code> group</li>
 </ul>
 <div class="admonition tip">
@@ -562,15 +579,6 @@ node-2.lab | SUCCESS =&gt; {
 </pre></div>
 
 
-<p>!!! Danger &ldquo;Important&rdquo;:<br />
-    In this lab exercise you are directly invoking the CNS-related playbooks of <code>openshift-ansible</code>. This is <strong>not supported</strong> in production as of yet.<br />
-    The supported way to deploy CNS with <code>openshift-ansible</code> is to include the configuration in the inventory file from the very beginning and deploy it with OpenShift. Special care has been taken in this lab so that it works with an existint OCP deployment.</p>
-<div class="codehilite"><pre><span></span>Official support for post-deploy CNS installation with this method is planned for one of the next minor releases.
-</pre></div>
-
-
-<p>The installation will take approximately 4-5 minutes. In the meantime proceed with the next paragraph.</p>
-<hr />
 <h2 id="what-happens-in-the-background">What happens in the background<a class="headerlink" href="#what-happens-in-the-background" title="Permanent link">#</a></h2>
 <p>CNS provides software-defined storage hosted on OpenShift used by OpenShift. In particular it&rsquo;s based on <em>Red Hat Gluster Storage</em> running in OpenShift pods with direct access the host&rsquo;s network and storage device.<br />
 Gluster effectively virtualizes the local storage capacity of each node into a flat namespace providing scale-out, federated file storage transparently as a single mount point across the network.</p>
@@ -584,60 +592,50 @@ Gluster effectively virtualizes the local storage capacity of each node into a f
 <p>At least 3, but potentially more, GlusterFS pods form a cluster (a <em>Trusted Storage Pool</em> in GlusterFS terminology) across which storage will transparently be replicated in a synchronous fashion.</p>
 <p>After some time you will see a 4th pod come up. <em>heketi</em> is a component that will expose an API for GlusterFS to OpenShift. This allows OpenShift to dynamically allocate storage from CNS in a programmatic fashion. See below for a visualization. Note that for simplicity, in our lab environment heketi may be scheduled on one of the OpenShift App nodes. In production <code>heketi</code> should be configured to run on OpenShift Infrastructure nodes.</p>
 <p><a href="../img/cns_diagram_heketi.svg"><img alt="heketi pod running in CNS" src="../img/cns_diagram_heketi.svg" /></a></p>
-<p>!!! Tip:<br />
-    For the extra curious - or if you still need to beat some time - here is a more detailed list of actions that are performed:</p>
-<div class="codehilite"><pre><span></span>- an OpenShift namespace is selected / created for the CNS pods
-- the permission to run CNS pods in `privileged` mode is added to the *ServiceAccount* used by CNS
-- a JSON structure is created that lays out a map of OpenShift nodes that will run CNS (called a `topology`), including information about their network and available disk devices
-- passwords are generated for user and administrative accounts of the CNS API server (`heketi`)
-- a set of templates are used to create an intermediary instance of *heketi*
-- the designated CNS nodes are labeled with a specific key-value pair
-- a `DaemonSet` configuration is created that causes a CNS pod to launch on every node matching that key-value pair
-- the intermediary instance of *heketi* uses the JSON-formatted topology to initialize the CNS pods (creating LVM and directory structures on the supplied block devices)
-- the intermediary instance of *heketi* is used to initiate GlusterFS peering so the CNS pods form a GlusterFS *Trusted Storage Pool*
-- the intermediary instance of *heketi* is used to create a GlusterFS volume to host the *heketi*-internal database (based on `BoltDB`)
-- a copy of the database of the intermediary *heketi* instance is created on that volume
-- the intermediary instance is terminated and a new *heketi* instance is deployed mounting the GlusterFS volume and the database
-- a `Service` is created in OpenShift to expose the API of *heketi* to the network
-- a `Route` is created in OpenShift to make the *heketi* pod reachable from the outside
-</pre></div>
-
-
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For the extra curious - or if you still need to beat some time - here is a more detailed list of actions that are performed:</p>
+<ul>
+<li>an OpenShift namespace is selected / created for the CNS pods</li>
+<li>the permission to run CNS pods in <code>privileged</code> mode is added to the <em>ServiceAccount</em> used by CNS</li>
+<li>a JSON structure is created that lays out a map of OpenShift nodes that will run CNS (called a <code>topology</code>), including information about their network and available disk devices</li>
+<li>passwords are generated for user and administrative accounts of the CNS API server (<code>heketi</code>)</li>
+<li>a set of templates are used to create an intermediary instance of <em>heketi</em></li>
+<li>the designated CNS nodes are labeled with a specific key-value pair</li>
+<li>a <code>DaemonSet</code> configuration is created that causes a CNS pod to launch on every node matching that key-value pair</li>
+<li>the intermediary instance of <em>heketi</em> uses the JSON-formatted topology to initialize the CNS pods (creating LVM and directory structures on the supplied block devices)</li>
+<li>the intermediary instance of <em>heketi</em> is used to initiate GlusterFS peering so the CNS pods form a GlusterFS <em>Trusted Storage Pool</em></li>
+<li>the intermediary instance of <em>heketi</em> is used to create a GlusterFS volume to host the <em>heketi</em>-internal database (based on <code>BoltDB</code>)</li>
+<li>a copy of the database of the intermediary <em>heketi</em> instance is created on that volume</li>
+<li>the intermediary instance is terminated and a new <em>heketi</em> instance is deployed mounting the GlusterFS volume and the database</li>
+<li>a <code>Service</code> is created in OpenShift to expose the API of <em>heketi</em> to the network</li>
+<li>a <code>Route</code> is created in OpenShift to make the <em>heketi</em> pod reachable from the outside</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is currently a bug where despite setting <code>openshift_storage_glusterfs_block_deploy=false</code> the <code>gluster-block</code> provisioner will be deployed anyway.<br />
+You will get to know this provisioner later in <a href="../../module-5-cns-for-infra/">Module 5</a>.</p>
+</div>
 <hr />
 <p>By now the installation should have completed successfully with output similar to the below:</p>
-<div class="codehilite"><pre><span></span>PLAY RECAP ***************************************************************************************************************
-infra-1.lab                : ok=72   changed=3    unreachable=0    failed=0
-infra-2.lab                : ok=72   changed=3    unreachable=0    failed=0
-infra-3.lab                : ok=72   changed=3    unreachable=0    failed=0
-localhost                  : ok=9    changed=0    unreachable=0    failed=0
-master.lab                 : ok=137  changed=34   unreachable=0    failed=0
-node-1.lab                 : ok=86   changed=4    unreachable=0    failed=0
-node-2.lab                 : ok=86   changed=4    unreachable=0    failed=0
-node-3.lab                 : ok=86   changed=4    unreachable=0    failed=0
-node-4.lab                 : ok=72   changed=3    unreachable=0    failed=0
+<div class="codehilite"><pre><span></span>PLAY RECAP ****************************************************************************************************************************
+infra-1.lab                : ok=60   changed=2    unreachable=0    failed=0
+infra-2.lab                : ok=60   changed=2    unreachable=0    failed=0
+infra-3.lab                : ok=60   changed=2    unreachable=0    failed=0
+localhost                  : ok=12   changed=0    unreachable=0    failed=0
+master.lab                 : ok=116  changed=34   unreachable=0    failed=0
+node-1.lab                 : ok=65   changed=6    unreachable=0    failed=0
+node-2.lab                 : ok=65   changed=6    unreachable=0    failed=0
+node-3.lab                 : ok=65   changed=6    unreachable=0    failed=0
+node-4.lab                 : ok=60   changed=2    unreachable=0    failed=0
+node-5.lab                 : ok=60   changed=2    unreachable=0    failed=0
+node-6.lab                 : ok=60   changed=2    unreachable=0    failed=0
 
-Wednesday 20 September 2017  11:44:29 +0000 (0:00:00.157)       0:04:33.834 ***
-===============================================================================
-openshift_storage_glusterfs : Wait for GlusterFS pods ------------------ 83.80s
-openshift_storage_glusterfs : Wait for deploy-heketi pod --------------- 31.64s
-openshift_version : Get available atomic-openshift version ------------- 19.64s
-openshift_storage_glusterfs : Wait for heketi pod ---------------------- 10.90s
-openshift_storage_glusterfs : Wait for copy job to finish -------------- 10.88s
-openshift_storage_glusterfs : Delete deploy resources ------------------- 5.20s
-openshift_storage_glusterfs : Load heketi topology ---------------------- 4.81s
-openshift_facts : Ensure various deps are installed --------------------- 4.57s
-openshift_storage_glusterfs : Create heketi DB volume ------------------- 3.55s
-openshift_version : Get available atomic-openshift version -------------- 3.17s
-openshift_storage_glusterfs : Deploy deploy-heketi pod ------------------ 3.06s
-openshift_storage_glusterfs : Deploy heketi pod ------------------------- 3.04s
-openshift_storage_glusterfs : Label GlusterFS nodes --------------------- 2.14s
-openshift_storage_glusterfs : Deploy GlusterFS pods --------------------- 1.75s
-openshift_docker_facts : Set docker facts ------------------------------- 1.61s
-openshift_storage_glusterfs : Add service accounts to privileged SCC ---- 1.44s
-openshift_storage_glusterfs : Verify target namespace exists ------------ 1.43s
-openshift_docker_facts : Set docker facts ------------------------------- 1.39s
-openshift_facts : Gather Cluster facts and set is_containerized if needed --- 1.25s
-openshift_storage_glusterfs : Create heketi service account ------------- 1.08s
+
+INSTALLER STATUS **********************************************************************************************************************
+Initialization             : Complete
+GlusterFS Install          : Complete
 </pre></div>
 
 
@@ -705,8 +703,10 @@ heketi-storage   heketi-storage-app-storage.cloudapps.35.158.172.55.nip.io      
 
 <p>Based on this <em>heketi</em> will be available on the heketi API URL, in this example:<br />
 http://<em>heketi-storage-app-storage.cloudapps.35.158.172.55.nip.io</em></p>
-<p>!!! Note:<br />
-    In your environment the URL will be slightly different. It will contain the public IPv4 address of your deployment, dynamically resolved by the nip.io service.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In your environment the URL will be slightly different. It will contain the public IPv4 address of your deployment, dynamically resolved by the nip.io service.</p>
+</div>
 <p>&#8680; You may verify this trivial health check using <code>curl</code> (and an in-line <code>oc</code> command to dynamically retrieve the <code>route</code> for easy copy&amp;paste):</p>
 <div class="codehilite"><pre><span></span>curl http://$(oc get route/heketi-storage -o jsonpath=&#39;{.spec.host}&#39;)/hello
 </pre></div>
@@ -746,12 +746,14 @@ export HEKETI_CLI_KEY=$(oc get pod/$HEKETI_POD -o jsonpath=&#39;{.spec.container
 
 <p>This should list at least one cluster by it&rsquo;s UUID:</p>
 <div class="codehilite"><pre><span></span>Clusters:
-fb67f97166c58f161b85201e1fd9b8ed
+Id:b4d91249c6123afa0281ee32965b20a7 [file][block]
 </pre></div>
 
 
-<p>!!! Note:<br />
-    The UUID is auto-generated and will be different for you.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The UUID is auto-generated and will be different for you.</p>
+</div>
 <p>&#8680; Use the <strong>UUID unique to your environment</strong> and obtain more information about it:</p>
 <div class="codehilite"><pre><span></span>heketi-cli cluster info fb67f97166c58f161b85201e1fd9b8e
 </pre></div>
@@ -765,6 +767,9 @@ bfc006b571e85a083118054233bfb16d
 c5979019ac13b9fe02f4e4e2dc6d62cb
 Volumes:
 2415fba2b9364a65711da2a8311a663a
+Block: true
+
+File: true
 </pre></div>
 
 
@@ -775,6 +780,9 @@ Volumes:
 
 <p>You will get lengthy output that shows what nodes and disk devices CNS has used to deploy a containerised GlusterFS cluster.</p>
 <div class="codehilite"><pre><span></span>Cluster Id: fb67f97166c58f161b85201e1fd9b8ed
+
+File:  true
+Block: true
 
 Volumes:
 
@@ -866,7 +874,7 @@ Id:2a49883a5cb39c3b845477ff85a729ba   Name:/dev/xvdc           State:online    S
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../module-1-install/" title="Module 1 - Combined OpenShift and CNS Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../module-1-ocp-environment/" title="Module 1 - OpenShift Environment" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -875,7 +883,7 @@ Id:2a49883a5cb39c3b845477ff85a729ba   Name:/dev/xvdc           State:online    S
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Module 1 - Combined OpenShift and CNS Installation
+                Module 1 - OpenShift Environment
               </span>
             </div>
           </a>
