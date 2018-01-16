@@ -638,6 +638,8 @@ Resources:
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
                   openshift_enable_service_catalog=true
                   openshift_template_service_broker_namespaces=['openshift']
+                  template_service_broker_install=true
+                  ansible_service_broker_install=false
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -709,6 +711,8 @@ Resources:
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
                   openshift_enable_service_catalog=true
                   openshift_template_service_broker_namespaces=['openshift']
+                  template_service_broker_install=true
+                  ansible_service_broker_install=false
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
@@ -1236,6 +1240,8 @@ Resources:
                   openshift_disable_check=disk_availability,memory_availability,docker_image_availability
                   openshift_enable_service_catalog=true
                   openshift_template_service_broker_namespaces=['openshift']
+                  template_service_broker_install=true
+                  ansible_service_broker_install=false
 
                   [masters]
                   master.lab openshift_public_hostname=${MasterNodePublicIP}.nip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
