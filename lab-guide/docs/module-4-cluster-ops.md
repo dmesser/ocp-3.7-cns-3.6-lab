@@ -18,7 +18,7 @@ There are several use cases for this:
 
 1. Run OpenShift across large geo-graphical distances with a CNS cluster per region whereas otherwise latency prohibits synchronous data replication in  a stretched setup
 
-!!! Note:
+!!! Note
     The procedures to add an additional CNS cluster to an existing setup is not yet supported by `openshift-ansible`.
 
 Because we cannot use `openshift-ansible` as of today we need to run a couple of steps manually that would otherwise be automated.
@@ -66,7 +66,7 @@ First we need to make sure the firewall on those systems is updated. Without `op
 
 &#8680; Run this small Ansible playbook to apply and reload the firewall configuration on all 3 nodes conveniently:
 
-    ansible-playbook configure-firewall.yml
+    ansible-playbook -i /etc/ansible/ocp-with-glusterfs configure-firewall.yml
 
 The playbook should complete successfully:
 
@@ -121,7 +121,7 @@ You can also watch the additional GlusterFS pods deploy in the OpenShift UI, whi
 
 [![CNS Deployment](img/openshift_2nd_cns_pods.png)](img/openshift_2nd_cns_pods.png)
 
-!!! Note:
+!!! Note
     It may take up to 3 minutes for the GlusterFS pods to transition into `READY` state.
 
 &#8680; When done, on the CLI display all GlusterFS pods alongside with the name of the container host they are running on:
@@ -268,7 +268,7 @@ export HEKETI_CLI_KEY=$(oc get pod/$HEKETI_POD -o jsonpath='{.spec.containers[0]
 Example output:
 
     Clusters:
-    fb67f97166c58f161b85201e1fd9b8ed
+    fb67f97166c58f161b85201e1fd9b8ed [file][block]
 
 Your ID will be different since it's auto-generated.
 
@@ -285,19 +285,21 @@ Your ID will be different since it's auto-generated.
 
 You should see output similar to the following:
 
-    Found node node-1.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
-    Found device /dev/xvdc
-    Found node node-2.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
-    Found device /dev/xvdc
-    Found node node-3.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
-    Found device /dev/xvdc
+          Found node node-1.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+          Found device /dev/xvdc
+          Found node node-2.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+          Found device /dev/xvdc
+          Found node node-3.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+          Found device /dev/xvdc
     Creating cluster ... ID: 46b205a4298c625c4bca2206b7a82dd3
-    Creating node node-4.lab ... ID: 604d2eb15a5ca510ff3fc5ecf912d3c0
-    Adding device /dev/xvdc ... OK
-    Creating node node-5.lab ... ID: 538b860406870288af23af0fbc2cd27f
-    Adding device /dev/xvdc ... OK
-    Creating node node-6.lab ... ID: 7736bd0cb6a84540860303a6479cacb2
-    Adding device /dev/xvdc ... OK
+          Allowing file volumes on cluster.
+          Allowing block volumes on cluster.
+          Creating node node-4.lab ... ID: 604d2eb15a5ca510ff3fc5ecf912d3c0
+          Adding device /dev/xvdc ... OK
+          Creating node node-5.lab ... ID: 538b860406870288af23af0fbc2cd27f
+          Adding device /dev/xvdc ... OK
+          Creating node node-6.lab ... ID: 7736bd0cb6a84540860303a6479cacb2
+          Adding device /dev/xvdc ... OK
 
 As indicated from above output a new cluster got created.
 
@@ -308,8 +310,8 @@ As indicated from above output a new cluster got created.
 You should see a second cluster in the list:
 
     Clusters:
-    46b205a4298c625c4bca2206b7a82dd3
-    fb67f97166c58f161b85201e1fd9b8ed
+    46b205a4298c625c4bca2206b7a82dd3 [file][block]
+    fb67f97166c58f161b85201e1fd9b8ed [file][block]
 
 The second cluster, in this example with the ID `46b205a4298c625c4bca2206b7a82dd3`, is an entirely independent GlusterFS deployment. The exact value will be different in your environment.
 
@@ -333,6 +335,9 @@ Now we have two independent GlusterFS clusters managed by the same heketi instan
 Abbreviated output:
 
     Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
+
+        File:  true
+        Block: true
 
         Volumes:
 
@@ -370,6 +375,9 @@ Abbreviated output:
 
     Cluster Id: fb67f97166c58f161b85201e1fd9b8ed
 
+          File:  true
+          Block: true
+
     [...output omitted for brevity...]
 
 heketi formed an new, independent 3-node GlusterFS cluster on those nodes.
@@ -390,7 +398,7 @@ glusterfs-jbvdk   1/1       Running   0          4h        10.0.3.202   node-2.l
 glusterfs-rchtr   1/1       Running   0          4h        10.0.4.203   node-3.lab
 ```
 
-!!! Note:
+!!! Note
     Again note that the pod names are dynamically generated and will be different. Look the FQDN of your hosts to determine one of new cluster's pods.
 
 &#8680; Let's run the `gluster peer status` command in the GlusterFS pod running on the node `node-6.lab`:
@@ -620,7 +628,7 @@ SLOW_PV=$(oc get pvc/my-slow-container-storage -o jsonpath="{.spec.volumeName}")
 oc get pv/$SLOW_PV -o jsonpath="{.spec.glusterfs.path}"
 ~~~~
 
-... you will notice that they match the volumes found in the CNS clusters from within their pods respectively.
+... you will notice that their GlusterFS volume path match the volumes found by heketi in the two CNS clusters respectively. Evidence the volumes have been created in exactly the cluster that the `StorageClass` pointed to.
 
 This is how you use multiple, parallel GlusterFS pools/clusters on a single OpenShift cluster with a single heketi instance. Whereas the first pool is created with `openshift-ansible` subsequent pools/cluster are created with the `heketi-cli` client.
 
@@ -809,7 +817,7 @@ Contrary to the output of these commands the label `glusterfs` is actually remov
 
     oc get pods -o wide -n app-storage -l glusterfs=storage-pod
 
-!!! Note:
+!!! Note
     It can take up to 2 minutes for the pods to terminate.
 
 You should be back down to 3 GlusterFS pods, e.g.
@@ -955,7 +963,7 @@ oc label node/node-6.lab glusterfs=storage-host
 
      oc get pods -o wide -n app-storage -l glusterfs=storage-pod
 
-!!! Note:
+!!! Note
     It may take up to 3 minutes for the GlusterFS pods to transition into `READY` state.
 
 This confirms all GlusterFS pods are ready to receive remote commands:
@@ -1147,14 +1155,20 @@ PVC -> PV -> heketi volume -> GlusterFS volume -> GlusterFS brick -> Physical De
 Note the `PVs` name:
 ``` hl_lines="5"
     Name:		my-large-container-store
-    Namespace:	my-test-project
-    StorageClass:	app-storage
+    Namespace:	app-storage
+    StorageClass:	glusterfs-storage
     Status:		Bound
     Volume:		pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
     Labels:		<none>
+    Annotations:	pv.kubernetes.io/bind-completed=yes
+    pv.kubernetes.io/bound-by-controller=yes
+    volume.beta.kubernetes.io/storage-provisioner=kubernetes.io/glusterfs
     Capacity:	200Gi
-    Access Modes:	RWO
-    No events.
+    Access Modes:	RWX
+    Events:
+    FirstSeen	LastSeen	Count	From				SubObjectPath	Type		Reason			Message
+    ---------	--------	-----	----				-------------	--------	------			-------
+    6s		6s		1	persistentvolume-controller			Normal		ProvisioningSucceeded	Successfully provisioned volume pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8 using kubernetes.io/glusterfs
 ```
 
 &#8680; Get the GlusterFS volume name of this PV, **use your PVs name here**, e.g.
@@ -1164,21 +1178,28 @@ Note the `PVs` name:
 The GlusterFS volume name as it used by GlusterFS:
 
 ``` hl_lines="13"
-    Name:		pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
-    Labels:		<none>
-    StorageClass:	app-storage
-    Status:		Bound
-    Claim:		my-test-project/my-large-container-store
-    Reclaim Policy:	Delete
-    Access Modes:	RWO
-    Capacity:	200Gi
-    Message:
-    Source:
-        Type:		Glusterfs (a Glusterfs mount on the host that shares a pod's lifetime)
-        EndpointsName:	glusterfs-dynamic-my-large-container-store
-        Path:		vol_3ff9946ddafaabe9745f184e4235d4e1
-        ReadOnly:		false
-    No events.
+Name:		pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
+Labels:		<none>
+Annotations:  Description=Gluster: Dynamically provisioned PV
+              gluster.org/type=file
+              kubernetes.io/createdby=heketi-dynamic-provisioner
+              pv.beta.kubernetes.io/gid=2002
+              pv.kubernetes.io/bound-by-controller=yes
+              pv.kubernetes.io/provisioned-by=kubernetes.io/glusterfs
+              volume.beta.kubernetes.io/mount-options=auto_unmount
+StorageClass:	glusterfs-storage
+Status:		Bound
+Claim:		app-storage/my-large-container-store
+Reclaim Policy:	Delete
+Access Modes:	RWX
+Capacity:	200Gi
+Message:
+Source:
+    Type:           Glusterfs (a Glusterfs mount on the host that shares a pod's lifetime)
+    EndpointsName:  glusterfs-dynamic-my-large-container-store
+    Path:           vol_3ff9946ddafaabe9745f184e4235d4e1
+    ReadOnly:       false
+Events:   <none>
 ```
 
 Let's programmatically determine and safe the relevant information so you don't have to type all this stuff.
@@ -1247,7 +1268,7 @@ Id:62cbae7a3f6faac38a551a614419cca3   Name:/dev/xvdd           State:online    S
 
 In this case it's `/dev/xvdd` of `node-6.lab`.
 
-!!! Note:
+!!! Note
     The device might be different for you. This is subject to heketi's dynamic scheduling.
 
 We will now proceed to disable and delete this device. For that we have to find and use it's UUID in `heketi`.
@@ -1275,7 +1296,8 @@ This will take the device offline and exclude it from future volume creation req
     heketi-cli device remove $FAILED_DEVICE_ID
 
 You will notice this command takes a while.
-That's because it will trigger a brick-replacement in GlusterFS. The command will block and heketi in the background will transparently create new bricks for each brick on the device to be deleted. The replacement operation will be conducted with the new bricks replacing all bricks on the device to be deleted. During this time the data remains accessible.
+That's because it will trigger a brick-replacement in GlusterFS. The command will block and heketi in the background will transparently create new bricks for each brick on the device to be deleted. There may be many bricks on the device since it's likely serving many volumes.
+The replacement operation will be conducted with the new bricks replacing all bricks on the device to be deleted. During this time the data remains accessible.
 
 The new bricks, if possible, will automatically be created in zones different from the remaining bricks to maintain equal balancing and cross-zone availability.
 
@@ -1301,6 +1323,6 @@ echo $NEW_DEVICE
 If you cross-check again the new bricks mount path with the heketi topology you will see it's indeed coming from a different device. The remaining device in `node-6.lab`, in this case `/dev/xvdc`
 
 !!! Tip
-    Device removal while maintaining volume health is possible in heketi as well. Simply delete all devices of the node in question as discussed above. Then the device can be deleted from heketi with `heketi-cli device delete <device-uuid>`
+    Node removal while maintaining volume health is possible in heketi as well. Simply delete all devices of the node in question as discussed above. Then the node itself can be deleted from heketi with `heketi-cli node delete <node-uuid>`
 
 ---

@@ -223,11 +223,11 @@ Normally a user doesn’t request storage with a `PVC` directly. Rather the `PVC
 
     > 1.  Log on to the OpenShift UI as the `developer` user
 
-    > 1.  Click *+Create project* and create a new one called 'my-test-project', label and description is optional
+    > 1.  Click *+ Create project* and create a new one called 'my-test-project', label and description is optional
 
-    > 1.  In the Overview, next to the project’s name select *Add to project*
+    > 1. Click on the project you just created
 
-    > 1.  In the *Browse Catalog* view select *Ruby* from the list of programming languages
+    > 1.  In the *Browse Catalog* view, select the "Languages" category and choose *Ruby* from the list of programming languages
 
     > 1.  Select the example app entitled *Rails + PostgreSQL (Persistent)*
 
@@ -725,13 +725,11 @@ Let's see how this is stored locally in the container.
 
     oc get pods -l app=file-uploader
 
-You will see two entries:
+You will see something similar to this:
 
-    file-uploader-1-build            0/1       Completed   0          7m
     file-uploader-1-g7b0h            1/1       Running     0          6m
 
 The name of the single pod currently running the app is this example is **file-uploader-1-g7b0h**.
-The container called `file-uploader-1-build` is the builder container that deployed the application and it has already terminated.
 
 !!! Note
     The exact name of the pod will be different in your environment.
@@ -924,7 +922,6 @@ Output:
 
 ~~~~
 NAME                             READY     STATUS      RESTARTS   AGE
-file-uploader-1-build            0/1       Completed   0          18m
 file-uploader-2-jd22b            1/1       Running     0          1m
 file-uploader-2-kw9lq            1/1       Running     0          2m
 file-uploader-2-xbz24            1/1       Running     0          1m
