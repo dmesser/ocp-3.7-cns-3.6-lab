@@ -50,19 +50,19 @@ Mappings:
 
   AWSRegion2OCPAMI:
     us-east-1:
-      ami: ami-ea163790
+      ami: ami-dad4f9a0
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
       ami: NOT_SUPPORTED
     us-west-2:
-      ami: ami-6c6edf14
+      ami: ami-b90ebec1
     eu-west-1:
       ami: NOT_SUPPORTED
     eu-west-2:
       ami: NOT_SUPPORTED
     eu-central-1:
-      ami: ami-16f36f79
+      ami: ami-1ef76871
     ap-northeast-1:
       ami: NOT_SUPPORTED
     ap-northeast-2:
@@ -608,8 +608,10 @@ Resources:
                   openshift_hosted_router_wait=false
                   openshift_registry_selector='role=infra'
                   openshift_hosted_registry_wait=false
+                  openshift_hosted_registry_storage_volume_size=10Gi
                   openshift_hosted_registry_storage_kind=glusterfs
-                  openshift_storage_glusterfs_registry_storageclass=True
+                  openshift_hosted_registry_storage_glusterfs_swap=true
+                  openshift_hosted_registry_storage_glusterfs_swapcopy=true
                   openshift_metrics_install_metrics=false
                   openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
                   openshift_metrics_cassandra_storage_type=pv
@@ -623,7 +625,6 @@ Resources:
                   openshift_storage_glusterfs_heketi_version=3.3.0-364
                   openshift_storage_glusterfs_registry_namespace=infra-storage
                   openshift_storage_glusterfs_registry_storageclass=false
-                  openshift_hosted_registry_storage_glusterfs_swap=true
                   openshift_storage_glusterfs_registry_block_deploy=true
                   openshift_storage_glusterfs_registry_block_version=3.3.0-362
                   openshift_storage_glusterfs_registry_block_host_vol_create=true
@@ -685,6 +686,8 @@ Resources:
                   openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}.xip.io'
                   openshift_router_selector='role=master'
                   openshift_hosted_router_wait=false
+                  openshift_hosted_registry_storage_glusterfs_swap=false
+                  openshift_hosted_registry_storage_kind=''
                   openshift_registry_selector='role=infra'
                   openshift_hosted_registry_wait=false
                   openshift_metrics_install_metrics=false
