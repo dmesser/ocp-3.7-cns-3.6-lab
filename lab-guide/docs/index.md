@@ -50,7 +50,7 @@ There is a copy-to-clipboard button next to each field to easily obtain the foll
 |------------| -------- |-------- |
 |IP to Lab Environment | MasterNodePublicIP |e.g. *34.226.81.9* |
 |SSH user on master node | SSHLoginUser | `ec2-user` |
-|(After OpenShift deployment) URL to OpenShift UI| OpenShiftLoginURL |e.g. *https://34.226.81.9..xip.io:8443/* |
+|(After OpenShift deployment) URL to OpenShift UI| OpenShiftLoginURL |e.g. *https://34.226.81.9.xip.io:8443/* |
 
 ## 6. Access the jump server
 

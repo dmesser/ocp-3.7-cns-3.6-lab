@@ -448,7 +448,7 @@ This will result in a file named `glusterfs-storage-fast.json` looking like the 
     "uid": "3c107010-a126-11e7-b0a5-025fcde0880f"
   },
   "parameters": {
-    "resturl": "http://heketi-storage-app-storage.cloudapps.34.252.58.209..xip.io",
+    "resturl": "http://heketi-storage-app-storage.cloudapps.34.252.58.209.xip.io",
     "restuser": "admin",
     "secretName": "heketi-storage-admin-secret",
     "secretNamespace": "app-storage",
@@ -494,7 +494,7 @@ This creates a file called `glusterfs-storage-slow.json`, looking similar to the
   },
   "parameters": {
     "clusterid": "46b205a4298c625c4bca2206b7a82dd3",
-    "resturl": "http://heketi-storage-app-storage.cloudapps.34.252.58.209..xip.io",
+    "resturl": "http://heketi-storage-app-storage.cloudapps.34.252.58.209.xip.io",
     "restuser": "admin",
     "secretName": "heketi-storage-admin-secret",
     "secretNamespace": "app-storage"

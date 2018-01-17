@@ -43,7 +43,7 @@ Name:		glusterfs-storage
 IsDefaultClass:	No
 Annotations:	<none>
 Provisioner:	kubernetes.io/glusterfs
-Parameters:	resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154..xip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
+Parameters:	resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.xip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
 ~~~~
 
 !!! Note
@@ -204,7 +204,7 @@ Name:           glusterfs-storage
 IsDefaultClass: Yes
 Annotations:	<none>
 Provisioner:	kubernetes.io/glusterfs
-Parameters:     resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154..xip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
+Parameters:     resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.xip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
 ~~~~
 
 !!! Danger "Important"
@@ -366,14 +366,14 @@ Now go ahead and try out the application. The overview page in the OpenShift UI 
 Output:
 
     NAME                     HOST/PORT                                                               PATH      SERVICES                 PORT      TERMINATION   WILDCARD
-    rails-pgsql-persistent   rails-pgsql-persistent-my-test-project.cloudapps.34.252.58.209..xip.io             rails-pgsql-persistent   <all>                   None
+    rails-pgsql-persistent   rails-pgsql-persistent-my-test-project.cloudapps.34.252.58.209.xip.io             rails-pgsql-persistent   <all>                   None
 
 !!! Note
     Again, the URL will be slightly different for you.
 
 Following this output, point your browser to the URL (prepend it with `http://` and append **/articles**) to reach the actual application, in this case:
 
-http://*rails-pgsql-persistent-my-test-project.cloudapps.**<YOUR-IP-HERE\>**..xip.io*/**articles**
+http://*rails-pgsql-persistent-my-test-project.cloudapps.**<YOUR-IP-HERE\>**.xip.io*/**articles**
 
 You should be able to successfully create articles and comments. The username/password to create articles and comments is by default **openshift**/**secret**.
 When they are saved they are actually saved in the PostgreSQL database which stores it’s table spaces on a GlusterFS volume provided by CNS.
@@ -703,9 +703,9 @@ As part of the deployment a `Service` has been created for our app automatically
 The route forwards all traffic on port 80 of it's automatically generated subdomain of the OpenShift router to port 8080 of the container running the app.
 
     NAME            HOST/PORT                                                      PATH      SERVICES        PORT       TERMINATION   WILDCARD
-    file-uploader   file-uploader-my-test-project.cloudapps.34.252.58.209..xip.io             file-uploader   8080-tcp                 None
+    file-uploader   file-uploader-my-test-project.cloudapps.34.252.58.209.xip.io             file-uploader   8080-tcp                 None
 
-Point your browser to the URL advertised by the route, that is *http://file-uploader-my-test-project.cloudapps.**<YOUR-IP-HERE\>**..xip.io*
+Point your browser to the URL advertised by the route, that is *http://file-uploader-my-test-project.cloudapps.**<YOUR-IP-HERE\>**.xip.io*
 
 Alternatively, in the OpenShift UI, while logged on as `devleoper` to the project called `my-test-project`, click the **Down Arrow** in the **Overview** section next to the deployment called **file-uploader**. The URL to your app will be in the section called **ROUTES**.
 

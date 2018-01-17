@@ -603,7 +603,7 @@ Resources:
                   openshift_image_tag=v3.7.14
                   openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
                   openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}..xip.io'
+                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}.xip.io'
                   openshift_router_selector='role=master'
                   openshift_hosted_router_wait=false
                   openshift_registry_selector='role=infra'
@@ -642,7 +642,7 @@ Resources:
                   ansible_service_broker_install=false
 
                   [masters]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}..xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
+                  master.lab openshift_public_hostname=${MasterNodePublicIP}.xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
 
                   [masters:vars]
                   openshift_schedulable=true
@@ -652,7 +652,7 @@ Resources:
                   masters
 
                   [nodes]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}..xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
+                  master.lab openshift_public_hostname=${MasterNodePublicIP}.xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
                   infra-1.lab openshift_hostname=infra-1.lab openshift_ip=${InfraNode1Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
                   infra-2.lab openshift_hostname=infra-2.lab openshift_ip=${InfraNode2Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
                   infra-3.lab openshift_hostname=infra-3.lab openshift_ip=${InfraNode3Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
@@ -681,7 +681,7 @@ Resources:
                   openshift_image_tag=v3.7.14
                   openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
                   openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}..xip.io'
+                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}.xip.io'
                   openshift_router_selector='role=master'
                   openshift_hosted_router_wait=false
                   openshift_registry_selector='role=infra'
@@ -715,7 +715,7 @@ Resources:
                   ansible_service_broker_install=false
 
                   [masters]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}..xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
+                  master.lab openshift_public_hostname=${MasterNodePublicIP}.xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
 
                   [masters:vars]
                   openshift_schedulable=true
@@ -725,7 +725,7 @@ Resources:
                   masters
 
                   [nodes]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}..xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
+                  master.lab openshift_public_hostname=${MasterNodePublicIP}.xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
                   infra-1.lab openshift_hostname=infra-1.lab openshift_ip=${InfraNode1Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
                   infra-2.lab openshift_hostname=infra-2.lab openshift_ip=${InfraNode2Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
                   infra-3.lab openshift_hostname=infra-3.lab openshift_ip=${InfraNode3Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
@@ -1217,7 +1217,7 @@ Resources:
                   openshift_image_tag=v3.7.14
                   openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
                   openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}..xip.io'
+                  openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}.xip.io'
                   openshift_router_selector='role=master'
                   openshift_hosted_router_wait=false
                   openshift_registry_selector='role=infra'
@@ -1244,7 +1244,7 @@ Resources:
                   ansible_service_broker_install=false
 
                   [masters]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}..xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
+                  master.lab openshift_public_hostname=${MasterNodePublicIP}.xip.io openshift_hostname=master.lab openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
 
                   [masters:vars]
                   openshift_schedulable=true
@@ -1254,7 +1254,7 @@ Resources:
                   masters
 
                   [nodes]
-                  master.lab openshift_public_hostname=${MasterNodePublicIP}..xip.io openshift_hostname=master.lab  openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
+                  master.lab openshift_public_hostname=${MasterNodePublicIP}.xip.io openshift_hostname=master.lab  openshift_ip=${MasterNodeInterface.PrimaryPrivateIpAddress} openshift_public_ip=${MasterNodePublicIP}
                   infra-1.lab openshift_hostname=infra-1.lab openshift_ip=${InfraNode1Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
                   infra-2.lab openshift_hostname=infra-2.lab openshift_ip=${InfraNode2Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
                   infra-3.lab openshift_hostname=infra-3.lab openshift_ip=${InfraNode3Interface.PrimaryPrivateIpAddress} openshift_node_labels="{'role': 'infra'}"
@@ -1309,5 +1309,5 @@ Outputs:
 
   OpenShiftLoginURL:
     Description: "OpenShift Master Node Public IP Address"
-    Value: !Sub "https://${MasterNodePublicIP}..xip.io:8443/"
+    Value: !Sub "https://${MasterNodePublicIP}.xip.io:8443/"
 ...
