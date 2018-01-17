@@ -46,7 +46,7 @@ Provisioner:	kubernetes.io/glusterfs
 Parameters:	resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.nip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
 ~~~~
 
-!!! Note:
+!!! Note
     The exact value for `resturl` will again be different for you because it's based on the `route`/IP address on your system.
 
 The *Provisioner* is a module in OpenShift/Kubernetes that can talk to the CNS API service: *heketi*. The parameters supplied in the `StorageClass` tell the *Provisioner* the URL of the API as well as the `admin` users (defined in `restuser`) password in the form of an OpenShift `secret` (`base64`'d hash of the password).
@@ -223,7 +223,7 @@ Normally a user doesn’t request storage with a `PVC` directly. Rather the `PVC
 
     > 1.  Log on to the OpenShift UI as the `developer` user
 
-    > 1.  Create a new project called 'my-test-project', label and description is optional
+    > 1.  Click *+Create project* and create a new one called 'my-test-project', label and description is optional
 
     > 1.  In the Overview, next to the project’s name select *Add to project*
 
@@ -261,7 +261,7 @@ Let's pick a database application that definitely needs persistent storage. It's
 
 Among various OpenShift resources also our `PVC` will be created:
 
-``` hl_lines="7"
+``` hl_lines="8"
 [...output omitted...]
 secret "rails-pgsql-persistent" created
 service "rails-pgsql-persistent" created
@@ -339,7 +339,7 @@ The complete output should look like this:
 
 Exit out of the watch mode with: <kbd>Ctrl</kbd> + <kbd>c</kbd>
 
-!!! Note:
+!!! Note
     It may take up to 5-7 minutes for the deployment to complete.
 
     If you did it via the UI the deployment is finished when both, rails app and postgres database are up and running:
@@ -368,7 +368,7 @@ Output:
     NAME                     HOST/PORT                                                               PATH      SERVICES                 PORT      TERMINATION   WILDCARD
     rails-pgsql-persistent   rails-pgsql-persistent-my-test-project.cloudapps.34.252.58.209.nip.io             rails-pgsql-persistent   <all>                   None
 
-!!! Note:
+!!! Note
     Again, the URL will be slightly different for you.
 
 Following this output, point your browser to the URL (prepend it with `http://` and append **/articles**) to reach the actual application, in this case:

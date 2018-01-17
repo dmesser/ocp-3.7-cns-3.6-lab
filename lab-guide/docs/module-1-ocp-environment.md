@@ -6,7 +6,7 @@
 The OpenShift Lab Environment
 -----------------------------
 
-Your lab environment has *OpenShift Container Platform 3.6* pre-installed. It consists of:
+Your lab environment has *OpenShift Container Platform 3.7* pre-installed. It consists of:
 
  - 1 Master node, running the master services and the router
  - 3 Infra nodes, running the registry
@@ -70,19 +70,19 @@ You will see that there is a router, an internal container registry and a web-co
 ~~~~
 In project default on server https://master.lab:8443
 
-https://docker-registry-default.cloudapps.52.28.118.20.nip.io (passthrough) (svc/docker-registry)
-  dc/docker-registry deploys mirror.lab:5555/openshift3/ose-docker-registry:v3.6.173.0.21
+https://docker-registry-default.cloudapps.54.164.139.145.nip.io (passthrough) (svc/docker-registry)
+  dc/docker-registry deploys mirror.lab:5555/openshift3/ose-docker-registry:v3.7.14
     deployment #1 deployed 12 minutes ago - 1 pod
 
 svc/kubernetes - 172.30.0.1 ports 443->8443, 53->8053, 53->8053
 
-https://registry-console-default.cloudapps.52.28.118.20.nip.io (passthrough) (svc/registry-console)
-  dc/registry-console deploys mirror.lab:5555/openshift3/registry-console:v3.6
-    deployment #1 deployed 10 minutes ago - 1 pod
+https://registry-console-default.cloudapps.54.164.139.145.nip.io (passthrough) (svc/registry-console)
+  dc/registry-console deploys docker.io/openshift3/registry-console:v3.7
+    deployment #1 deployed 12 minutes ago - 1 pod
 
-svc/router - 172.30.131.155 ports 80, 443, 1936
-  dc/router deploys mirror.lab:5555/openshift3/ose-haproxy-router:v3.6.173.0.21
-    deployment #1 deployed 10 minutes ago - 1 pod
+svc/router - 172.30.54.153 ports 80, 443, 1936
+  dc/router deploys mirror.lab:5555/openshift3/ose-haproxy-router:v3.7.14
+    deployment #1 deployed 13 minutes ago - 1 pod
 ~~~~
 
 &#8680; Display all available nodes in the system
@@ -93,16 +93,16 @@ You should see 9 nodes in **READY** state:
 
 ~~~~
 NAME          STATUS                     AGE       VERSION
-infra-1.lab   Ready                      14m       v1.6.1+5115d708d7
-infra-2.lab   Ready                      14m       v1.6.1+5115d708d7
-infra-3.lab   Ready                      14m       v1.6.1+5115d708d7
-master.lab    Ready,SchedulingDisabled   19m       v1.6.1+5115d708d7
-node-1.lab    Ready                      14m       v1.6.1+5115d708d7
-node-2.lab    Ready                      14m       v1.6.1+5115d708d7
-node-3.lab    Ready                      14m       v1.6.1+5115d708d7
-node-4.lab    Ready                      14m       v1.6.1+5115d708d7
-node-5.lab    Ready                      14m       v1.6.1+5115d708d7
-node-6.lab    Ready                      14m       v1.6.1+5115d708d7
+infra-1.lab   Ready                      14m       v1.7.6+a08f5eeb62
+infra-2.lab   Ready                      14m       v1.7.6+a08f5eeb62
+infra-3.lab   Ready                      14m       v1.7.6+a08f5eeb62
+master.lab    Ready,SchedulingDisabled   17m       v1.7.6+a08f5eeb62
+node-1.lab    Ready                      14m       v1.7.6+a08f5eeb62
+node-2.lab    Ready                      14m       v1.7.6+a08f5eeb62
+node-3.lab    Ready                      14m       v1.7.6+a08f5eeb62
+node-4.lab    Ready                      14m       v1.7.6+a08f5eeb62
+node-5.lab    Ready                      14m       v1.7.6+a08f5eeb62
+node-6.lab    Ready                      14m       v1.7.6+a08f5eeb62
 ~~~~
 
 &#8680; A slight variant of that command will show us some tags (called *labels*):
@@ -113,16 +113,16 @@ You should see that 3 node have the label `role=infra` applied whereas the other
 
 ~~~~
 NAME          STATUS                     AGE       VERSION             LABELS
-infra-1.lab   Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-1.lab,role=infra
-infra-2.lab   Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-2.lab,role=infra
-infra-3.lab   Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-3.lab,role=infra
-master.lab    Ready,SchedulingDisabled   26m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=master.lab,role=master
-node-1.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,glusterfs=storage-host,kubernetes.io/hostname=node-1.lab,role=app
-node-2.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,glusterfs=storage-host,kubernetes.io/hostname=node-2.lab,role=app
-node-3.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,glusterfs=storage-host,kubernetes.io/hostname=node-3.lab,role=app
-node-4.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-4.lab,role=app
-node-5.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-5.lab,role=app
-node-6.lab    Ready                      21m       v1.6.1+5115d708d7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-6.lab,role=app
+infra-1.lab   Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-1.lab,role=infra
+infra-2.lab   Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-2.lab,role=infra
+infra-3.lab   Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=infra-3.lab,role=infra
+master.lab    Ready,SchedulingDisabled   18m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=master.lab,role=master
+node-1.lab    Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-1.lab,role=app
+node-2.lab    Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-2.lab,role=app
+node-3.lab    Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-3.lab,role=app
+node-4.lab    Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-4.lab,role=app
+node-5.lab    Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-5.lab,role=app
+node-6.lab    Ready                      15m       v1.7.6+a08f5eeb62   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=node-6.lab,role=app
 ~~~~
 
 #### Review Registry configuration
@@ -136,7 +136,7 @@ There is a single instance of the registry because there is so far no shared sto
 ~~~~ hl_lines="34 36 37"
 Name:		docker-registry
 Namespace:	default
-Created:	16 minutes ago
+Created:	13 minutes ago
 Labels:		docker-registry=default
 Annotations:	<none>
 Latest Version:	1
@@ -150,7 +150,7 @@ Pod Template:
   Service Account:	registry
   Containers:
    registry:
-    Image:	mirror.lab:5555/openshift3/ose-docker-registry:v3.6.173.0.21
+    Image:	mirror.lab:5555/openshift3/ose-docker-registry:v3.7.14
     Port:	5000/TCP
     Requests:
       cpu:	100m
@@ -160,7 +160,7 @@ Pod Template:
     Environment:
       REGISTRY_HTTP_ADDR:					:5000
       REGISTRY_HTTP_NET:					tcp
-      REGISTRY_HTTP_SECRET:					hrwyZRlJiB48Ep0XI5qER2KgJFEW8wE1bxz7jJrSgiU=
+      REGISTRY_HTTP_SECRET:					0w38j8dBrP0fJMXhg6wjxJ88pWjErCrL0Uxm4BOLhJQ=
       REGISTRY_MIDDLEWARE_REPOSITORY_OPENSHIFT_ENFORCEQUOTA:	false
       OPENSHIFT_DEFAULT_REGISTRY:				docker-registry.default.svc:5000
       REGISTRY_HTTP_TLS_KEY:					/etc/secrets/registry.key
@@ -179,7 +179,7 @@ Pod Template:
 
 Deployment #1 (latest):
 	Name:		docker-registry-1
-	Created:	16 minutes ago
+	Created:	13 minutes ago
 	Status:		Complete
 	Replicas:	1 current / 1 desired
 	Selector:	deployment=docker-registry-1,deploymentconfig=docker-registry,docker-registry=default
@@ -189,7 +189,7 @@ Deployment #1 (latest):
 Events:
   FirstSeen	LastSeen	Count	From				SubObjectPath	Type		Reason			Message
   ---------	--------	-----	----				-------------	--------	------			-------
-  16m		16m		1	deploymentconfig-controller			Normal		DeploymentCreatedCreated new replication controller "docker-registry-1" for version 1
+  13m		13m		1	deploymentconfig-controller			Normal		DeploymentCreated	Created new replication controller "docker-registry-1" for version 1
 ~~~~
 
 The highlighted lines above show that the OpenShift internal registry is currently using storage of `emptyDir` to store container images that developers and build process create in OpenShift.

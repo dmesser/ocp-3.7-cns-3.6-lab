@@ -38,17 +38,21 @@ When your lab infrastructure is ready this progress bar disappears. Upon launch 
 
 ![Lab timer](img/qwiklab-end-button.png)
 
-## 4. Get the lab access credentials
+## 5. Get the lab access credentials
 
 When lab provisioning is finished successfully lab access data will displayed on the left side of this screen.
 
 ![Lab info](img/qwiklab-lab-details.png)
 
+There is a copy-to-clipboard button next to each field to easily obtain the following data:
+
 |Type | Name | Example Value |
 |------------| -------- |-------- |
-|URL to OpenShift UI| OpenShiftLoginURL |e.g. *https://34.226.81.9.nip.io:8443/* |
 |IP to Lab Environment | MasterNodePublicIP |e.g. *34.226.81.9* |
 |SSH user on master node | SSHLoginUser | `ec2-user` |
+|(After OpenShift deployment) URL to OpenShift UI| OpenShiftLoginURL |e.g. *https://34.226.81.9.nip.io:8443/* |
+
+## 6. Access the jump server
 
 &#8680; To login via SSH download the PEM file to your machine and change the permissions:
 
@@ -62,7 +66,7 @@ The Master node also functions as your *jumpserver*. Once you are logged on to i
 
 ---
 
-## 6. Lab Environment Overview
+## 7. Lab Environment Overview
 
 The lab environment has 10 nodes in total with stable, internal IP addresses and `/etc/hosts`-based DNS resolution. All nodes have internet access. Only the Master can be reached from the Internet via it's public IP however.
 
@@ -86,7 +90,7 @@ This labs topology roughly looks like this:
 
 ---
 
-## 7. Lab tips
+## 8. Lab tips
 
 You might these hints useful:
 

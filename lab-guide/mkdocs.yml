@@ -15,7 +15,7 @@ theme:
 pages:
 - Overview: index.md
 - Modules:
-    - 'Module 1 - Examine OpenShift Installation': module-1-ocp-environment.md
+    - 'Module 1 - OpenShift Environment': module-1-ocp-environment.md
     - 'Module 2 - Deploying Container-Native Storage': module-2-deploy-cns.md
     - 'Module 3 - Persistent Storage for Apps': module-3-cns-for-apps.md
     - 'Module 4 - Cluster Operations': module-4-cluster-ops.md
