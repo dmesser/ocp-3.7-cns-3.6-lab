@@ -686,10 +686,10 @@ Resources:
                   openshift_master_default_subdomain='cloudapps.${MasterNodePublicIP}.xip.io'
                   openshift_router_selector='role=master'
                   openshift_hosted_router_wait=false
-                  openshift_hosted_registry_storage_glusterfs_swap=false
-                  openshift_hosted_registry_storage_kind=''
                   openshift_registry_selector='role=infra'
                   openshift_hosted_registry_wait=false
+                  openshift_hosted_registry_storage_kind=''
+                  openshift_hosted_registry_storage_glusterfs_swap=false
                   openshift_metrics_install_metrics=false
                   openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
                   openshift_metrics_cassandra_storage_type=pv
