@@ -458,7 +458,7 @@ glusterfs-storage   kubernetes.io/glusterfs
 IsDefaultClass: No
 Annotations:    &lt;none&gt;
 Provisioner:    kubernetes.io/glusterfs
-Parameters: resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.nip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
+Parameters: resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.xip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
 </pre></div>
 
 
@@ -611,7 +611,7 @@ Storage is freed up by deleting the <code>PVC</code>. The <code>PVC</code> contr
 <span class="hll">IsDefaultClass: Yes
 </span>Annotations:    &lt;none&gt;
 Provisioner:    kubernetes.io/glusterfs
-Parameters:     resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.nip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
+Parameters:     resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.154.xip.io,restuser=admin,secretName=heketi-storage-admin-secret,secretNamespace=app-storage
 </pre></div>
 
 
@@ -631,13 +631,13 @@ Parameters:     resturl=http://heketi-storage-app-storage.cloudapps.52.28.134.15
 <p>Log on to the OpenShift UI as the <code>developer</code> user</p>
 </li>
 <li>
-<p>Click <em>+Create project</em> and create a new one called &lsquo;my-test-project&rsquo;, label and description is optional</p>
+<p>Click <em>+ Create project</em> and create a new one called &lsquo;my-test-project&rsquo;, label and description is optional</p>
 </li>
 <li>
-<p>In the Overview, next to the project’s name select <em>Add to project</em></p>
+<p>Click on the project you just created</p>
 </li>
 <li>
-<p>In the <em>Browse Catalog</em> view select <em>Ruby</em> from the list of programming languages</p>
+<p>In the <em>Browse Catalog</em> view, select the &ldquo;Languages&rdquo; category and choose <em>Ruby</em> from the list of programming languages</p>
 </li>
 <li>
 <p>Select the example app entitled <em>Rails + PostgreSQL (Persistent)</em></p>
@@ -777,7 +777,7 @@ postgresql   Bound     pvc-6c348fbb-4e9d-11e7-970e-0a9938370404   15Gi       RWO
 
 <p>Output:</p>
 <div class="codehilite"><pre><span></span>NAME                     HOST/PORT                                                               PATH      SERVICES                 PORT      TERMINATION   WILDCARD
-rails-pgsql-persistent   rails-pgsql-persistent-my-test-project.cloudapps.34.252.58.209.nip.io             rails-pgsql-persistent   &lt;all&gt;                   None
+rails-pgsql-persistent   rails-pgsql-persistent-my-test-project.cloudapps.34.252.58.209.xip.io             rails-pgsql-persistent   &lt;all&gt;                   None
 </pre></div>
 
 
@@ -786,7 +786,7 @@ rails-pgsql-persistent   rails-pgsql-persistent-my-test-project.cloudapps.34.252
 <p>Again, the URL will be slightly different for you.</p>
 </div>
 <p>Following this output, point your browser to the URL (prepend it with <code>http://</code> and append <strong>/articles</strong>) to reach the actual application, in this case:</p>
-<p>http://<em>rails-pgsql-persistent-my-test-project.cloudapps.<strong>&lt;YOUR-IP-HERE></strong>.nip.io</em>/<strong>articles</strong></p>
+<p>http://<em>rails-pgsql-persistent-my-test-project.cloudapps.<strong>&lt;YOUR-IP-HERE></strong>.xip.io</em>/<strong>articles</strong></p>
 <p>You should be able to successfully create articles and comments. The username/password to create articles and comments is by default <strong>openshift</strong>/<strong>secret</strong>.<br />
 When they are saved they are actually saved in the PostgreSQL database which stores it’s table spaces on a GlusterFS volume provided by CNS.</p>
 <p>&#8680; You can verify that the postgres pod indeed mounted the PVC under the pather where PostgreSQL normally stores it&rsquo;s data with this command:</p>
@@ -1112,11 +1112,11 @@ file-uploader-1-g7b0h            1/1       Running     0          1m
 
 <p>The route forwards all traffic on port 80 of it&rsquo;s automatically generated subdomain of the OpenShift router to port 8080 of the container running the app.</p>
 <div class="codehilite"><pre><span></span>NAME            HOST/PORT                                                      PATH      SERVICES        PORT       TERMINATION   WILDCARD
-file-uploader   file-uploader-my-test-project.cloudapps.34.252.58.209.nip.io             file-uploader   8080-tcp                 None
+file-uploader   file-uploader-my-test-project.cloudapps.34.252.58.209.xip.io             file-uploader   8080-tcp                 None
 </pre></div>
 
 
-<p>Point your browser to the URL advertised by the route, that is <em>http://file-uploader-my-test-project.cloudapps.<strong>&lt;YOUR-IP-HERE></strong>.nip.io</em></p>
+<p>Point your browser to the URL advertised by the route, that is <em>http://file-uploader-my-test-project.cloudapps.<strong>&lt;YOUR-IP-HERE></strong>.xip.io</em></p>
 <p>Alternatively, in the OpenShift UI, while logged on as <code>devleoper</code> to the project called <code>my-test-project</code>, click the <strong>Down Arrow</strong> in the <strong>Overview</strong> section next to the deployment called <strong>file-uploader</strong>. The URL to your app will be in the section called <strong>ROUTES</strong>.</p>
 <p><a href="../img/uploader_app_route.png"><img alt="The file uploader app route" src="../img/uploader_app_route.png" /></a></p>
 <p>The application again is very simply: it lists all file previously uploaded files and offers the ability to upload new ones, as well as download the existing uploads. Right now there is nothing.</p>
@@ -1129,14 +1129,12 @@ file-uploader   file-uploader-my-test-project.cloudapps.34.252.58.209.nip.io    
 </pre></div>
 
 
-<p>You will see two entries:</p>
-<div class="codehilite"><pre><span></span>file-uploader-1-build            0/1       Completed   0          7m
-file-uploader-1-g7b0h            1/1       Running     0          6m
+<p>You will see something similar to this:</p>
+<div class="codehilite"><pre><span></span>file-uploader-1-g7b0h            1/1       Running     0          6m
 </pre></div>
 
 
-<p>The name of the single pod currently running the app is this example is <strong>file-uploader-1-g7b0h</strong>.<br />
-The container called <code>file-uploader-1-build</code> is the builder container that deployed the application and it has already terminated.</p>
+<p>The name of the single pod currently running the app is this example is <strong>file-uploader-1-g7b0h</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The exact name of the pod will be different in your environment.</p>
@@ -1319,7 +1317,6 @@ One strategy here could have been to use <code>oc rsync</code> saving the data t
 
 <p>Output:</p>
 <div class="codehilite"><pre><span></span>NAME                             READY     STATUS      RESTARTS   AGE
-file-uploader-1-build            0/1       Completed   0          18m
 file-uploader-2-jd22b            1/1       Running     0          1m
 file-uploader-2-kw9lq            1/1       Running     0          2m
 file-uploader-2-xbz24            1/1       Running     0          1m

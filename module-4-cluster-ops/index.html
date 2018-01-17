@@ -440,8 +440,10 @@
 <p>Run OpenShift across large geo-graphical distances with a CNS cluster per region whereas otherwise latency prohibits synchronous data replication in  a stretched setup</p>
 </li>
 </ol>
-<p>!!! Note:<br />
-    The procedures to add an additional CNS cluster to an existing setup is not yet supported by <code>openshift-ansible</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The procedures to add an additional CNS cluster to an existing setup is not yet supported by <code>openshift-ansible</code>.</p>
+</div>
 <p>Because we cannot use <code>openshift-ansible</code> as of today we need to run a couple of steps manually that would otherwise be automated.</p>
 <p>To deploy a second CNS cluster, aka GlusterFS pool, follow these steps:</p>
 <p>&#8680; Log in as <code>operator</code> to namespace <code>app-storage</code></p>
@@ -482,7 +484,7 @@
 
 
 <p>&#8680; Run this small Ansible playbook to apply and reload the firewall configuration on all 3 nodes conveniently:</p>
-<div class="codehilite"><pre><span></span>ansible-playbook configure-firewall.yml
+<div class="codehilite"><pre><span></span>ansible-playbook -i /etc/ansible/ocp-with-glusterfs configure-firewall.yml
 </pre></div>
 
 
@@ -535,8 +537,10 @@ oc label node/node-6.lab glusterfs=storage-host
 
 <p>You can also watch the additional GlusterFS pods deploy in the OpenShift UI, while being logged in as <code>operator</code> in project <code>app-storage</code>, select <strong>Applications</strong> from the left menu and then <strong>Pods</strong>:</p>
 <p><a href="../img/openshift_2nd_cns_pods.png"><img alt="CNS Deployment" src="../img/openshift_2nd_cns_pods.png" /></a></p>
-<p>!!! Note:<br />
-    It may take up to 3 minutes for the GlusterFS pods to transition into <code>READY</code> state.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It may take up to 3 minutes for the GlusterFS pods to transition into <code>READY</code> state.</p>
+</div>
 <p>&#8680; When done, on the CLI display all GlusterFS pods alongside with the name of the container host they are running on:</p>
 <div class="codehilite"><pre><span></span>oc get pods -o wide -n app-storage -l glusterfs=storage-pod
 </pre></div>
@@ -675,7 +679,7 @@ export HEKETI_CLI_KEY=$(oc get pod/$HEKETI_POD -o jsonpath=&#39;{.spec.container
 
 <p>Example output:</p>
 <div class="codehilite"><pre><span></span>Clusters:
-fb67f97166c58f161b85201e1fd9b8ed
+fb67f97166c58f161b85201e1fd9b8ed [file][block]
 </pre></div>
 
 
@@ -695,19 +699,21 @@ fb67f97166c58f161b85201e1fd9b8ed
 
 
 <p>You should see output similar to the following:</p>
-<div class="codehilite"><pre><span></span>Found node node-1.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
-Found device /dev/xvdc
-Found node node-2.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
-Found device /dev/xvdc
-Found node node-3.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
-Found device /dev/xvdc
+<div class="codehilite"><pre><span></span>      Found node node-1.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+      Found device /dev/xvdc
+      Found node node-2.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+      Found device /dev/xvdc
+      Found node node-3.lab on cluster fb67f97166c58f161b85201e1fd9b8ed
+      Found device /dev/xvdc
 Creating cluster ... ID: 46b205a4298c625c4bca2206b7a82dd3
-Creating node node-4.lab ... ID: 604d2eb15a5ca510ff3fc5ecf912d3c0
-Adding device /dev/xvdc ... OK
-Creating node node-5.lab ... ID: 538b860406870288af23af0fbc2cd27f
-Adding device /dev/xvdc ... OK
-Creating node node-6.lab ... ID: 7736bd0cb6a84540860303a6479cacb2
-Adding device /dev/xvdc ... OK
+      Allowing file volumes on cluster.
+      Allowing block volumes on cluster.
+      Creating node node-4.lab ... ID: 604d2eb15a5ca510ff3fc5ecf912d3c0
+      Adding device /dev/xvdc ... OK
+      Creating node node-5.lab ... ID: 538b860406870288af23af0fbc2cd27f
+      Adding device /dev/xvdc ... OK
+      Creating node node-6.lab ... ID: 7736bd0cb6a84540860303a6479cacb2
+      Adding device /dev/xvdc ... OK
 </pre></div>
 
 
@@ -719,8 +725,8 @@ Adding device /dev/xvdc ... OK
 
 <p>You should see a second cluster in the list:</p>
 <div class="codehilite"><pre><span></span>Clusters:
-46b205a4298c625c4bca2206b7a82dd3
-fb67f97166c58f161b85201e1fd9b8ed
+46b205a4298c625c4bca2206b7a82dd3 [file][block]
+fb67f97166c58f161b85201e1fd9b8ed [file][block]
 </pre></div>
 
 
@@ -761,6 +767,9 @@ fb67f97166c58f161b85201e1fd9b8ed
 <p>Abbreviated output:</p>
 <div class="codehilite"><pre><span></span>Cluster Id: 46b205a4298c625c4bca2206b7a82dd3
 
+    File:  true
+    Block: true
+
     Volumes:
 
     Nodes:
@@ -797,6 +806,9 @@ fb67f97166c58f161b85201e1fd9b8ed
 
 Cluster Id: fb67f97166c58f161b85201e1fd9b8ed
 
+      File:  true
+      Block: true
+
 [...output omitted for brevity...]
 </pre></div>
 
@@ -818,8 +830,10 @@ glusterfs-rchtr   1/1       Running   0          4h        10.0.4.203   node-3.l
 </pre></div>
 
 
-<p>!!! Note:<br />
-    Again note that the pod names are dynamically generated and will be different. Look the FQDN of your hosts to determine one of new cluster&rsquo;s pods.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Again note that the pod names are dynamically generated and will be different. Look the FQDN of your hosts to determine one of new cluster&rsquo;s pods.</p>
+</div>
 <p>&#8680; Let&rsquo;s run the <code>gluster peer status</code> command in the GlusterFS pod running on the node <code>node-6.lab</code>:</p>
 <div class="codehilite"><pre><span></span>POD_NUMBER_SIX=$(oc get pods -o jsonpath=&#39;{.items[?(@.status.hostIP==&quot;10.0.4.206&quot;)].metadata.name}&#39;)
 oc rsh $POD_NUMBER_SIX gluster peer status
@@ -876,7 +890,7 @@ In order to request a volume from specific cluster you have to supply the cluste
     <span class="nt">&quot;uid&quot;</span><span class="p">:</span> <span class="s2">&quot;3c107010-a126-11e7-b0a5-025fcde0880f&quot;</span>
   <span class="p">},</span>
   <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;resturl&quot;</span><span class="p">:</span> <span class="s2">&quot;http://heketi-storage-app-storage.cloudapps.34.252.58.209.nip.io&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;resturl&quot;</span><span class="p">:</span> <span class="s2">&quot;http://heketi-storage-app-storage.cloudapps.34.252.58.209.xip.io&quot;</span><span class="p">,</span>
     <span class="nt">&quot;restuser&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
     <span class="nt">&quot;secretName&quot;</span><span class="p">:</span> <span class="s2">&quot;heketi-storage-admin-secret&quot;</span><span class="p">,</span>
     <span class="nt">&quot;secretNamespace&quot;</span><span class="p">:</span> <span class="s2">&quot;app-storage&quot;</span><span class="p">,</span>
@@ -921,7 +935,7 @@ In order to request a volume from specific cluster you have to supply the cluste
   <span class="p">},</span>
   <span class="nt">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="hll">    <span class="nt">&quot;clusterid&quot;</span><span class="p">:</span> <span class="s2">&quot;46b205a4298c625c4bca2206b7a82dd3&quot;</span><span class="p">,</span>
-</span>    <span class="nt">&quot;resturl&quot;</span><span class="p">:</span> <span class="s2">&quot;http://heketi-storage-app-storage.cloudapps.34.252.58.209.nip.io&quot;</span><span class="p">,</span>
+</span>    <span class="nt">&quot;resturl&quot;</span><span class="p">:</span> <span class="s2">&quot;http://heketi-storage-app-storage.cloudapps.34.252.58.209.xip.io&quot;</span><span class="p">,</span>
     <span class="nt">&quot;restuser&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
     <span class="nt">&quot;secretName&quot;</span><span class="p">:</span> <span class="s2">&quot;heketi-storage-admin-secret&quot;</span><span class="p">,</span>
     <span class="nt">&quot;secretNamespace&quot;</span><span class="p">:</span> <span class="s2">&quot;app-storage&quot;</span>
@@ -1043,7 +1057,7 @@ oc get pv/$SLOW_PV -o jsonpath=&quot;{.spec.glusterfs.path}&quot;
 </pre></div>
 
 
-<p>&hellip; you will notice that they match the volumes found in the CNS clusters from within their pods respectively.</p>
+<p>&hellip; you will notice that their GlusterFS volume path match the volumes found by heketi in the two CNS clusters respectively. Evidence the volumes have been created in exactly the cluster that the <code>StorageClass</code> pointed to.</p>
 <p>This is how you use multiple, parallel GlusterFS pools/clusters on a single OpenShift cluster with a single heketi instance. Whereas the first pool is created with <code>openshift-ansible</code> subsequent pools/cluster are created with the <code>heketi-cli</code> client.</p>
 <p>Clean up the PVCs and the second <em>StorageClass</em> in preparation for the next section.</p>
 <p>&#8680; Delete both PVCs (and therefore their volume)</p>
@@ -1226,8 +1240,10 @@ oc label node/node-6.lab glusterfs-
 </pre></div>
 
 
-<p>!!! Note:<br />
-    It can take up to 2 minutes for the pods to terminate.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It can take up to 2 minutes for the pods to terminate.</p>
+</div>
 <p>You should be back down to 3 GlusterFS pods, e.g.</p>
 <div class="codehilite"><pre><span></span>NAME              READY     STATUS    RESTARTS   AGE       IP           NODE
 glusterfs-5rc2g   1/1       Running   0          5h        10.0.2.201   node-1.lab
@@ -1362,8 +1378,10 @@ oc label node/node-6.lab glusterfs=storage-host
 </pre></div>
 
 
-<p>!!! Note:<br />
-    It may take up to 3 minutes for the GlusterFS pods to transition into <code>READY</code> state.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It may take up to 3 minutes for the GlusterFS pods to transition into <code>READY</code> state.</p>
+</div>
 <p>This confirms all GlusterFS pods are ready to receive remote commands:</p>
 <div class="codehilite"><pre><span></span>NAME              READY     STATUS    RESTARTS   AGE       IP           NODE
 glusterfs-0lr75   1/1       Running   0          4m        10.0.4.106   node-6.lab
@@ -1542,14 +1560,20 @@ We will simulate this use case now.</p>
 
 <p>Note the <code>PVs</code> name:</p>
 <div class="codehilite"><pre><span></span>    Name:       my-large-container-store
-    Namespace:  my-test-project
-    StorageClass:   app-storage
+    Namespace:  app-storage
+    StorageClass:   glusterfs-storage
     Status:     Bound
 <span class="hll">    Volume:     pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
 </span>    Labels:     &lt;none&gt;
+    Annotations:    pv.kubernetes.io/bind-completed=yes
+    pv.kubernetes.io/bound-by-controller=yes
+    volume.beta.kubernetes.io/storage-provisioner=kubernetes.io/glusterfs
     Capacity:   200Gi
-    Access Modes:   RWO
-    No events.
+    Access Modes:   RWX
+    Events:
+    FirstSeen   LastSeen    Count   From                SubObjectPath   Type        Reason          Message
+    ---------   --------    -----   ----                -------------   --------    ------          -------
+    6s      6s      1   persistentvolume-controller         Normal      ProvisioningSucceeded   Successfully provisioned volume pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8 using kubernetes.io/glusterfs
 </pre></div>
 
 
@@ -1559,21 +1583,28 @@ We will simulate this use case now.</p>
 
 
 <p>The GlusterFS volume name as it used by GlusterFS:</p>
-<div class="codehilite"><pre><span></span>    Name:       pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
-    Labels:     &lt;none&gt;
-    StorageClass:   app-storage
-    Status:     Bound
-    Claim:      my-test-project/my-large-container-store
-    Reclaim Policy: Delete
-    Access Modes:   RWO
-    Capacity:   200Gi
-    Message:
-    Source:
-        Type:       Glusterfs (a Glusterfs mount on the host that shares a pod&#39;s lifetime)
-        EndpointsName:  glusterfs-dynamic-my-large-container-store
-<span class="hll">        Path:       vol_3ff9946ddafaabe9745f184e4235d4e1
-</span>        ReadOnly:       false
-    No events.
+<div class="codehilite"><pre><span></span>Name:       pvc-078a1698-4f5b-11e7-ac96-1221f6b873f8
+Labels:     &lt;none&gt;
+Annotations:  Description=Gluster: Dynamically provisioned PV
+              gluster.org/type=file
+              kubernetes.io/createdby=heketi-dynamic-provisioner
+              pv.beta.kubernetes.io/gid=2002
+              pv.kubernetes.io/bound-by-controller=yes
+              pv.kubernetes.io/provisioned-by=kubernetes.io/glusterfs
+              volume.beta.kubernetes.io/mount-options=auto_unmount
+StorageClass:   glusterfs-storage
+Status:     Bound
+Claim:      app-storage/my-large-container-store
+<span class="hll">Reclaim Policy: Delete
+</span>Access Modes:   RWX
+Capacity:   200Gi
+Message:
+Source:
+    Type:           Glusterfs (a Glusterfs mount on the host that shares a pod&#39;s lifetime)
+    EndpointsName:  glusterfs-dynamic-my-large-container-store
+    Path:           vol_3ff9946ddafaabe9745f184e4235d4e1
+    ReadOnly:       false
+Events:   &lt;none&gt;
 </pre></div>
 
 
@@ -1641,8 +1672,10 @@ echo $BRICK_DIR
 
 
 <p>In this case it&rsquo;s <code>/dev/xvdd</code> of <code>node-6.lab</code>.</p>
-<p>!!! Note:<br />
-    The device might be different for you. This is subject to heketi&rsquo;s dynamic scheduling.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The device might be different for you. This is subject to heketi&rsquo;s dynamic scheduling.</p>
+</div>
 <p>We will now proceed to disable and delete this device. For that we have to find and use it&rsquo;s UUID in <code>heketi</code>.</p>
 <p>Safe the <code>heketi</code> device&rsquo;s ID from the brick on <code>node-6.lab</code> using the following definition of an environment variable, again by leveraging <code>jq</code> to parse the JSON output of <code>heketi topology info</code>:</p>
 <div class="codehilite"><pre><span></span>FAILED_DEVICE_ID=$(heketi-cli topology info --json | jq &quot;.clusters[] | select(.id==\&quot;$FIRST_CNS_CLUSTER\&quot;) | .nodes[] | select(.hostnames.manage[0] == \&quot;node-6.lab\&quot;) | .devices &quot; | jq -r &quot;.[] | select (.bricks[0].path ==\&quot;$BRICK_DIR\&quot;) | .id&quot;)
@@ -1668,7 +1701,8 @@ echo $BRICK_DIR
 
 
 <p>You will notice this command takes a while.<br />
-That&rsquo;s because it will trigger a brick-replacement in GlusterFS. The command will block and heketi in the background will transparently create new bricks for each brick on the device to be deleted. The replacement operation will be conducted with the new bricks replacing all bricks on the device to be deleted. During this time the data remains accessible.</p>
+That&rsquo;s because it will trigger a brick-replacement in GlusterFS. The command will block and heketi in the background will transparently create new bricks for each brick on the device to be deleted. There may be many bricks on the device since it&rsquo;s likely serving many volumes.<br />
+The replacement operation will be conducted with the new bricks replacing all bricks on the device to be deleted. During this time the data remains accessible.</p>
 <p>The new bricks, if possible, will automatically be created in zones different from the remaining bricks to maintain equal balancing and cross-zone availability.</p>
 <p>&#8680; Finally, you are now able to delete the device in heketi entirely</p>
 <div class="codehilite"><pre><span></span>heketi-cli device delete $FAILED_DEVICE_ID
@@ -1692,7 +1726,7 @@ echo $NEW_DEVICE
 <p>If you cross-check again the new bricks mount path with the heketi topology you will see it&rsquo;s indeed coming from a different device. The remaining device in <code>node-6.lab</code>, in this case <code>/dev/xvdc</code></p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Device removal while maintaining volume health is possible in heketi as well. Simply delete all devices of the node in question as discussed above. Then the device can be deleted from heketi with <code>heketi-cli device delete &lt;device-uuid&gt;</code></p>
+<p>Node removal while maintaining volume health is possible in heketi as well. Simply delete all devices of the node in question as discussed above. Then the node itself can be deleted from heketi with <code>heketi-cli node delete &lt;node-uuid&gt;</code></p>
 </div>
 <hr />
                 

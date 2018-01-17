@@ -468,7 +468,7 @@ openshift-ansible.noarch                   3.7.14-1.git.0.4b35b2d.el7           
 <span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.7.14</span>
 <span class="na">openshift_master_identity_providers</span><span class="o">=</span><span class="s">[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]</span>
 <span class="na">openshift_master_htpasswd_users</span><span class="o">=</span><span class="s">{&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}</span>
-<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.34.239.188.221.nip.io&#39;</span>
+<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.34.239.188.221.xip.io&#39;</span>
 <span class="na">openshift_router_selector</span><span class="o">=</span><span class="s">&#39;role=master&#39;</span>
 <span class="na">openshift_hosted_router_wait</span><span class="o">=</span><span class="s">true</span>
 <span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
@@ -499,7 +499,7 @@ openshift-ansible.noarch                   3.7.14-1.git.0.4b35b2d.el7           
 <span class="na">openshift_enable_service_catalog</span><span class="o">=</span><span class="s">false</span>
 
 <span class="k">[masters]</span>
-<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">34.239.188.221.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">34.239.188.221.xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221</span>
 
 <span class="k">[masters:vars]</span>
 <span class="na">openshift_schedulable</span><span class="o">=</span><span class="s">true</span>
@@ -509,7 +509,7 @@ openshift-ansible.noarch                   3.7.14-1.git.0.4b35b2d.el7           
 <span class="na">masters</span>
 
 <span class="k">[nodes]</span>
-<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">34.239.188.221.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">34.239.188.221.xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221</span>
 <span class="na">infra-1.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-1.lab openshift_ip=10.0.2.101 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
 <span class="na">infra-2.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-2.lab openshift_ip=10.0.3.102 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
 <span class="na">infra-3.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-3.lab openshift_ip=10.0.4.103 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
@@ -697,15 +697,15 @@ heketi-storage   172.30.225.240   &lt;none&gt;        8080/TCP   1h
 
 <p>The output should look similar to the below:</p>
 <div class="codehilite"><pre><span></span>NAME             HOST/PORT                                                   PATH      SERVICES         PORT      TERMINATION   WILDCARD
-heketi-storage   heketi-storage-app-storage.cloudapps.35.158.172.55.nip.io             heketi-storage   &lt;all&gt;                   None
+heketi-storage   heketi-storage-app-storage.cloudapps.35.158.172.55.xip.io             heketi-storage   &lt;all&gt;                   None
 </pre></div>
 
 
 <p>Based on this <em>heketi</em> will be available on the heketi API URL, in this example:<br />
-http://<em>heketi-storage-app-storage.cloudapps.35.158.172.55.nip.io</em></p>
+http://<em>heketi-storage-app-storage.cloudapps.35.158.172.55.xip.io</em></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In your environment the URL will be slightly different. It will contain the public IPv4 address of your deployment, dynamically resolved by the nip.io service.</p>
+<p>In your environment the URL will be slightly different. It will contain the public IPv4 address of your deployment, dynamically resolved by the .xip.io service.</p>
 </div>
 <p>&#8680; You may verify this trivial health check using <code>curl</code> (and an in-line <code>oc</code> command to dynamically retrieve the <code>route</code> for easy copy&amp;paste):</p>
 <div class="codehilite"><pre><span></span>curl http://$(oc get route/heketi-storage -o jsonpath=&#39;{.spec.host}&#39;)/hello

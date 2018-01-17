@@ -309,12 +309,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#openshift-loggingmetrics-on-cns" title="OpenShift Logging/Metrics on CNS" class="md-nav__link">
-    OpenShift Logging/Metrics on CNS
+  <a href="#openshift-loggingmetrics-on-cns-block-storage" title="OpenShift Logging/Metrics on CNS block storage" class="md-nav__link">
+    OpenShift Logging/Metrics on CNS block storage
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#completing-gluster-block-setup" title="Completing gluster-block setup" class="md-nav__link">
+    Completing gluster-block setup
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#deploying-openshift-metrics-with-persistent-storage-from-cns" title="Deploying OpenShift Metrics with Persistent Storage from CNS" class="md-nav__link">
@@ -375,12 +382,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#openshift-loggingmetrics-on-cns" title="OpenShift Logging/Metrics on CNS" class="md-nav__link">
-    OpenShift Logging/Metrics on CNS
+  <a href="#openshift-loggingmetrics-on-cns-block-storage" title="OpenShift Logging/Metrics on CNS block storage" class="md-nav__link">
+    OpenShift Logging/Metrics on CNS block storage
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#completing-gluster-block-setup" title="Completing gluster-block setup" class="md-nav__link">
+    Completing gluster-block setup
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#deploying-openshift-metrics-with-persistent-storage-from-cns" title="Deploying OpenShift Metrics with Persistent Storage from CNS" class="md-nav__link">
@@ -434,9 +448,10 @@ Before OpenShift Container Platform 3.6 this had to be done manually on an exist
 <p>With <code>openshift-ansible</code> you now have this setup task automated. The playbooks that implement this will deploy a <strong>separate CNS cluster</strong>, preferably on the <em>Infrastructure Nodes</em>, create a <code>PVC</code> and update the Registry <code>DeploymentConfig</code> to mount the associated <code>PV</code> which is where container images will then be stored.</p>
 <div class="admonition caution">
 <p class="admonition-title">Important</p>
-<p>This method will be disruptive. All data stored in the registry so far will become unavailable.<br />
-Migration scenarios exist but are beyond the scope of this lab.</p>
+<p>This method is potentially disruptive. The registry will be re-deployed in this process and may temporarily beansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \</p>
 </div>
+<p>/usr/share/ansible/openshift-ansible/playbooks/byo/openshift-glusterfs/registry.yml unavailable.<br />
+    Migration of the data will be taken care of by <code>openshift-ansible</code>.</p>
 <p>&#8680; Review the <code>openshift-ansible</code> inventory file in <code>/etc/ansible/ocp-with-glusterfs-registry</code> that has been prepared in your environment:</p>
 <p><kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd></p>
 <div class="codehilite"><pre><span></span><span class="k">[OSEv3:children]</span>
@@ -450,12 +465,15 @@ Migration scenarios exist but are beyond the scope of this lab.</p>
 <span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.6.173.0.21</span>
 <span class="na">openshift_master_identity_providers</span><span class="o">=</span><span class="s">[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]</span>
 <span class="na">openshift_master_htpasswd_users</span><span class="o">=</span><span class="s">{&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}</span>
-<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.52.59.170.248.nip.io&#39;</span>
+<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.52.59.170.248.xip.io&#39;</span>
 <span class="na">openshift_router_selector</span><span class="o">=</span><span class="s">&#39;role=master&#39;</span>
-<span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
-<span class="hll"><span class="na">openshift_hosted_registry_storage_kind</span><span class="o">=</span><span class="s">glusterfs</span>
-</span><span class="hll"><span class="na">openshift_storage_glusterfs_registry_storageclass</span><span class="o">=</span><span class="s">true</span>
-</span><span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_hosted_router_wait</span><span class="o">=</span><span class="s">false</span>
+<span class="hll"><span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
+</span><span class="hll"><span class="na">openshift_hosted_registry_wait</span><span class="o">=</span><span class="s">false</span>
+</span><span class="hll"><span class="na">openshift_hosted_registry_storage_volume_size</span><span class="o">=</span><span class="s">10Gi</span>
+</span><span class="na">openshift_hosted_registry_storage_glusterfs_swap</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_hosted_registry_storage_glusterfs_swapcopy</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
 <span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
 <span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
 <span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
@@ -463,25 +481,41 @@ Migration scenarios exist but are beyond the scope of this lab.</p>
 <span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
 <span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
 <span class="na">openshift_storage_glusterfs_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-server-rhel7</span>
-<span class="na">openshift_storage_glusterfs_version</span><span class="o">=</span><span class="s">3.2.0-7</span>
-<span class="na">openshift_storage_glusterfs_heketi_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-volmanager-rhel7</span>
-<span class="na">openshift_storage_glusterfs_heketi_version</span><span class="o">=</span><span class="s">3.2.0-11</span>
-<span class="na">openshift_storage_glusterfs_registry_namespace</span><span class="o">=</span><span class="s">infra-storage</span>
+<span class="na">openshift_storage_glusterfs_version</span><span class="o">=</span><span class="s">3.3.0-362</span>
+<span class="hll"><span class="na">openshift_storage_glusterfs_heketi_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-volmanager-rhel7</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_heketi_version</span><span class="o">=</span><span class="s">3.3.0-364</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_registry_namespace</span><span class="o">=</span><span class="s">infra-storage</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_registry_storageclass</span><span class="o">=</span><span class="s">false</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_registry_block_deploy</span><span class="o">=</span><span class="s">true</span>
+</span><span class="hll"><span class="na">openshift_storage_glusterfs_registry_block_version</span><span class="o">=</span><span class="s">3.3.0-362</span>
+</span><span class="na">openshift_storage_glusterfs_registry_block_host_vol_create</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_storage_glusterfs_registry_block_host_vol_size</span><span class="o">=</span><span class="s">20</span>
 <span class="na">openshift_docker_additional_registries</span><span class="o">=</span><span class="s">mirror.lab:5555</span>
 <span class="na">openshift_docker_insecure_registries</span><span class="o">=</span><span class="s">mirror.lab:5555</span>
 <span class="na">oreg_url</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose-${component}:${version}</span>
+<span class="na">osm_etcd_image</span><span class="o">=</span><span class="s">mirror.lab:5555/rhel7/etcd</span>
+<span class="na">openshift_service_catalog_image_prefix</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose-</span>
+<span class="na">openshift_cli_image</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose</span>
+<span class="na">osm_image</span><span class="o">=</span><span class="s">mirror.lab:5555/openshift3/ose</span>
 <span class="na">openshift_examples_modify_imagestreams</span><span class="o">=</span><span class="s">false</span>
-<span class="na">openshift_disable_check</span><span class="o">=</span><span class="s">disk_availability,memory_availability</span>
+<span class="na">openshift_disable_check</span><span class="o">=</span><span class="s">disk_availability,memory_availability,docker_image_availability</span>
+<span class="na">openshift_enable_service_catalog</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_template_service_broker_namespaces</span><span class="o">=</span><span class="s">[&#39;openshift&#39;]</span>
+<span class="na">template_service_broker_install</span><span class="o">=</span><span class="s">true</span>
+<span class="na">ansible_service_broker_install</span><span class="o">=</span><span class="s">false</span>
 
 <span class="k">[masters]</span>
-<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">52.59.170.248.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">52.59.170.248.xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248</span>
 
 <span class="k">[masters:vars]</span>
 <span class="na">openshift_schedulable</span><span class="o">=</span><span class="s">true</span>
 <span class="na">openshift_node_labels</span><span class="o">=</span><span class="s">&quot;{&#39;role&#39;: &#39;master&#39;}&quot;</span>
 
+<span class="k">[etcd:children]</span>
+<span class="na">masters</span>
+
 <span class="k">[nodes]</span>
-<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">52.59.170.248.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248</span>
+<span class="na">master.lab openshift_public_hostname</span><span class="o">=</span><span class="s">52.59.170.248.xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248</span>
 <span class="na">infra-1.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-1.lab openshift_ip=10.0.2.101 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
 <span class="na">infra-2.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-2.lab openshift_ip=10.0.3.102 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
 <span class="na">infra-3.lab openshift_hostname</span><span class="o">=</span><span class="s">infra-3.lab openshift_ip=10.0.4.103 openshift_node_labels=&quot;{&#39;role&#39;: &#39;infra&#39;}&quot;</span>
@@ -490,17 +524,26 @@ Migration scenarios exist but are beyond the scope of this lab.</p>
 <span class="na">node-3.lab openshift_hostname</span><span class="o">=</span><span class="s">node-3.lab openshift_ip=10.0.4.203 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
 <span class="na">node-4.lab openshift_hostname</span><span class="o">=</span><span class="s">node-4.lab openshift_ip=10.0.2.204 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
 <span class="na">node-5.lab openshift_hostname</span><span class="o">=</span><span class="s">node-5.lab openshift_ip=10.0.3.205 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
-<span class="na">node-6.lab openshift_hostname</span><span class="o">=</span><span class="s">node-6.lab openshift_ip=10.0.4.206 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
-
-<span class="hll"><span class="k">[glusterfs_registry]</span>
+<span class="hll"><span class="na">node-6.lab openshift_hostname</span><span class="o">=</span><span class="s">node-6.lab openshift_ip=10.0.4.206 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
+</span><span class="hll">
+</span><span class="hll"><span class="k">[glusterfs_registry]</span>
 </span><span class="hll"><span class="na">infra-1.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.2.101 glusterfs_zone=1 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
 </span><span class="hll"><span class="na">infra-2.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.3.102 glusterfs_zone=2 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
-</span><span class="hll"><span class="na">infra-3.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.4.103 glusterfs_zone=3 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
-</span></pre></div>
+</span><span class="na">infra-3.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.4.103 glusterfs_zone=3 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
+</pre></div>
 
 
-<p>The highlighted lines indicate the vital options in the inventory file to instruct <code>openshift-ansible</code> to deploy this setup.<br />
-Hosts in the <code>[glusterfs_registry]</code> group will run the CNS cluster specifically created for OpenShift Infrastructure. Just like in Module 2, each host gets specific information about the free block device to use for CNS and the failure zone it resides in (the infrastructure nodes are also hosted in 3 different Availability Zones)<br />
+<p>The highlighted lines indicate the vital options in the inventory file to instruct <code>openshift-ansible</code> to deploy this setup.</p>
+<ul>
+<li>a hostgroup called <code>[glusterfs_registry]</code> is created with all those OpenShift nodes that are designed to run CNS for Registry and other infrastructure</li>
+<li>an instruction to trigger deployment of CNS for the registry (<code>openshift_hosted_registry_storage_kind=glusterfs</code>)</li>
+<li>a custom name for the namespace is provided in which the CNS pods will live (<code>openshift_storage_glusterfs_registry_namespace</code>, optional)</li>
+<li>any existing registry backend will be swapped out for a CNS volume (<code>openshift_hosted_registry_storage_glusterfs_swap</code>, default <code>false</code>)</li>
+<li>any existing data in an existing registry will be copied to the CNS volume (<code>openshift_hosted_registry_storage_glusterfs_swapcopy</code>, default <code>true</code>)</li>
+<li>the <code>gluster-block</code> provisioner is enabled (<code>openshift_storage_glusterfs_registry_block_deploy</code>) and a version is selected (<code>openshift_storage_glusterfs_registry_block_version</code>)</li>
+<li>a 20GiB volume that <code>gluster-block</code> will use to back iSCSI LUNs will be created (<code>openshift_storage_glusterfs_registry_block_host_vol_create</code>, <code>openshift_storage_glusterfs_registry_block_host_vol_size</code>)</li>
+</ul>
+<p>Hosts in the <code>[glusterfs_registry]</code> group will run the CNS cluster specifically created for OpenShift Infrastructure. Just like in Module 2, each host gets specific information about the free block device to use for CNS and the failure zone it resides in (the infrastructure nodes are also hosted in 3 different Availability Zones)<br />
 The option <code>openshift_hosted_registry_storage_kind=glusterfs</code> will cause the registry to re-deployed with a <code>PVC</code> served by this cluster.</p>
 <p>&#8680; First ensure that from an Ansible-perspective the required nodes are reachable</p>
 <div class="codehilite"><pre><span></span>ansible -i /etc/ansible/ocp-with-glusterfs-registry glusterfs_registry -m ping
@@ -547,11 +590,6 @@ So making the master accept pods again we ensure the re-deployed router finds it
 
 
 <p>This will take about 6-7 minutes to complete.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>As in Module 2, executing the playbook in <code>byo/openshift-glusterfs/registry.yml</code> directly post-deployment is not supported in production as of yet. Special care has been taken in this lab so that it works here.<br />
-This will change in one of the next releases of <code>openshift-ansible</code>.</p>
-</div>
 <p>The playbook should succeed without any failures. After it completes you have a Registry that uses CNS to store container images. It has automatically been scaled to 3 pods for high availability too.</p>
 <p>&#8680; Log in as <code>operator</code> in the <code>default</code> namespace</p>
 <div class="codehilite"><pre><span></span>oc login -u operator -n default
@@ -670,8 +708,9 @@ heketi-registry-1-k744l    1/1       Running   0          30m
 
 <p>With this you have successfully remediated a single point of failure from your OpenShift installation. Since this setup is entirely automated by <code>openshift-ansible</code> you can deploy out of the box an OpenShift environment capable of hosting stateful applications and operate a fault-tolerant registry. All this with no external dependencies or complicated integration of external storage :)</p>
 <hr />
-<h2 id="openshift-loggingmetrics-on-cns">OpenShift Logging/Metrics on CNS<a class="headerlink" href="#openshift-loggingmetrics-on-cns" title="Permanent link">#</a></h2>
-<p>OpenShift Logging (Kibana) and Metrics (Cassandra) are also components that require persistent storage. Typically so far external block storage providers had to be used in order to get these services to work reliably.</p>
+<h2 id="openshift-loggingmetrics-on-cns-block-storage">OpenShift Logging/Metrics on CNS block storage<a class="headerlink" href="#openshift-loggingmetrics-on-cns-block-storage" title="Permanent link">#</a></h2>
+<p>OpenShift Logging (Kibana) and Metrics (Cassandra) are also components that require persistent storage. Typically so far external block storage providers had to be used in order to get these services to work reliably.<br />
+Since the introduction of <code>gluster-block</code> this is now possible with CNS as well.</p>
 <p>It might seem counter-intuitive at first to consider CNS to serve these systems, mainly because:</p>
 <ul>
 <li>Kibana and Cassandra are shared-nothing scale-out services</li>
@@ -683,35 +722,94 @@ heketi-registry-1-k744l    1/1       Running   0          30m
 <li>the storage type available in infra nodes is most likely not suitable for performant long-term operations of these services (CNS uses aggregate performance of multiple devices and hosts)</li>
 <li>without CNS some sort external storage system is required that requires additional manual configuration steps, in any case you should not use <code>emptyDir</code></li>
 </ul>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>In the next couple of steps we will deploy Logging/Metrics on CNS. This is will be supported with the upcoming release of CNS 3.6 (early October 2017) in production. However the instructions will slightly vary because the <code>PersistentVolumes</code> will not be backed by a normal GlusterFS volume but by <code>gluster-block</code> to achieve high performance.<br />
-It will not be supported to run these services on standard <code>gluster-fuse</code> based CNS.</p>
+<h4 id="completing-gluster-block-setup">Completing <code>gluster-block</code> setup<a class="headerlink" href="#completing-gluster-block-setup" title="Permanent link">#</a></h4>
+<p>With the execution of previous playbook we have also deployed and configured <code>gluster-block</code>. The required settings were all in the Ansible inventory file. Note that while the registry will consume a normal CNS volume based on <code>gluster-fuse</code>, GlusterFS&rsquo; native file protocol, the only supported form of CNS backing both OpenShift Logging and/or Metrics is <code>gluster-block</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">A quick primer to <code>gluster-block</code></p>
+<p><code>gluster-block</code> is a block-storage provisioner based on CNS. It is implemented using a large GlusterFS volume that hosts sparse files which in turn are the backing files of iSCSI LUNs served by <code>gluster-block</code>. The orchestration of this taken care of by the <code>gluster-block-provisioner</code> which runs in a pod just like <code>heketi</code>.<br />
+Even though the result of this are iSCSI LUNs, i.e. block devices, this kind of storage, when claimed, still ends up being mounted by OpenShift nodes and then formatted with XFS (like for any other block storage in OpenShift). As a consequence <code>gluster-block</code> only supports <code>RWO</code> volumes.</p>
+<p>So you may ask: is this, an XFS-formatted iSCSI LUN backed by a sparse file on top of GlusterFS, still faster than a plain GlusterFS volume? The answer is yes for applications like OpenShift Metrics and Logging. Such applications regularly do file-system operations like locking or byte-range locking which are very expensive on any distributed filesystem, and GlusterFS is no exception. On local filesystems like XFS this is not a problem. The resulting XFS meta-data operations are not distributed in <code>gluster-block</code> but are perceived as plain I/O to a file on top of GlusterFS, which is fast.</p>
 </div>
-<p>To review the required configuration sections in the <code>openshift-ansible</code> inventory file, open the standard inventory file <code>/etc/ansible/hosts/</code> that was used to deploy this OCP cluster initially:</p>
-<p><kbd>/etc/ansible/hosts:</kbd></p>
-<div class="codehilite"><pre><span></span><span class="k">[OSEv3:children]</span>
-<span class="na">masters</span>
-<span class="na">nodes</span>
+<p>By default <code>openshift-ansible</code> will stand up the <code>gluster-block</code> infrastructure as part of deploying CNS but it will not configure the nodes to mount iSCSI volumes with multipathing. The process involves installing the <code>iscsi-initiator-utils</code> as well as <code>device-mapper-multipath</code>, and then enable / configure the <code>multipathd</code> service.<br />
+This has already been prepared for you in this environment. For more details on the steps, consult the <a href="https://access.redhat.com/documentation/en-us/red_hat_gluster_storage/3.3/html-single/container-native_storage_for_openshift_container_platform/#Block_Storage">documentation</a>.</p>
+<p>The only configuration step left is to create a <code>StorageClass</code> for <code>gluster-block</code> and temporarily make it the default so the playbooks which provision OpenShift Logging and Metrics get their PVCs fulfilled by <code>gluster-block</code>.</p>
+<p>First, make sure you are logged in as <code>operator</code> in the <code>infra-storage</code> namespace:</p>
+<div class="codehilite"><pre><span></span>oc login -u operator -n infra-storage
+</pre></div>
 
-<span class="k">[OSEv3:vars]</span>
-<span class="na">deployment_type</span><span class="o">=</span><span class="s">openshift-enterprise</span>
-<span class="na">containerized</span><span class="o">=</span><span class="s">true</span>
-<span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.6.173.0.21</span>
-<span class="na">openshift_master_identity_providers</span><span class="o">=</span><span class="s">[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]</span>
-<span class="na">openshift_master_htpasswd_users</span><span class="o">=</span><span class="s">{&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}</span>
-<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.52.59.170.248.nip.io&#39;</span>
-<span class="na">openshift_router_selector</span><span class="o">=</span><span class="s">&#39;role=master&#39;</span>
-<span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
-<span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
-<span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
-<span class="hll"><span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
-</span><span class="hll"><span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
-</span><span class="na">openshift_logging_install_logging</span><span class="o">=</span><span class="s">false</span>
-<span class="hll"><span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
-</span><span class="hll"><span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
-</span>
-<span class="k">[... output omitted... ]</span>
+
+<p>Then, programmatically determine the auto-generated credentials for the <code>heketi</code> pod and the cluster ID for the CNS cluster serving the registry:</p>
+<div class="codehilite"><pre><span></span>HEKETI_POD=$(oc get pods -l glusterfs=heketi-registry-pod -n infra-storage -o jsonpath=&quot;{.items[0].metadata.name}&quot;)
+export HEKETI_CLI_SERVER=http://$(oc get route/heketi-registry -o jsonpath=&#39;{.spec.host}&#39;)
+export HEKETI_CLI_USER=admin
+export HEKETI_CLI_KEY=$(oc get pod/$HEKETI_POD -o jsonpath=&#39;{.spec.containers[0].env[?(@.name==&quot;HEKETI_ADMIN_KEY&quot;)].value}&#39;)
+export CNS_INFRA_CLUSTER=$(heketi-cli cluster list --json | jq -r &#39;.clusters[0]&#39;)
+</pre></div>
+
+
+<p>The, create YAML representation of the <code>secret</code> to store the credentials for the <code>heketi</code> pod by copy&amp;pasting the following command (inserts the credentials from the environment variable for you convenience):</p>
+<div class="codehilite"><pre><span></span>cat &gt; gluster-block-secret.yml &lt;&lt;EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: heketi-secret
+  namespace: infra-storage
+data:
+  # base64 encoded password. E.g.: echo -n &quot;mypassword&quot; | base64
+  key: ${HEKETI_CLI_KEY}
+type: gluster.org/glusterblock
+EOF
+</pre></div>
+
+
+<p>Create the <code>secret</code>:</p>
+<div class="codehilite"><pre><span></span>oc create -f gluster-block-secret.yml
+</pre></div>
+
+
+<p>Now create the actual <code>StorageClass</code> for <code>gluster-block</code>, again by running this command that creates the file with the right content and saves you from typing:</p>
+<div class="codehilite"><pre><span></span>cat &gt; gluster-block-storageclass.yml &lt;&lt;EOF
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+ name: gluster-block
+provisioner: gluster.org/glusterblock
+parameters:
+ resturl: &quot;${HEKETI_CLI_SERVER}&quot;
+ restuser: &quot;${HEKETI_CLI_USER}&quot;
+ restsecretnamespace: &quot;infra-storage&quot;
+ restsecretname: &quot;heketi-secret&quot;
+ hacount: &quot;3&quot;
+ clusterids: &quot;630372ccdc720a92c681fb928f27b53f,796e6db1981f369ea0340913eeea4c9a&quot;
+ chapauthenabled: &quot;true&quot;
+ ~~~~
+
+To review the required configuration sections in the `openshift-ansible` inventory file, open the standard inventory file `/etc/ansible/hosts/` that was used to deploy this OCP cluster initially:
+
+&lt;kbd&gt;/etc/ansible/hosts:&lt;/kbd&gt;
+~~~~ini hl_lines=&quot;16 17 19 20&quot;
+[OSEv3:children]
+masters
+nodes
+
+[OSEv3:vars]
+deployment_type=openshift-enterprise
+containerized=true
+openshift_image_tag=v3.6.173.0.21
+openshift_master_identity_providers=[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]
+openshift_master_htpasswd_users={&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}
+openshift_master_default_subdomain=&#39;cloudapps.52.59.170.248.xip.io&#39;
+openshift_router_selector=&#39;role=master&#39;
+openshift_registry_selector=&#39;role=infra&#39;
+openshift_metrics_install_metrics=false
+openshift_metrics_hawkular_hostname=&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;
+openshift_metrics_cassandra_storage_type=pv
+openshift_metrics_cassandra_pvc_size=10Gi
+openshift_logging_install_logging=false
+openshift_logging_es_pvc_size=10Gi
+openshift_logging_es_pvc_dynamic=true
+
+[... output omitted... ]
 </pre></div>
 
 
