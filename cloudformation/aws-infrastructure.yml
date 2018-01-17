@@ -628,7 +628,7 @@ Resources:
                   openshift_storage_glusterfs_registry_block_deploy=true
                   openshift_storage_glusterfs_registry_block_version=3.3.0-362
                   openshift_storage_glusterfs_registry_block_host_vol_create=true
-                  openshift_storage_glusterfs_registry_block_host_vol_size=20
+                  openshift_storage_glusterfs_registry_block_host_vol_size=30
                   openshift_docker_additional_registries=mirror.lab:5555
                   openshift_docker_insecure_registries=mirror.lab:5555
                   oreg_url=mirror.lab:5555/openshift3/ose-${!component}:${!version}
