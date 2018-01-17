@@ -18,7 +18,7 @@
 - name: create multipath configuration for gluster-block
   copy:
     src: multipath.conf
-    dest: multipath.conf
+    dest: /etc/multipath.conf
 
 - name: restart multipath daemon
   service:
