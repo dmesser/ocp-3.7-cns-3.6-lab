@@ -20,9 +20,8 @@ Before OpenShift Container Platform 3.6 this had to be done manually on an exist
 With `openshift-ansible` you now have this setup task automated. The playbooks that implement this will deploy a **separate CNS cluster**, preferably on the *Infrastructure Nodes*, create a `PVC` and update the Registry `DeploymentConfig` to mount the associated `PV` which is where container images will then be stored.
 
 !!! Caution "Important"
-    This method is potentially disruptive. The registry will be re-deployed in this process and may temporarily beansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \
-/usr/share/ansible/openshift-ansible/playbooks/byo/openshift-glusterfs/registry.yml unavailable.
-    Migration of the data will be taken care of by `openshift-ansible`.
+    This method is potentially disruptive. The registry will be re-deployed in this process and may temporarily be unavailable.
+    Migration of the data will in the future be taken care of by `openshift-ansible`. Currently there is bug that prevents this from happening but it should be resolved soon.
 
 &#8680; Review the `openshift-ansible` inventory file in `/etc/ansible/ocp-with-glusterfs-registry` that has been prepared in your environment:
 
@@ -157,14 +156,23 @@ infra-2.lab | SUCCESS => {
     ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \
     /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-glusterfs/registry.yml
 
+
+This creates a new CNS deployment just for infrastructure workloads on the infrastructure nodes. This will take 6-7 minutes to complete and also create `PersistentVolume` and `PersistentVolumeClaim` objects for CNS volume that will serve the registry as a backend.
+
+&#8680; Now, run the following playbook to update the registry:
+
+    ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-hosted.yml
+
+This will take another 2-3 minutes.
+
+!!! Warning
+    Currently there is a bug in `openshift-ansible` that will cause this playbook to fail when attempting to migrate data from the existing registry. The task `Activate registry maintenance mode` will fail. Nevertheless the registry is updated like you will see below.
+
 &#8680; Disable scheduling on the Master again:
 
     oadm manage-node master.lab --schedulable=false
 
-This will take about 6-7 minutes to complete.
-
-
-The playbook should succeed without any failures. After it completes you have a Registry that uses CNS to store container images. It has automatically been scaled to 3 pods for high availability too.
+Now you have a Registry that uses CNS to store container images. It has automatically been scaled to 3 pods for high availability too.
 
 &#8680; Log in as `operator` in the `default` namespace
 
@@ -188,7 +196,7 @@ docker-registry   2          1         1         config
 ~~~~ hl_lines="36 37"
 Name:		docker-registry
 Namespace:	default
-Created:	42 minutes ago
+Created:	40 minutes ago
 Labels:		docker-registry=default
 Annotations:	<none>
 Latest Version:	2
@@ -202,7 +210,7 @@ Pod Template:
   Service Account:	registry
   Containers:
    registry:
-    Image:	mirror.lab:5555/openshift3/ose-docker-registry:v3.6.173.0.21
+    Image:	mirror.lab:5555/openshift3/ose-docker-registry:v3.7.14
     Port:	5000/TCP
     Requests:
       cpu:	100m
@@ -212,7 +220,7 @@ Pod Template:
     Environment:
       REGISTRY_HTTP_ADDR:					:5000
       REGISTRY_HTTP_NET:					tcp
-      REGISTRY_HTTP_SECRET:					4wwwdIkD5sKc/AcAQ76BuNaOWF13MvkYge6ltjJobn0=
+      REGISTRY_HTTP_SECRET:					xeEy14G8IIpgkmQ5mA4UMC+XMhZgEfCy8JRvTN003oQ=
       REGISTRY_MIDDLEWARE_REPOSITORY_OPENSHIFT_ENFORCEQUOTA:	false
       REGISTRY_HTTP_TLS_KEY:					/etc/secrets/registry.key
       REGISTRY_HTTP_TLS_CERTIFICATE:				/etc/secrets/registry.crt
@@ -231,23 +239,22 @@ Pod Template:
 
 Deployment #2 (latest):
 	Name:		docker-registry-2
-	Created:	14 minutes ago
+	Created:	15 minutes ago
 	Status:		Complete
 	Replicas:	3 current / 3 desired
 	Selector:	deployment=docker-registry-2,deploymentconfig=docker-registry,docker-registry=default
 	Labels:		docker-registry=default,openshift.io/deployment-config.name=docker-registry
 	Pods Status:	3 Running / 0 Waiting / 0 Succeeded / 0 Failed
 Deployment #1:
-	Created:	42 minutes ago
+	Created:	40 minutes ago
 	Status:		Complete
 	Replicas:	0 current / 0 desired
 
 Events:
-  FirstSeen	LastSeen	Count	From				SubObjectPath	Type		Reason				Message
-  ---------	--------	-----	----				-------------	--------	------				-------
-  42m		42m		1	deploymentconfig-controller			Normal		DeploymentCreated		Created new replication controller "docker-registry-1" for version 1
-  14m		14m		1	deploymentconfig-controller			Normal		DeploymentCreated		Created new replication controller "docker-registry-2" for version 2
-  14m		14m		1	deploymentconfig-controller			Normal		ReplicationControllerScaled	Scaled replication controller "docker-registry-1" from 842477907952 to 3
+  FirstSeen	LastSeen	Count	From				SubObjectPath	Type		Reason			Message
+  ---------	--------	-----	----				-------------	--------	------			-------
+  40m		40m		1	deploymentconfig-controller			Normal		DeploymentCreated	Created new replication controller "docker-registry-1" for version 1
+  15m		15m		1	deploymentconfig-controller			Normal		DeploymentCreated	Created new replication controller "docker-registry-2" for version 2
 ~~~~
 
 While the exact output will be different for you it is easy to tell the registry pods are configured to mount a `PersistentVolume` associated with the `PersistentVolumeClaim` named `registry-claim`.
@@ -260,7 +267,7 @@ The `PVC` was automatically generated by `openshift-ansible`:
 
 ~~~~
 NAME             STATUS    VOLUME            CAPACITY   ACCESSMODES   STORAGECLASS   AGE
-registry-claim   Bound     registry-volume   5Gi        RWX                          23m
+registry-claim   Bound     registry-volume   10Gi       RWX                          23m
 ~~~~
 
 In the OpenShift UI you will see the new Registry configuration when you log on as `operator` and check the **Overview** page in the `default` namespace:
@@ -273,14 +280,15 @@ In the OpenShift UI you will see the new Registry configuration when you log on 
 
     oc get pods -n infra-storage
 
-There is now dedicated a CNS stack for OpenShift Infrastructure:
+There is now dedicated a CNS stack including the `gluster-block` provisioner for OpenShift Infrastructure:
 
 ~~~~
-NAME                       READY     STATUS    RESTARTS   AGE
-glusterfs-registry-1jct8   1/1       Running   0          33m
-glusterfs-registry-jp92q   1/1       Running   0          33m
-glusterfs-registry-x2kkm   1/1       Running   0          33m
-heketi-registry-1-k744l    1/1       Running   0          30m
+NAME                                           READY     STATUS    RESTARTS   AGE
+glusterblock-registry-provisioner-dc-1-6wlcw   1/1       Running   0          24m
+glusterfs-registry-2f2vk                       1/1       Running   0          27m
+glusterfs-registry-kxghm                       1/1       Running   0          27m
+glusterfs-registry-pjrfl                       1/1       Running   0          27m
+heketi-registry-1-6rjth                        1/1       Running   0          25m
 ~~~~
 
 With this you have successfully remediated a single point of failure from your OpenShift installation. Since this setup is entirely automated by `openshift-ansible` you can deploy out of the box an OpenShift environment capable of hosting stateful applications and operate a fault-tolerant registry. All this with no external dependencies or complicated integration of external storage :)
@@ -368,14 +376,19 @@ parameters:
  restsecretnamespace: "infra-storage"
  restsecretname: "heketi-secret"
  hacount: "3"
- clusterids: "630372ccdc720a92c681fb928f27b53f,796e6db1981f369ea0340913eeea4c9a"
+ clusterids: "${CNS_INFRA_CLUSTER}"
  chapauthenabled: "true"
- ~~~~
+EOF
+~~~~
 
-To review the required configuration sections in the `openshift-ansible` inventory file, open the standard inventory file `/etc/ansible/hosts/` that was used to deploy this OCP cluster initially:
+Now create the `StorageClass`:
 
-<kbd>/etc/ansible/hosts:</kbd>
-~~~~ini hl_lines="16 17 19 20"
+    oc create -f gluster-block-storageclass.yml
+
+To review the required configuration sections in the `openshift-ansible` inventory file, open the standard inventory file `/etc/ansible/ocp-with-glusterfs-registry` that was used to deploy this OCP cluster initially:
+
+<kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd>
+~~~~ini hl_lines="21 22 24 25"
 [OSEv3:children]
 masters
 nodes
@@ -383,12 +396,17 @@ nodes
 [OSEv3:vars]
 deployment_type=openshift-enterprise
 containerized=true
-openshift_image_tag=v3.6.173.0.21
+openshift_image_tag=v3.7.14
 openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-openshift_master_default_subdomain='cloudapps.52.59.170.248.xip.io'
-openshift_router_selector='role=master'
+openshift_master_default_subdomain='cloudapps.52.59.170.248.xip.ioopenshift_router_selector='role=master'
+openshift_hosted_router_wait=false
 openshift_registry_selector='role=infra'
+openshift_hosted_registry_wait=false
+openshift_hosted_registry_storage_volume_size=10Gi
+openshift_hosted_registry_storage_kind=glusterfs
+openshift_hosted_registry_storage_glusterfs_swap=true
+openshift_hosted_registry_storage_glusterfs_swapcopy=true
 openshift_metrics_install_metrics=false
 openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
 openshift_metrics_cassandra_storage_type=pv
