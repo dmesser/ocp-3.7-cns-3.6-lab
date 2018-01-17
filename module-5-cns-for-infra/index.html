@@ -448,10 +448,9 @@ Before OpenShift Container Platform 3.6 this had to be done manually on an exist
 <p>With <code>openshift-ansible</code> you now have this setup task automated. The playbooks that implement this will deploy a <strong>separate CNS cluster</strong>, preferably on the <em>Infrastructure Nodes</em>, create a <code>PVC</code> and update the Registry <code>DeploymentConfig</code> to mount the associated <code>PV</code> which is where container images will then be stored.</p>
 <div class="admonition caution">
 <p class="admonition-title">Important</p>
-<p>This method is potentially disruptive. The registry will be re-deployed in this process and may temporarily beansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \</p>
+<p>This method is potentially disruptive. The registry will be re-deployed in this process and may temporarily be unavailable.<br />
+Migration of the data will in the future be taken care of by <code>openshift-ansible</code>. Currently there is bug that prevents this from happening but it should be resolved soon.</p>
 </div>
-<p>/usr/share/ansible/openshift-ansible/playbooks/byo/openshift-glusterfs/registry.yml unavailable.<br />
-    Migration of the data will be taken care of by <code>openshift-ansible</code>.</p>
 <p>&#8680; Review the <code>openshift-ansible</code> inventory file in <code>/etc/ansible/ocp-with-glusterfs-registry</code> that has been prepared in your environment:</p>
 <p><kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd></p>
 <div class="codehilite"><pre><span></span><span class="k">[OSEv3:children]</span>
@@ -584,13 +583,23 @@ So making the master accept pods again we ensure the re-deployed router finds it
 </pre></div>
 
 
+<p>This creates a new CNS deployment just for infrastructure workloads on the infrastructure nodes. This will take 6-7 minutes to complete and also create <code>PersistentVolume</code> and <code>PersistentVolumeClaim</code> objects for CNS volume that will serve the registry as a backend.</p>
+<p>&#8680; Now, run the following playbook to update the registry:</p>
+<div class="codehilite"><pre><span></span>ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-hosted.yml
+</pre></div>
+
+
+<p>This will take another 2-3 minutes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently there is a bug in <code>openshift-ansible</code> that will cause this playbook to fail when attempting to migrate data from the existing registry. The task <code>Activate registry maintenance mode</code> will fail. Nevertheless the registry is updated like you will see below.</p>
+</div>
 <p>&#8680; Disable scheduling on the Master again:</p>
 <div class="codehilite"><pre><span></span>oadm manage-node master.lab --schedulable=false
 </pre></div>
 
 
-<p>This will take about 6-7 minutes to complete.</p>
-<p>The playbook should succeed without any failures. After it completes you have a Registry that uses CNS to store container images. It has automatically been scaled to 3 pods for high availability too.</p>
+<p>Now you have a Registry that uses CNS to store container images. It has automatically been scaled to 3 pods for high availability too.</p>
 <p>&#8680; Log in as <code>operator</code> in the <code>default</code> namespace</p>
 <div class="codehilite"><pre><span></span>oc login -u operator -n default
 </pre></div>
@@ -614,7 +623,7 @@ docker-registry   2          1         1         config
 
 <div class="codehilite"><pre><span></span>Name:       docker-registry
 Namespace:  default
-Created:    42 minutes ago
+Created:    40 minutes ago
 Labels:     docker-registry=default
 Annotations:    &lt;none&gt;
 Latest Version: 2
@@ -628,7 +637,7 @@ Pod Template:
   Service Account:  registry
   Containers:
    registry:
-    Image:  mirror.lab:5555/openshift3/ose-docker-registry:v3.6.173.0.21
+    Image:  mirror.lab:5555/openshift3/ose-docker-registry:v3.7.14
     Port:   5000/TCP
     Requests:
       cpu:  100m
@@ -638,7 +647,7 @@ Pod Template:
     Environment:
       REGISTRY_HTTP_ADDR:                   :5000
       REGISTRY_HTTP_NET:                    tcp
-      REGISTRY_HTTP_SECRET:                 4wwwdIkD5sKc/AcAQ76BuNaOWF13MvkYge6ltjJobn0=
+      REGISTRY_HTTP_SECRET:                 xeEy14G8IIpgkmQ5mA4UMC+XMhZgEfCy8JRvTN003oQ=
       REGISTRY_MIDDLEWARE_REPOSITORY_OPENSHIFT_ENFORCEQUOTA:    false
       REGISTRY_HTTP_TLS_KEY:                    /etc/secrets/registry.key
       REGISTRY_HTTP_TLS_CERTIFICATE:                /etc/secrets/registry.crt
@@ -657,23 +666,22 @@ Pod Template:
 
 Deployment #2 (latest):
     Name:       docker-registry-2
-    Created:    14 minutes ago
+    Created:    15 minutes ago
     Status:     Complete
     Replicas:   3 current / 3 desired
     Selector:   deployment=docker-registry-2,deploymentconfig=docker-registry,docker-registry=default
     Labels:     docker-registry=default,openshift.io/deployment-config.name=docker-registry
     Pods Status:    3 Running / 0 Waiting / 0 Succeeded / 0 Failed
 Deployment #1:
-    Created:    42 minutes ago
+    Created:    40 minutes ago
     Status:     Complete
     Replicas:   0 current / 0 desired
 
 Events:
-  FirstSeen LastSeen    Count   From                SubObjectPath   Type        Reason              Message
-  --------- --------    -----   ----                -------------   --------    ------              -------
-  42m       42m     1   deploymentconfig-controller         Normal      DeploymentCreated       Created new replication controller &quot;docker-registry-1&quot; for version 1
-  14m       14m     1   deploymentconfig-controller         Normal      DeploymentCreated       Created new replication controller &quot;docker-registry-2&quot; for version 2
-  14m       14m     1   deploymentconfig-controller         Normal      ReplicationControllerScaled Scaled replication controller &quot;docker-registry-1&quot; from 842477907952 to 3
+  FirstSeen LastSeen    Count   From                SubObjectPath   Type        Reason          Message
+  --------- --------    -----   ----                -------------   --------    ------          -------
+  40m       40m     1   deploymentconfig-controller         Normal      DeploymentCreated   Created new replication controller &quot;docker-registry-1&quot; for version 1
+  15m       15m     1   deploymentconfig-controller         Normal      DeploymentCreated   Created new replication controller &quot;docker-registry-2&quot; for version 2
 </pre></div>
 
 
@@ -685,7 +693,7 @@ Events:
 
 <p>The <code>PVC</code> was automatically generated by <code>openshift-ansible</code>:</p>
 <div class="codehilite"><pre><span></span>NAME             STATUS    VOLUME            CAPACITY   ACCESSMODES   STORAGECLASS   AGE
-registry-claim   Bound     registry-volume   5Gi        RWX                          23m
+registry-claim   Bound     registry-volume   10Gi       RWX                          23m
 </pre></div>
 
 
@@ -697,12 +705,13 @@ registry-claim   Bound     registry-volume   5Gi        RWX                     
 </pre></div>
 
 
-<p>There is now dedicated a CNS stack for OpenShift Infrastructure:</p>
-<div class="codehilite"><pre><span></span>NAME                       READY     STATUS    RESTARTS   AGE
-glusterfs-registry-1jct8   1/1       Running   0          33m
-glusterfs-registry-jp92q   1/1       Running   0          33m
-glusterfs-registry-x2kkm   1/1       Running   0          33m
-heketi-registry-1-k744l    1/1       Running   0          30m
+<p>There is now dedicated a CNS stack including the <code>gluster-block</code> provisioner for OpenShift Infrastructure:</p>
+<div class="codehilite"><pre><span></span>NAME                                           READY     STATUS    RESTARTS   AGE
+glusterblock-registry-provisioner-dc-1-6wlcw   1/1       Running   0          24m
+glusterfs-registry-2f2vk                       1/1       Running   0          27m
+glusterfs-registry-kxghm                       1/1       Running   0          27m
+glusterfs-registry-pjrfl                       1/1       Running   0          27m
+heketi-registry-1-6rjth                        1/1       Running   0          25m
 </pre></div>
 
 
@@ -780,36 +789,46 @@ parameters:
  restsecretnamespace: &quot;infra-storage&quot;
  restsecretname: &quot;heketi-secret&quot;
  hacount: &quot;3&quot;
- clusterids: &quot;630372ccdc720a92c681fb928f27b53f,796e6db1981f369ea0340913eeea4c9a&quot;
+ clusterids: &quot;${CNS_INFRA_CLUSTER}&quot;
  chapauthenabled: &quot;true&quot;
- ~~~~
+EOF
+</pre></div>
 
-To review the required configuration sections in the `openshift-ansible` inventory file, open the standard inventory file `/etc/ansible/hosts/` that was used to deploy this OCP cluster initially:
 
-&lt;kbd&gt;/etc/ansible/hosts:&lt;/kbd&gt;
-~~~~ini hl_lines=&quot;16 17 19 20&quot;
-[OSEv3:children]
-masters
-nodes
+<p>Now create the <code>StorageClass</code>:</p>
+<div class="codehilite"><pre><span></span>oc create -f gluster-block-storageclass.yml
+</pre></div>
 
-[OSEv3:vars]
-deployment_type=openshift-enterprise
-containerized=true
-openshift_image_tag=v3.6.173.0.21
-openshift_master_identity_providers=[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]
-openshift_master_htpasswd_users={&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}
-openshift_master_default_subdomain=&#39;cloudapps.52.59.170.248.xip.io&#39;
-openshift_router_selector=&#39;role=master&#39;
-openshift_registry_selector=&#39;role=infra&#39;
-openshift_metrics_install_metrics=false
-openshift_metrics_hawkular_hostname=&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;
-openshift_metrics_cassandra_storage_type=pv
-openshift_metrics_cassandra_pvc_size=10Gi
-openshift_logging_install_logging=false
-openshift_logging_es_pvc_size=10Gi
-openshift_logging_es_pvc_dynamic=true
 
-[... output omitted... ]
+<p>To review the required configuration sections in the <code>openshift-ansible</code> inventory file, open the standard inventory file <code>/etc/ansible/ocp-with-glusterfs-registry</code> that was used to deploy this OCP cluster initially:</p>
+<p><kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd></p>
+<div class="codehilite"><pre><span></span><span class="k">[OSEv3:children]</span>
+<span class="na">masters</span>
+<span class="na">nodes</span>
+
+<span class="k">[OSEv3:vars]</span>
+<span class="na">deployment_type</span><span class="o">=</span><span class="s">openshift-enterprise</span>
+<span class="na">containerized</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_image_tag</span><span class="o">=</span><span class="s">v3.7.14</span>
+<span class="na">openshift_master_identity_providers</span><span class="o">=</span><span class="s">[{&#39;name&#39;: &#39;htpasswd&#39;, &#39;login&#39;: &#39;true&#39;, &#39;challenge&#39;: &#39;true&#39;, &#39;kind&#39;: &#39;HTPasswdPasswordIdentityProvider&#39;, &#39;filename&#39;: &#39;/etc/origin/master/htpasswd&#39;}]</span>
+<span class="na">openshift_master_htpasswd_users</span><span class="o">=</span><span class="s">{&#39;developer&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;,&#39;operator&#39;: &#39;$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/&#39;}</span>
+<span class="na">openshift_master_default_subdomain</span><span class="o">=</span><span class="s">&#39;cloudapps.52.59.170.248.xip.ioopenshift_router_selector=&#39;role=master&#39;</span>
+<span class="na">openshift_hosted_router_wait</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
+<span class="na">openshift_hosted_registry_wait</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_hosted_registry_storage_volume_size</span><span class="o">=</span><span class="s">10Gi</span>
+<span class="na">openshift_hosted_registry_storage_kind</span><span class="o">=</span><span class="s">glusterfs</span>
+<span class="na">openshift_hosted_registry_storage_glusterfs_swap</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_hosted_registry_storage_glusterfs_swapcopy</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
+<span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
+<span class="hll"><span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
+</span><span class="hll"><span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
+</span><span class="na">openshift_logging_install_logging</span><span class="o">=</span><span class="s">false</span>
+<span class="hll"><span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
+</span><span class="hll"><span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
+</span>
+<span class="k">[... output omitted... ]</span>
 </pre></div>
 
 
