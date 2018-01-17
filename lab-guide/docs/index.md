@@ -50,7 +50,7 @@ There is a copy-to-clipboard button next to each field to easily obtain the foll
 |------------| -------- |-------- |
 |IP to Lab Environment | MasterNodePublicIP |e.g. *34.226.81.9* |
 |SSH user on master node | SSHLoginUser | `ec2-user` |
-|(After OpenShift deployment) URL to OpenShift UI| OpenShiftLoginURL |e.g. *https://34.226.81.9.nip.io:8443/* |
+|(After OpenShift deployment) URL to OpenShift UI| OpenShiftLoginURL |e.g. *https://34.226.81.9..xip.io:8443/* |
 
 ## 6. Access the jump server
 
@@ -95,7 +95,7 @@ This labs topology roughly looks like this:
 You might these hints useful:
 
 - almost all of the commands/files don't contain environment-specific content, there is a <kbd>copy-to-clipboard</kbd> button on the right end of every code block for your convenience
-- this lab uses nip.io for DNS resolution of the public IP specific to your lab, keep that in mind when working with URLs in the lab
+- this lab uses .xip.io for DNS resolution of the public IP specific to your lab, keep that in mind when working with URLs in the lab
 - you can skip modules in this lab, unless stated otherwise in the *Overview* section they are independent of each other
 - if you want to look at this lab guide in a separate window: this documentation is hosted at <a href="https://dmesser.github.io/ocp-3.7-cns-3.6-lab/" target="_blank">https://dmesser.github.io/ocp-3.7-cns-3.6-lab</a>
 

@@ -49,7 +49,7 @@ containerized=true
 openshift_image_tag=v3.7.14
 openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-openshift_master_default_subdomain='cloudapps.34.239.188.221.nip.io'
+openshift_master_default_subdomain='cloudapps.34.239.188.221..xip.io'
 openshift_router_selector='role=master'
 openshift_hosted_router_wait=true
 openshift_registry_selector='role=infra'
@@ -80,7 +80,7 @@ openshift_disable_check=disk_availability,memory_availability,docker_image_avail
 openshift_enable_service_catalog=false
 
 [masters]
-master.lab openshift_public_hostname=34.239.188.221.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221
+master.lab openshift_public_hostname=34.239.188.221..xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221
 
 [masters:vars]
 openshift_schedulable=true
@@ -90,7 +90,7 @@ openshift_node_labels="{'role': 'master'}"
 masters
 
 [nodes]
-master.lab openshift_public_hostname=34.239.188.221.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221
+master.lab openshift_public_hostname=34.239.188.221..xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=34.239.188.221
 infra-1.lab openshift_hostname=infra-1.lab openshift_ip=10.0.2.101 openshift_node_labels="{'role': 'infra'}"
 infra-2.lab openshift_hostname=infra-2.lab openshift_ip=10.0.3.102 openshift_node_labels="{'role': 'infra'}"
 infra-3.lab openshift_hostname=infra-3.lab openshift_ip=10.0.4.103 openshift_node_labels="{'role': 'infra'}"
@@ -298,13 +298,13 @@ To also use heketi outside of OpenShift in addition to the `Service` a `Route` h
 The output should look similar to the below:
 
     NAME             HOST/PORT                                                   PATH      SERVICES         PORT      TERMINATION   WILDCARD
-    heketi-storage   heketi-storage-app-storage.cloudapps.35.158.172.55.nip.io             heketi-storage   <all>                   None
+    heketi-storage   heketi-storage-app-storage.cloudapps.35.158.172.55..xip.io             heketi-storage   <all>                   None
 
 Based on this *heketi* will be available on the heketi API URL, in this example:
-http://*heketi-storage-app-storage.cloudapps.35.158.172.55.nip.io*
+http://*heketi-storage-app-storage.cloudapps.35.158.172.55..xip.io*
 
 !!! Note
-    In your environment the URL will be slightly different. It will contain the public IPv4 address of your deployment, dynamically resolved by the nip.io service.
+    In your environment the URL will be slightly different. It will contain the public IPv4 address of your deployment, dynamically resolved by the .xip.io service.
 
 &#8680; You may verify this trivial health check using `curl` (and an in-line `oc` command to dynamically retrieve the `route` for easy copy&paste):
 

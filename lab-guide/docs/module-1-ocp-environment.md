@@ -70,13 +70,13 @@ You will see that there is a router, an internal container registry and a web-co
 ~~~~
 In project default on server https://master.lab:8443
 
-https://docker-registry-default.cloudapps.54.164.139.145.nip.io (passthrough) (svc/docker-registry)
+https://docker-registry-default.cloudapps.54.164.139.145..xip.io (passthrough) (svc/docker-registry)
   dc/docker-registry deploys mirror.lab:5555/openshift3/ose-docker-registry:v3.7.14
     deployment #1 deployed 12 minutes ago - 1 pod
 
 svc/kubernetes - 172.30.0.1 ports 443->8443, 53->8053, 53->8053
 
-https://registry-console-default.cloudapps.54.164.139.145.nip.io (passthrough) (svc/registry-console)
+https://registry-console-default.cloudapps.54.164.139.145..xip.io (passthrough) (svc/registry-console)
   dc/registry-console deploys docker.io/openshift3/registry-console:v3.7
     deployment #1 deployed 12 minutes ago - 1 pod
 

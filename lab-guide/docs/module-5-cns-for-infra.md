@@ -38,7 +38,7 @@ containerized=true
 openshift_image_tag=v3.6.173.0.21
 openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-openshift_master_default_subdomain='cloudapps.52.59.170.248.nip.io'
+openshift_master_default_subdomain='cloudapps.52.59.170.248..xip.io'
 openshift_router_selector='role=master'
 openshift_registry_selector='role=infra'
 openshift_hosted_registry_storage_kind=glusterfs
@@ -62,14 +62,14 @@ openshift_examples_modify_imagestreams=false
 openshift_disable_check=disk_availability,memory_availability
 
 [masters]
-master.lab openshift_public_hostname=52.59.170.248.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248
+master.lab openshift_public_hostname=52.59.170.248..xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248
 
 [masters:vars]
 openshift_schedulable=true
 openshift_node_labels="{'role': 'master'}"
 
 [nodes]
-master.lab openshift_public_hostname=52.59.170.248.nip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248
+master.lab openshift_public_hostname=52.59.170.248..xip.io openshift_hostname=master.lab openshift_ip=10.0.1.100 openshift_public_ip=52.59.170.248
 infra-1.lab openshift_hostname=infra-1.lab openshift_ip=10.0.2.101 openshift_node_labels="{'role': 'infra'}"
 infra-2.lab openshift_hostname=infra-2.lab openshift_ip=10.0.3.102 openshift_node_labels="{'role': 'infra'}"
 infra-3.lab openshift_hostname=infra-3.lab openshift_ip=10.0.4.103 openshift_node_labels="{'role': 'infra'}"
@@ -294,7 +294,7 @@ containerized=true
 openshift_image_tag=v3.6.173.0.21
 openshift_master_identity_providers=[{'name': 'htpasswd', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 openshift_master_htpasswd_users={'developer': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/','operator': '$apr1$bKWroIXS$/xjq07zVg9XtH6/VKuh6r/'}
-openshift_master_default_subdomain='cloudapps.52.59.170.248.nip.io'
+openshift_master_default_subdomain='cloudapps.52.59.170.248..xip.io'
 openshift_router_selector='role=master'
 openshift_registry_selector='role=infra'
 openshift_metrics_install_metrics=false
