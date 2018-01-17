@@ -9,6 +9,22 @@
   with_items:
     - cns-deploy-5.0.0-56.el7rhgs
     - heketi-client-5.0.0-19.el7rhgs
+    - iscsi-initiator-utils
+    - device-mapper-multipath
+
+- name: enable multipathing
+  shell: mpathconf --enable
+
+- name: create multipath configuration for gluster-block
+  copy:
+    src: multipath.conf
+    dest: multipath.conf
+
+- name: restart multipath daemon
+  service:
+    name: multipathd
+    state: restarted
+    enabled: yes
 
 - name: enable EPEL
   yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
