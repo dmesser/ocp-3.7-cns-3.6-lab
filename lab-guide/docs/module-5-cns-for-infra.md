@@ -117,7 +117,7 @@ Next, we will deploy the second CNS cluster and the update the OpenShift Registr
 &#8680; Review the `openshift-ansible` inventory file in `/etc/ansible/ocp-with-glusterfs-registry` that has been prepared in your environment:
 
 <kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd>
-~~~~ini hl_lines="4 15 16 17 18 19 31 32 33 34 35 36 73 74 75 76"
+~~~~ini hl_lines="4 15 16 17 18 19 32 33 34 35 36 37 73 74 75 76"
 [OSEv3:children]
 masters
 nodes
@@ -144,6 +144,7 @@ openshift_metrics_cassandra_pvc_size=10Gi
 openshift_logging_install_logging=false
 openshift_logging_es_pvc_size=10Gi
 openshift_logging_es_pvc_dynamic=true
+openshift_logging_es_memory_limit=2G
 openshift_storage_glusterfs_image=rhgs3/rhgs-server-rhel7
 openshift_storage_glusterfs_version=3.3.0-362
 openshift_storage_glusterfs_heketi_image=rhgs3/rhgs-volmanager-rhel7
@@ -527,6 +528,7 @@ openshift_metrics_cassandra_pvc_size=10Gi
 openshift_logging_install_logging=false
 openshift_logging_es_pvc_size=10Gi
 openshift_logging_es_pvc_dynamic=true
+openshift_logging_es_memory_limit=2G
 
 [... output omitted... ]
 ~~~~
