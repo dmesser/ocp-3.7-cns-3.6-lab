@@ -117,7 +117,7 @@ Next, we will deploy the second CNS cluster and the update the OpenShift Registr
 &#8680; Review the `openshift-ansible` inventory file in `/etc/ansible/ocp-with-glusterfs-registry` that has been prepared in your environment:
 
 <kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd>
-~~~~ini hl_lines="4 15 16 17 18 31 32 33 34 35 36 73 74 75 76"
+~~~~ini hl_lines="4 15 16 17 18 19 31 32 33 34 35 36 73 74 75 76"
 [OSEv3:children]
 masters
 nodes
@@ -135,8 +135,8 @@ openshift_hosted_router_wait=false
 openshift_registry_selector='role=infra'
 openshift_hosted_registry_wait=false
 openshift_hosted_registry_storage_volume_size=10Gi
-openshift_hosted_registry_storage_glusterfs_swap=true
-openshift_hosted_registry_storage_glusterfs_swapcopy=false
+#openshift_hosted_registry_storage_glusterfs_swap=true
+#openshift_hosted_registry_storage_glusterfs_swapcopy=true
 openshift_metrics_install_metrics=false
 openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
 openshift_metrics_cassandra_storage_type=pv
@@ -202,9 +202,19 @@ The highlighted lines indicate the vital options in the inventory file to instru
 - an instruction to trigger deployment of CNS for the registry (`openshift_hosted_registry_storage_kind=glusterfs`)
 - a custom name for the namespace is provided in which the CNS pods will live (`openshift_storage_glusterfs_registry_namespace`, optional)
 - any existing registry backend will be swapped out for a CNS volume (`openshift_hosted_registry_storage_glusterfs_swap`, default `false`)
+- any existing data on the old backend will be copied over to the CNS volume (`openshift_hosted_registry_storage_glusterfs_swapcopy`, default `false`)
 - the `gluster-block` provisioner is enabled (`openshift_storage_glusterfs_registry_block_deploy`) and a version is selected (`openshift_storage_glusterfs_registry_block_version`)
 - a 30GiB volume that `gluster-block` will use to back iSCSI LUNs will be created (`openshift_storage_glusterfs_registry_block_host_vol_create`, `openshift_storage_glusterfs_registry_block_host_vol_size`)
 
+!!! Tip "Why are some entries commented out?"
+    At this time of writing `openshift-ansible` has not fully implemented the new way of swapping the registry.
+    These two settings
+
+      - `openshift_hosted_registry_storage_glusterfs_swap: true`
+      - `openshift_hosted_registry_storage_glusterfs_swapcopy: true`
+
+    are required for the next version of `openshift-ansible`.
+    In this lab we rely on a fall back behaviour with these settings disabled.
 
 Hosts in the `[glusterfs_registry]` group will run the CNS cluster specifically created for OpenShift Infrastructure. Just like in Module 2, each host gets specific information about the free block device to use for CNS and the failure zone it resides in (the infrastructure nodes are also hosted in 3 different Availability Zones)
 The option `openshift_hosted_registry_storage_kind=glusterfs` will cause the registry to re-deployed with a `PVC` served by this cluster.
@@ -508,8 +518,8 @@ openshift_registry_selector='role=infra'
 openshift_hosted_registry_wait=false
 openshift_hosted_registry_storage_volume_size=10Gi
 openshift_hosted_registry_storage_kind=glusterfs
-openshift_hosted_registry_storage_glusterfs_swap=true
-openshift_hosted_registry_storage_glusterfs_swapcopy=false
+#openshift_hosted_registry_storage_glusterfs_swap=true
+#openshift_hosted_registry_storage_glusterfs_swapcopy=true
 openshift_metrics_install_metrics=false
 openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
 openshift_metrics_cassandra_storage_type=pv
