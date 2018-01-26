@@ -611,7 +611,7 @@ Resources:
                   openshift_hosted_registry_storage_volume_size=10Gi
                   openshift_hosted_registry_storage_kind=glusterfs
                   openshift_hosted_registry_storage_glusterfs_swap=true
-                  openshift_hosted_registry_storage_glusterfs_swapcopy=true
+                  openshift_hosted_registry_storage_glusterfs_swapcopy=false
                   openshift_metrics_install_metrics=false
                   openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
                   openshift_metrics_cassandra_storage_type=pv
