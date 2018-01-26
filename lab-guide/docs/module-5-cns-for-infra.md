@@ -8,7 +8,7 @@ OpenShift Registry on CNS
 The Registry in OpenShift is used to store all images that result of Source-to-Image deployments as well as custom container images.
 It runs as one or more containers in specific Infrastructure Nodes or Master Nodes in OpenShift.
 
-As explorerd in Module 1, by default the registry uses a hosts local storage (`emptyDir`) which makes it prone to outages. To avoid such outages the storage needs to be **persistent** and **shared** in order to survive Registry pod restarts and scale-out.
+As explored in Module 1, by default the registry uses a hosts local storage (`emptyDir`) which makes it prone to outages. To avoid such outages the storage needs to be **persistent** and **shared** in order to survive Registry pod restarts and scale-out.
 
 What we want to achieve is a setup like depicted in the following diagram:
 
@@ -17,16 +17,107 @@ What we want to achieve is a setup like depicted in the following diagram:
 This can be achieved with CNS simply by making the registry pods refer to a PVC in access mode *RWX* based on CNS.
 Before OpenShift Container Platform 3.6 this had to be done manually on an existing CNS cluster.
 
-With `openshift-ansible` you now have this setup task automated. The playbooks that implement this will deploy a **separate CNS cluster**, preferably on the *Infrastructure Nodes*, create a `PVC` and update the Registry `DeploymentConfig` to mount the associated `PV` which is where container images will then be stored.
+With `openshift-ansible` you now have this setup task automated. The playbooks that implement this will deploy a **separate CNS cluster**, preferably on the *Infrastructure Nodes*, create a `PVC` and update the Registry `DeploymentConfig` to mount the associated `PV` which is where container images will then be stored. This new cluster will be independent from the first one you created in Module 2, including it's own dedicated `heketi` instance.
+
+In this step we will also enable the `gluster-block` capability. We do this because we want this separate CNS cluster to serve other infrastructure workloads like OpenShift Logging and Metrics as well. You will learn more about the nature of that feature in a few minutes.
+
+First, let's deploy this CNS cluster with infrastructure focus. Currently `openshift-ansible` is missing some automation in regards to setting up requirements for `gluster-block`. We will compensate for that with a small Ansible playbook that you can copy & paste from below.
+
+&#8680; Create the following file called `prepare-gluster-block.yml`:
+
+<kbd>prepare-gluster-block.yml:</kbd>
+~~~~yaml
+---
+
+- hosts: glusterfs_registry
+
+  tasks:
+
+    - name: install dependencies
+      yum: name={{ item }} state=present
+      with_items:
+        - iscsi-initiator-utils
+        - device-mapper-multipath
+
+    - name: enable multipathing
+      shell: mpathconf --enable
+      args:
+        creates: /etc/multipath.conf
+
+    - name: configure iscsi multipathing
+      blockinfile:
+        path: /etc/multipath.conf
+        block: |
+         devices {
+                  device {
+                          vendor "LIO-ORG"
+                          user_friendly_names "yes"
+                          path_grouping_policy "failover"
+                          path_selector "round-robin 0"
+                          failback immediate
+                          path_checker "tur"
+                          prio "const"
+                          no_path_retry 120
+                          rr_weight "uniform"
+                  }
+          }
+
+    - name: load required kernel modules
+      modprobe: name={{ item }} state=present
+      with_items:
+        - dm_thin_pool
+        - dm_multipath
+        - target_core_user
+
+    - name: ensure kernel modules load a boot
+      lineinfile:
+        path: /etc/modules-load.d/{{ item }}.conf
+        line: "{{ item }}"
+        create: yes
+      with_items:
+        - dm_thin_pool
+        - dm_multipath
+        - target_core_user
+
+    - name: configure firewall
+      shell: "iptables {{ item }}"
+      with_items:
+        - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24010 -j ACCEPT"
+        - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 3260 -j ACCEPT"
+        - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 111 -j ACCEPT"
+
+    - name: persist firewall confg
+      lineinfile:
+        path: /etc/sysconfig/iptables
+        line: "{{ item }}"
+        insertafter: "^:OS_FIREWALL_ALLOW"
+      with_items:
+        - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24010 -j ACCEPT"
+        - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 3260 -j ACCEPT"
+        - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 111 -j ACCEPT"
+
+    - name: start and enable rpcbind service
+      service: name=rpcbind state=started enabled=yes
+
+...
+~~~~
+
+&#8680; Save the file in your current directory and execute it like this:
+
+    ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry prepare-gluster-block.yml
+
+The playbook should finish without any errors. In the next release of `openshift-ansible` this manual preparation will not be necessary anymore.
+
+Next, we will deploy the second CNS cluster and the update the OpenShift Registry configuration to store it's images on a `PersistentVolume` provided by that cluster.
 
 !!! Caution "Important"
     This method is potentially disruptive. The registry will be re-deployed in this process and may temporarily be unavailable.
-    Migration of the data will in the future be taken care of by `openshift-ansible`. Currently there is bug that prevents this from happening but it should be resolved soon.
+    Migration of the data will in the future be taken care of by `openshift-ansible`.
 
 &#8680; Review the `openshift-ansible` inventory file in `/etc/ansible/ocp-with-glusterfs-registry` that has been prepared in your environment:
 
 <kbd>/etc/ansible/ocp-with-glusterfs-registry:</kbd>
-~~~~ini hl_lines="4 15 16 17 29 30 31 32 33 34 71 72 73 74 75"
+~~~~ini hl_lines="4 15 16 17 18 31 32 33 34 35 36 73 74 75 76"
 [OSEv3:children]
 masters
 nodes
@@ -45,7 +136,7 @@ openshift_registry_selector='role=infra'
 openshift_hosted_registry_wait=false
 openshift_hosted_registry_storage_volume_size=10Gi
 openshift_hosted_registry_storage_glusterfs_swap=true
-openshift_hosted_registry_storage_glusterfs_swapcopy=true
+openshift_hosted_registry_storage_glusterfs_swapcopy=false
 openshift_metrics_install_metrics=false
 openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
 openshift_metrics_cassandra_storage_type=pv
@@ -62,7 +153,7 @@ openshift_storage_glusterfs_registry_storageclass=false
 openshift_storage_glusterfs_registry_block_deploy=true
 openshift_storage_glusterfs_registry_block_version=3.3.0-362
 openshift_storage_glusterfs_registry_block_host_vol_create=true
-openshift_storage_glusterfs_registry_block_host_vol_size=20
+openshift_storage_glusterfs_registry_block_host_vol_size=30
 openshift_docker_additional_registries=mirror.lab:5555
 openshift_docker_insecure_registries=mirror.lab:5555
 oreg_url=mirror.lab:5555/openshift3/ose-${component}:${version}
@@ -111,9 +202,8 @@ The highlighted lines indicate the vital options in the inventory file to instru
 - an instruction to trigger deployment of CNS for the registry (`openshift_hosted_registry_storage_kind=glusterfs`)
 - a custom name for the namespace is provided in which the CNS pods will live (`openshift_storage_glusterfs_registry_namespace`, optional)
 - any existing registry backend will be swapped out for a CNS volume (`openshift_hosted_registry_storage_glusterfs_swap`, default `false`)
-- any existing data in an existing registry will be copied to the CNS volume (`openshift_hosted_registry_storage_glusterfs_swapcopy`, default `true`)
 - the `gluster-block` provisioner is enabled (`openshift_storage_glusterfs_registry_block_deploy`) and a version is selected (`openshift_storage_glusterfs_registry_block_version`)
-- a 20GiB volume that `gluster-block` will use to back iSCSI LUNs will be created (`openshift_storage_glusterfs_registry_block_host_vol_create`, `openshift_storage_glusterfs_registry_block_host_vol_size`)
+- a 30GiB volume that `gluster-block` will use to back iSCSI LUNs will be created (`openshift_storage_glusterfs_registry_block_host_vol_create`, `openshift_storage_glusterfs_registry_block_host_vol_size`)
 
 
 Hosts in the `[glusterfs_registry]` group will run the CNS cluster specifically created for OpenShift Infrastructure. Just like in Module 2, each host gets specific information about the free block device to use for CNS and the failure zone it resides in (the infrastructure nodes are also hosted in 3 different Availability Zones)
@@ -149,7 +239,7 @@ infra-2.lab | SUCCESS => {
     This is a very simple lab environment :)
     There is no sophisticated external load-balancing across the infrastructure nodes in place.
     That's why the OpenShift router will run on the master node. The router will get re-deployed when executing the following playbook.
-    So making the master accept pods again we ensure the re-deployed router finds it's place again.
+    So making the master accept pods again we ensure the re-deployed router finds it's place again. In a production environment this is not required.
 
 &#8680; Run the CNS registry playbook that ships with `openshift-ansible`:
 
@@ -157,22 +247,20 @@ infra-2.lab | SUCCESS => {
     /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-glusterfs/registry.yml
 
 
-This creates a new CNS deployment just for infrastructure workloads on the infrastructure nodes. This will take 6-7 minutes to complete and also create `PersistentVolume` and `PersistentVolumeClaim` objects for CNS volume that will serve the registry as a backend.
+This creates a new CNS deployment just for infrastructure workloads on the infrastructure nodes. This will take 5-6 minutes to complete and also create `PersistentVolume` and `PersistentVolumeClaim` objects for CNS volume that will serve the registry as a backend.
 
-&#8680; Now, run the following playbook to update the registry:
+&#8680; Now, run the following playbook to update the registry's configuration:
 
-    ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-hosted.yml
+    ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \
+    /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-hosted.yml
 
-This will take another 2-3 minutes.
-
-!!! Warning
-    Currently there is a bug in `openshift-ansible` that will cause this playbook to fail when attempting to migrate data from the existing registry. The task `Activate registry maintenance mode` will fail. Nevertheless the registry is updated like you will see below.
+This will take another 2-3 minutes. The playbook should complete without any errors.
 
 &#8680; Disable scheduling on the Master again:
 
     oadm manage-node master.lab --schedulable=false
 
-Now you have a Registry that uses CNS to store container images. It has automatically been scaled to 3 pods for high availability too.
+Now you have a Registry that uses CNS to store container images. It has been re-deployed and automatically scaled to 3 pods for high availability too.
 
 &#8680; Log in as `operator` in the `default` namespace
 
@@ -187,6 +275,19 @@ It should say:
 ~~~
 NAME              REVISION   DESIRED   CURRENT   TRIGGERED BY
 docker-registry   2          1         1         config
+~~~
+
+&#8680; Verify you now have 3 registry pods running:
+
+    oc get pods -l docker-registry
+
+It should say:
+
+~~~
+NAME                      READY     STATUS    RESTARTS   AGE
+docker-registry-2-5d4n7   1/1       Running   0          1m
+docker-registry-2-89c28   1/1       Running   0          1m
+docker-registry-2-mvgw9   1/1       Running   0          1m
 ~~~
 
 &#8680; You can review the details and see how the `PVC` backs the registry by executing this command
@@ -274,7 +375,8 @@ In the OpenShift UI you will see the new Registry configuration when you log on 
 
 [![Registry Deployment Scaled](img/registry_3way_dc.png)](img/registry_3way_dc.png)
 
-`openshift-ansible` generated an independent set of GlusterFS pods, a separate instance of `heketi` and a separate `StorageClass` as well. These components were configured to use the `infra-storage` namespace. Refer to Module 2 to get an understanding of those components if you just skipped to here.
+`openshift-ansible` generated an independent set of GlusterFS pods and even separate instance of `heketi`. These components were configured to use the `infra-storage` namespace. It has consciously **not configured** a `StorageClass` and statically provioned the `PV` and `PVC` for `registry-claim`. This is in order to prevent accidental deletion of the Registry storage.
+Refer to Module 2 to get an understanding of those components if you just skipped to here.
 
 &#8680; Verify there are at least 3 GlusterFS pods and one `heketi` pod:
 
@@ -301,6 +403,14 @@ OpenShift Logging/Metrics on CNS block storage
 OpenShift Logging (Kibana) and Metrics (Cassandra) are also components that require persistent storage. Typically so far external block storage providers had to be used in order to get these services to work reliably.
 Since the introduction of `gluster-block` this is now possible with CNS as well.
 
+#### A `gluster-block` crash course
+
+`gluster-block` is a block-storage provisioner based on CNS. It is implemented using a large GlusterFS volume that hosts sparse files which in turn are the backing files of iSCSI LUNs served by `gluster-block`. The orchestration of this taken care of by the `gluster-block-provisioner` which runs in a pod just like `heketi`.
+Even though the result of this are iSCSI LUNs, i.e. block devices, this kind of storage, when claimed, still ends up being mounted by OpenShift nodes and then formatted with XFS (like for any other block storage in OpenShift). As a consequence `gluster-block` only supports `RWO` volumes.
+
+!!! Tip "Will this not make things slower?"
+    So you may ask: is this, an XFS-formatted iSCSI LUN backed by a sparse file on top of GlusterFS, still faster than a plain GlusterFS volume? The answer is yes for applications like OpenShift Metrics and Logging. Such applications regularly do file-system operations like locking or byte-range locking which are very expensive on any distributed filesystem, and GlusterFS is no exception. On local filesystems like XFS this is not a problem. The resulting XFS meta-data operations are not distributed in `gluster-block` but are perceived as plain I/O to a file on top of GlusterFS through the iSCSI target which is fast.
+
 It might seem counter-intuitive at first to consider CNS to serve these systems, mainly because:
 
   - Kibana and Cassandra are shared-nothing scale-out services
@@ -316,16 +426,8 @@ Here are a couple of reasons why it is still a good idea to run those on CNS:
 
 With the execution of previous playbook we have also deployed and configured `gluster-block`. The required settings were all in the Ansible inventory file. Note that while the registry will consume a normal CNS volume based on `gluster-fuse`, GlusterFS' native file protocol, the only supported form of CNS backing both OpenShift Logging and/or Metrics is `gluster-block`.
 
-!!! Tip "A quick primer to `gluster-block`"
-    `gluster-block` is a block-storage provisioner based on CNS. It is implemented using a large GlusterFS volume that hosts sparse files which in turn are the backing files of iSCSI LUNs served by `gluster-block`. The orchestration of this taken care of by the `gluster-block-provisioner` which runs in a pod just like `heketi`.
-    Even though the result of this are iSCSI LUNs, i.e. block devices, this kind of storage, when claimed, still ends up being mounted by OpenShift nodes and then formatted with XFS (like for any other block storage in OpenShift). As a consequence `gluster-block` only supports `RWO` volumes.
 
-    So you may ask: is this, an XFS-formatted iSCSI LUN backed by a sparse file on top of GlusterFS, still faster than a plain GlusterFS volume? The answer is yes for applications like OpenShift Metrics and Logging. Such applications regularly do file-system operations like locking or byte-range locking which are very expensive on any distributed filesystem, and GlusterFS is no exception. On local filesystems like XFS this is not a problem. The resulting XFS meta-data operations are not distributed in `gluster-block` but are perceived as plain I/O to a file on top of GlusterFS, which is fast.
-
-By default `openshift-ansible` will stand up the `gluster-block` infrastructure as part of deploying CNS but it will not configure the nodes to mount iSCSI volumes with multipathing. The process involves installing the `iscsi-initiator-utils` as well as `device-mapper-multipath`, and then enable / configure the `multipathd` service.
-This has already been prepared for you in this environment. For more details on the steps, consult the [documentation](https://access.redhat.com/documentation/en-us/red_hat_gluster_storage/3.3/html-single/container-native_storage_for_openshift_container_platform/#Block_Storage).
-
-The only configuration step left is to create a `StorageClass` for `gluster-block` and temporarily make it the default so the playbooks which provision OpenShift Logging and Metrics get their PVCs fulfilled by `gluster-block`.
+Now, the only configuration step left is to create a `StorageClass` for `gluster-block` and temporarily make it the default so the playbooks which provision OpenShift Logging and Metrics get their PVCs fulfilled by `gluster-block`.  For more details on the `gluster-block`, consult the [documentation](https://access.redhat.com/documentation/en-us/red_hat_gluster_storage/3.3/html-single/container-native_storage_for_openshift_container_platform/#Block_Storage).
 
 First, make sure you are logged in as `operator` in the `infra-storage` namespace:
 
@@ -339,6 +441,7 @@ export HEKETI_CLI_SERVER=http://$(oc get route/heketi-registry -o jsonpath='{.sp
 export HEKETI_CLI_USER=admin
 export HEKETI_CLI_KEY=$(oc get pod/$HEKETI_POD -o jsonpath='{.spec.containers[0].env[?(@.name=="HEKETI_ADMIN_KEY")].value}')
 export CNS_INFRA_CLUSTER=$(heketi-cli cluster list --json | jq -r '.clusters[0]')
+export HEKETI_ADMIN_KEY_SECRET=$(echo -n ${HEKETI_CLI_KEY} | base64)
 ~~~~
 
 The, create YAML representation of the `secret` to store the credentials for the `heketi` pod by copy&pasting the following command (inserts the credentials from the environment variable for you convenience):
@@ -352,7 +455,7 @@ metadata:
   namespace: infra-storage
 data:
   # base64 encoded password. E.g.: echo -n "mypassword" | base64
-  key: ${HEKETI_CLI_KEY}
+  key: ${HEKETI_ADMIN_KEY_SECRET}
 type: gluster.org/glusterblock
 EOF
 ~~~~
@@ -406,7 +509,7 @@ openshift_hosted_registry_wait=false
 openshift_hosted_registry_storage_volume_size=10Gi
 openshift_hosted_registry_storage_kind=glusterfs
 openshift_hosted_registry_storage_glusterfs_swap=true
-openshift_hosted_registry_storage_glusterfs_swapcopy=true
+openshift_hosted_registry_storage_glusterfs_swapcopy=false
 openshift_metrics_install_metrics=false
 openshift_metrics_hawkular_hostname="hawkular-metrics.{{ openshift_master_default_subdomain }}"
 openshift_metrics_cassandra_storage_type=pv
@@ -433,32 +536,34 @@ Unfortunately `openshift-ansible` today is lacking the ability to specify a cert
     oc patch storageclass glusterfs-storage \
     -p '{"metadata": {"annotations": {"storageclass.kubernetes.io/is-default-class": "false"}}}'
 
-&#8680; Then, use the `oc patch` command again to change the definition of the `StorageClass` on the fly:
+This is because the playbooks for Metrics and Logging don't allow to specify a `StorageClass` name for the `PVC` they will generate. Hence it will take the default and we make that temporarily be `gluster-block`.
 
-    oc patch storageclass glusterfs-registry \
+&#8680; Again, use the `oc patch` command again to change the definition of the `StorageClass` `glusterfs-block` on the fly:
+
+    oc patch storageclass glusterfs-block \
     -p '{"metadata": {"annotations": {"storageclass.kubernetes.io/is-default-class": "true"}}}'
 
-&#8680; Verify that now the `StorageClass` `glusterfs-registry` is the default:
+&#8680; Verify that now the `StorageClass` `glusterfs-block` is the default:
 
     oc get storageclass
 
 ~~~~ hl_lines="2"
 NAME                           TYPE
-glusterfs-registry (default)   kubernetes.io/glusterfs
+glusterfs-block (default)      gluster.org/glusterblock
 glusterfs-storage              kubernetes.io/glusterfs
 ~~~~
 
 #### Deploying OpenShift Metrics with Persistent Storage from CNS
 
-The inventory file `/etc/ansible/hosts` as explained has all the required options set to run Logging/Metrics on dynamic provisioned storage supplied via a `PVC`. The only variable that we need to override is (`openshift_metrics_install_metrics`) to actually invoke the required playbooks the installation.
+The inventory file `/etc/ansible/ocp-with-glusterfs-registry` as explained has all the required options set to run Logging/Metrics on dynamic provisioned storage supplied via a `PVC`. The only variable that we need to override is (`openshift_metrics_install_metrics`) to actually invoke the required playbooks the installation.
 
 &#8680; Execute the Metrics deployment playbook like this:
 
-    ansible-playbook -i /etc/ansible/hosts \
+    ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \
         -e openshift_metrics_install_metrics=True \
         /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-metrics.yml
 
-This takes about 1-2 minutes to complete. However the deployment is not quite finished yet.
+This takes about 3-4 minutes to complete. However the deployment is not quite finished yet.
 
 &#8680; Use the `watch` command to wait for the `hawkular-metrics` pod to be in `READY` state.
 
@@ -493,7 +598,7 @@ Don't worry - this is due to self-signed SSL certificates in this environment.
 
 [![OpenShift Metrics Hawkular](img/metrics_hawkular.png)](img/metrics_hawkular.png)
 
-&#8680; Then go back to the overview page. Next to the pods monitoring graphs for CPU, memory and network consumption will appear:
+&#8680; Then go back to the overview page and **reload your browser again**. Next to the pods monitoring graphs for CPU, memory and network consumption will now appear:
 
 [![OpenShift Metrics Graphs](img/metrics_graphs.png)](img/metrics_graphs.png)
 
@@ -501,10 +606,7 @@ If you change to the **Storage** menu in the OpenShift UI you will also see the 
 
 [![OpenShift Metrics PVC](img/metrics_pvc.png)](img/metrics_pvc.png)
 
-Congratulations. You have successfully deploy OpenShift Metrics using scalable, fault-tolerant and persistent storage. The data that you see visualized in the UI is stored on a `PersistentVolume` served by CNS.
-
-!!! Note "Preview"
-    This was a preview of the general process. Note that this will be supported for production with the release of CNS 3.6.
+Congratulations. You have successfully deploy OpenShift Metrics using scalable, fault-tolerant and persistent storage. The data that you see visualized in the UI is stored on a `PersistentVolume` served by CNS using `gluster-block`.
 
 #### Deploying OpenShift Logging with Persistent Storage from CNS
 
@@ -514,13 +616,15 @@ In a very similar fashion you can install OpenShift Logging Services, run by Kib
 
     oc login -u operator -n logging
 
+The settings for Logging are already in place in the inventory file (see the previous listing before you deployed Metrics).
+
 &#8680; Execute the Logging deployment playbook like this:
 
-    ansible-playbook -i /etc/ansible/hosts \
+    ansible-playbook -i /etc/ansible/ocp-with-glusterfs-registry \
       -e openshift_logging_install_logging=true \
       /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-logging.yml
 
-After 1-2 minutes the playbook finishes and you have a number of new pods in the `logging` namespace:
+After 5 minutes the playbook finishes and you have a number of new pods in the `logging` namespace:
 
 &#8680; List all the ElasticSearch pods that aggregate and store the logs:
 
@@ -575,8 +679,20 @@ The public URL for the Kibana UI will be visible in the **ROUTES** section of th
 When you are logging on for the first time Kibana will ask for credentials.
 Use your OpenShift `operator` account with the password `r3dh4t`.
 
-After logging in you will see that Kibana has started indexing the database, which is hosted on CNS by ElasticSearch.
+After logging in you will see the Kibana dashboard whichs displays log data from it's index, which is hosted on CNS by ElasticSearch.
 
-[![OpenShift Logging Indexing](img/kibana_es_indexing.png)](img/kibana_es_indexing.png)
+[![OpenShift Logging Indexing](img/kibana_es_dashboard.png)](img/kibana_es_dashboard.png)
 
-This shows that ElasticSearch search running of CNS-provided `PersistentVolume` successfully. It will take some time to complete the first indexing.
+This shows that ElasticSearch search running of CNS-provided `PersistentVolume` successfully.
+
+Now let's put back things in order and make the `StorageClass` for the first CNS cluster the default again.
+
+&#8680; Again, use the `oc patch` command again to change the definition of the `StorageClass` `glusterfs-block` on the fly:
+
+    oc patch storageclass glusterfs-block \
+    -p '{"metadata": {"annotations": {"storageclass.kubernetes.io/is-default-class": "false"}}}'
+
+&#8680;  Patch the `StorageClass` `glusterfs-storage` from the first CNS stack to be the default:
+
+    oc patch storageclass glusterfs-storage \
+    -p '{"metadata": {"annotations": {"storageclass.kubernetes.io/is-default-class": "true"}}}'
