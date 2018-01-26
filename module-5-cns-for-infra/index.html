@@ -580,6 +580,7 @@ Migration of the data will in the future be taken care of by <code>openshift-ans
 <span class="na">openshift_logging_install_logging</span><span class="o">=</span><span class="s">false</span>
 <span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
 <span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
+<span class="na">openshift_logging_es_memory_limit</span><span class="o">=</span><span class="s">2G</span>
 <span class="na">openshift_storage_glusterfs_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-server-rhel7</span>
 <span class="na">openshift_storage_glusterfs_version</span><span class="o">=</span><span class="s">3.3.0-362</span>
 <span class="na">openshift_storage_glusterfs_heketi_image</span><span class="o">=</span><span class="s">rhgs3/rhgs-volmanager-rhel7</span>
@@ -625,12 +626,12 @@ Migration of the data will in the future be taken care of by <code>openshift-ans
 <span class="na">node-4.lab openshift_hostname</span><span class="o">=</span><span class="s">node-4.lab openshift_ip=10.0.2.204 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
 <span class="na">node-5.lab openshift_hostname</span><span class="o">=</span><span class="s">node-5.lab openshift_ip=10.0.3.205 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
 <span class="na">node-6.lab openshift_hostname</span><span class="o">=</span><span class="s">node-6.lab openshift_ip=10.0.4.206 openshift_node_labels=&quot;{&#39;role&#39;: &#39;app&#39;}&quot;</span>
-
-<span class="hll"><span class="k">[glusterfs_registry]</span>
+<span class="hll">
+</span><span class="hll"><span class="k">[glusterfs_registry]</span>
 </span><span class="hll"><span class="na">infra-1.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.2.101 glusterfs_zone=1 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
 </span><span class="hll"><span class="na">infra-2.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.3.102 glusterfs_zone=2 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
-</span><span class="hll"><span class="na">infra-3.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.4.103 glusterfs_zone=3 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
-</span></pre></div>
+</span><span class="na">infra-3.lab glusterfs_ip</span><span class="o">=</span><span class="s">10.0.4.103 glusterfs_zone=3 glusterfs_devices=&#39;[ &quot;/dev/xvdc&quot; ]&#39;</span>
+</pre></div>
 
 
 <p>The highlighted lines indicate the vital options in the inventory file to instruct <code>openshift-ansible</code> to deploy this setup.</p>
@@ -950,7 +951,8 @@ EOF
 </span><span class="na">openshift_logging_install_logging</span><span class="o">=</span><span class="s">false</span>
 <span class="hll"><span class="na">openshift_logging_es_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
 </span><span class="hll"><span class="na">openshift_logging_es_pvc_dynamic</span><span class="o">=</span><span class="s">true</span>
-</span>
+</span><span class="na">openshift_logging_es_memory_limit</span><span class="o">=</span><span class="s">2G</span>
+
 <span class="k">[... output omitted... ]</span>
 </pre></div>
 
