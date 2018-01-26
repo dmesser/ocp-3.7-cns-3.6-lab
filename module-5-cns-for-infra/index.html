@@ -571,9 +571,9 @@ Migration of the data will in the future be taken care of by <code>openshift-ans
 <span class="hll"><span class="na">openshift_registry_selector</span><span class="o">=</span><span class="s">&#39;role=infra&#39;</span>
 </span><span class="hll"><span class="na">openshift_hosted_registry_wait</span><span class="o">=</span><span class="s">false</span>
 </span><span class="hll"><span class="na">openshift_hosted_registry_storage_volume_size</span><span class="o">=</span><span class="s">10Gi</span>
-</span><span class="hll"><span class="na">openshift_hosted_registry_storage_glusterfs_swap</span><span class="o">=</span><span class="s">true</span>
-</span><span class="na">openshift_hosted_registry_storage_glusterfs_swapcopy</span><span class="o">=</span><span class="s">false</span>
-<span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
+</span><span class="hll"><span class="c1">#openshift_hosted_registry_storage_glusterfs_swap=true</span>
+</span><span class="hll"><span class="c1">#openshift_hosted_registry_storage_glusterfs_swapcopy=true</span>
+</span><span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
 <span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
 <span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
 <span class="na">openshift_metrics_cassandra_pvc_size</span><span class="o">=</span><span class="s">10Gi</span>
@@ -639,9 +639,21 @@ Migration of the data will in the future be taken care of by <code>openshift-ans
 <li>an instruction to trigger deployment of CNS for the registry (<code>openshift_hosted_registry_storage_kind=glusterfs</code>)</li>
 <li>a custom name for the namespace is provided in which the CNS pods will live (<code>openshift_storage_glusterfs_registry_namespace</code>, optional)</li>
 <li>any existing registry backend will be swapped out for a CNS volume (<code>openshift_hosted_registry_storage_glusterfs_swap</code>, default <code>false</code>)</li>
+<li>any existing data on the old backend will be copied over to the CNS volume (<code>openshift_hosted_registry_storage_glusterfs_swapcopy</code>, default <code>false</code>)</li>
 <li>the <code>gluster-block</code> provisioner is enabled (<code>openshift_storage_glusterfs_registry_block_deploy</code>) and a version is selected (<code>openshift_storage_glusterfs_registry_block_version</code>)</li>
 <li>a 30GiB volume that <code>gluster-block</code> will use to back iSCSI LUNs will be created (<code>openshift_storage_glusterfs_registry_block_host_vol_create</code>, <code>openshift_storage_glusterfs_registry_block_host_vol_size</code>)</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Why are some entries commented out?</p>
+<p>At this time of writing <code>openshift-ansible</code> has not fully implemented the new way of swapping the registry.<br />
+These two settings</p>
+<ul>
+<li><code>openshift_hosted_registry_storage_glusterfs_swap: true</code></li>
+<li><code>openshift_hosted_registry_storage_glusterfs_swapcopy: true</code></li>
+</ul>
+<p>are required for the next version of <code>openshift-ansible</code>.<br />
+In this lab we rely on a fall back behaviour with these settings disabled.</p>
+</div>
 <p>Hosts in the <code>[glusterfs_registry]</code> group will run the CNS cluster specifically created for OpenShift Infrastructure. Just like in Module 2, each host gets specific information about the free block device to use for CNS and the failure zone it resides in (the infrastructure nodes are also hosted in 3 different Availability Zones)<br />
 The option <code>openshift_hosted_registry_storage_kind=glusterfs</code> will cause the registry to re-deployed with a <code>PVC</code> served by this cluster.</p>
 <p>&#8680; First ensure that from an Ansible-perspective the required nodes are reachable</p>
@@ -892,7 +904,7 @@ EOF
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
- name: gluster-block
+ name: glusterfs-block
 provisioner: gluster.org/glusterblock
 parameters:
  resturl: &quot;${HEKETI_CLI_SERVER}&quot;
@@ -929,8 +941,8 @@ EOF
 <span class="na">openshift_hosted_registry_wait</span><span class="o">=</span><span class="s">false</span>
 <span class="na">openshift_hosted_registry_storage_volume_size</span><span class="o">=</span><span class="s">10Gi</span>
 <span class="na">openshift_hosted_registry_storage_kind</span><span class="o">=</span><span class="s">glusterfs</span>
-<span class="na">openshift_hosted_registry_storage_glusterfs_swap</span><span class="o">=</span><span class="s">true</span>
-<span class="na">openshift_hosted_registry_storage_glusterfs_swapcopy</span><span class="o">=</span><span class="s">false</span>
+<span class="c1">#openshift_hosted_registry_storage_glusterfs_swap=true</span>
+<span class="c1">#openshift_hosted_registry_storage_glusterfs_swapcopy=true</span>
 <span class="na">openshift_metrics_install_metrics</span><span class="o">=</span><span class="s">false</span>
 <span class="na">openshift_metrics_hawkular_hostname</span><span class="o">=</span><span class="s">&quot;hawkular-metrics.{{ openshift_master_default_subdomain }}&quot;</span>
 <span class="hll"><span class="na">openshift_metrics_cassandra_storage_type</span><span class="o">=</span><span class="s">pv</span>
