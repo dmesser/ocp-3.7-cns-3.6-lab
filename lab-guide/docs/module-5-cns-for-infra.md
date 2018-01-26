@@ -481,7 +481,7 @@ cat > gluster-block-storageclass.yml <<EOF
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
- name: gluster-block
+ name: glusterfs-block
 provisioner: gluster.org/glusterblock
 parameters:
  resturl: "${HEKETI_CLI_SERVER}"
