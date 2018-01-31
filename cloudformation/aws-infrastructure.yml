@@ -620,6 +620,7 @@ Resources:
                   openshift_logging_install_logging=false
                   openshift_logging_es_pvc_size=10Gi
                   openshift_logging_es_pvc_dynamic=true
+                  openshift_logging_es_pvc_size=10Gi
                   openshift_storage_glusterfs_image=rhgs3/rhgs-server-rhel7
                   openshift_storage_glusterfs_version=3.3.0-362
                   openshift_storage_glusterfs_heketi_image=rhgs3/rhgs-volmanager-rhel7
