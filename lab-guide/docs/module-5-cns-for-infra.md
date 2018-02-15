@@ -96,6 +96,11 @@ First, let's deploy this CNS cluster with infrastructure focus. Currently `opens
         - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 3260 -j ACCEPT"
         - "-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 111 -j ACCEPT"
 
+    - name: add rpcbind to multi-user target
+      shell: systemctl add-wants multi-user rpcbind.service
+      args:
+        creates: /etc/systemd/system/multi-user.target.wants/rpcbind.service
+
     - name: start and enable rpcbind service
       service: name=rpcbind state=started enabled=yes
 
